@@ -5,17 +5,40 @@ import boto3
 import requests
 from decimal import Decimal
 import logging
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Initialize DynamoDB client
+# Initialize AWS clients
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['PLACES_TABLE_NAME'])
+secrets_client = boto3.client('secretsmanager')
 
-# Google Maps API key
-GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_MAPS_API_KEY']
+# Secret name for Google Maps API key
+GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
 PLACES_API_BASE_URL = 'https://maps.googleapis.com/maps/api/place'
+
+# Function to retrieve secret from AWS Secrets Manager
+def get_secret(secret_name):
+    try:
+        response = secrets_client.get_secret_value(SecretId=secret_name)
+        if 'SecretString' in response:
+            return response['SecretString']
+    except ClientError as e:
+        logger.error(f"Error retrieving secret {secret_name}: {str(e)}")
+        raise e
+
+# Get Google Maps API key from Secrets Manager
+def get_google_maps_api_key():
+    secret = get_secret(GOOGLE_MAPS_API_KEY_SECRET_NAME)
+    # The secret might be a JSON string with key-value pairs
+    try:
+        secret_dict = json.loads(secret)
+        return secret_dict.get('GOOGLE_MAPS_API_KEY', secret)
+    except json.JSONDecodeError:
+        # If it's not JSON, return the string directly
+        return secret
 
 # Default cache expiration (24 hours)
 CACHE_TTL = 24 * 60 * 60
@@ -99,13 +122,16 @@ def get_nearby_places(lat, lng, radius, tour_type):
     # Cache miss or expired - fetch from Google Maps API
     place_types = get_place_types_for_tour(tour_type)
     
+    # Get API key from Secrets Manager
+    api_key = get_google_maps_api_key()
+    
     # First search for nearby places
     nearby_url = f"{PLACES_API_BASE_URL}/nearbysearch/json"
     params = {
         'location': f"{lat},{lng}",
         'radius': radius,
         'types': '|'.join(place_types),
-        'key': GOOGLE_MAPS_API_KEY
+        'key': api_key
     }
     
     response = requests.get(nearby_url, params=params)
@@ -164,11 +190,14 @@ def get_city_highlights(city, tour_type):
         logger.warning(f"Cache retrieval error: {str(e)}")
     
     # Cache miss or expired - fetch from Google Maps API
+    # Get API key from Secrets Manager
+    api_key = get_google_maps_api_key()
+    
     # First, geocode the city to get coordinates
     geocode_url = f"https://maps.googleapis.com/maps/api/geocode/json"
     params = {
         'address': city,
-        'key': GOOGLE_MAPS_API_KEY
+        'key': api_key
     }
     
     response = requests.get(geocode_url, params=params)

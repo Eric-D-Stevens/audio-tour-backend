@@ -12,12 +12,40 @@ logger.setLevel(logging.INFO)
 
 # Initialize AWS clients
 s3 = boto3.client('s3')
+secrets_client = boto3.client('secretsmanager')
 BUCKET_NAME = os.environ['CONTENT_BUCKET_NAME']
 CLOUDFRONT_DOMAIN = os.environ['CLOUDFRONT_DOMAIN']
 
-# API keys from environment variables
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-ELEVENLABS_API_KEY = os.environ['ELEVENLABS_API_KEY']
+# Secret names for API keys
+OPENAI_API_KEY_SECRET_NAME = os.environ['OPENAI_API_KEY_SECRET_NAME']
+ELEVENLABS_API_KEY_SECRET_NAME = os.environ['ELEVENLABS_API_KEY_SECRET_NAME']
+
+# Function to retrieve secret from AWS Secrets Manager
+def get_secret(secret_name):
+    try:
+        response = secrets_client.get_secret_value(SecretId=secret_name)
+        if 'SecretString' in response:
+            return response['SecretString']
+    except ClientError as e:
+        logger.error(f"Error retrieving secret {secret_name}: {str(e)}")
+        raise e
+
+# Get API keys from Secrets Manager
+def get_openai_api_key():
+    secret = get_secret(OPENAI_API_KEY_SECRET_NAME)
+    try:
+        secret_dict = json.loads(secret)
+        return secret_dict.get('OPENAI_API_KEY', secret)
+    except json.JSONDecodeError:
+        return secret
+
+def get_elevenlabs_api_key():
+    secret = get_secret(ELEVENLABS_API_KEY_SECRET_NAME)
+    try:
+        secret_dict = json.loads(secret)
+        return secret_dict.get('ELEVENLABS_API_KEY', secret)
+    except json.JSONDecodeError:
+        return secret
 
 # API endpoints
 OPENAI_API_URL = "https://api.openai.com/v1/chat/completions"
@@ -187,18 +215,34 @@ def get_place_details(place_id):
     # For simplicity, we'll simulate it here - in a real implementation,
     # you would make the actual API call to get details
     
-    # Use the Google Maps API key from environment variables
-    api_key = os.environ['GOOGLE_MAPS_API_KEY']
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,rating,types,editorial_summary,website,formatted_phone_number&key={api_key}"
+    # Get Google Maps API key from Secrets Manager
+    # Since we don't have this secret defined in our CDK, we'll need to add it
+    # For now, let's assume it's stored with the same name as in the geolocation Lambda
+    google_maps_api_key_secret_name = os.environ.get('GOOGLE_MAPS_API_KEY_SECRET_NAME', 'google-maps-api-key')
     
     try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            data = response.json()
-            if data.get('status') == 'OK':
-                return data.get('result', {})
+        # Get the secret value
+        secret = get_secret(google_maps_api_key_secret_name)
+        # Parse it if it's JSON
+        try:
+            secret_dict = json.loads(secret)
+            api_key = secret_dict.get('GOOGLE_MAPS_API_KEY', secret)
+        except json.JSONDecodeError:
+            api_key = secret
+            
+        url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,rating,types,editorial_summary,website,formatted_phone_number&key={api_key}"
+        
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('status') == 'OK':
+                    return data.get('result', {})
+        except Exception as e:
+            logger.error(f"Error fetching place details: {str(e)}")
+            
     except Exception as e:
-        logger.error(f"Error fetching place details: {str(e)}")
+        logger.error(f"Error retrieving Google Maps API key: {str(e)}")
     
     return None
 
@@ -231,9 +275,12 @@ def generate_script(place_details, tour_type):
         This is for a {tour_type} focused tour.
         """
         
+        # Get OpenAI API key from Secrets Manager
+        openai_api_key = get_openai_api_key()
+        
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {OPENAI_API_KEY}"
+            "Authorization": f"Bearer {openai_api_key}"
         }
         
         payload = {
@@ -263,10 +310,13 @@ def generate_script(place_details, tour_type):
 def generate_audio(script):
     """Generate audio from script using Eleven Labs API"""
     try:
+        # Get ElevenLabs API key from Secrets Manager
+        elevenlabs_api_key = get_elevenlabs_api_key()
+        
         headers = {
             "Accept": "audio/mpeg",
             "Content-Type": "application/json",
-            "xi-api-key": ELEVENLABS_API_KEY
+            "xi-api-key": elevenlabs_api_key
         }
         
         payload = {
