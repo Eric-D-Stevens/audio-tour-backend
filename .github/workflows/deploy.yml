@@ -21,8 +21,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest
-        pip install -r lambda/geolocation/requirements.txt
-        pip install -r lambda/audio-generation/requirements.txt
     
     #- name: Run tests
     #- run: pytest
@@ -30,8 +28,18 @@ jobs:
     - name: Package Lambda functions
       run: |
         mkdir -p dist
-        cd lambda/geolocation && zip -r ../../dist/geolocation.zip . && cd ../..
-        cd lambda/audio-generation && zip -r ../../dist/audio-generation.zip . && cd ../..
+        
+        # Geolocation Lambda
+        mkdir -p build/geolocation
+        cp -r lambda/geolocation/* build/geolocation/
+        pip install -r lambda/geolocation/requirements.txt -t build/geolocation/
+        cd build/geolocation && zip -r ../../dist/geolocation.zip . && cd ../..
+        
+        # Audio Generation Lambda
+        mkdir -p build/audio-generation
+        cp -r lambda/audio-generation/* build/audio-generation/
+        pip install -r lambda/audio-generation/requirements.txt -t build/audio-generation/
+        cd build/audio-generation && zip -r ../../dist/audio-generation.zip . && cd ../..
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
