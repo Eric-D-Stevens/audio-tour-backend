@@ -51,3 +51,9 @@ jobs:
     - name: Upload Lambda packages to S3
       run: |
         aws s3 sync dist/ s3://${{ secrets.LAMBDA_BUCKET }}/
+        
+    - name: Trigger Infrastructure Deployment
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: trigger-infra-deploy
