@@ -54,8 +54,13 @@ jobs:
     
     - name: Upload Lambda packages to S3
       run: |
+        # Upload versioned packages
         aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
+        
+        # Also upload non-versioned copies for manual deployments
+        aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/geolocation.zip
+        aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/audio-generation.zip
         
         # Also upload a version.json file with the current version
         echo '{"version": "'${VERSION}'"}' > version.json
