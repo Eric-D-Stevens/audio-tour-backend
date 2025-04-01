@@ -25,6 +25,10 @@ jobs:
     #- name: Run tests
     #- run: pytest
     
+    - name: Generate version string
+      id: version
+      run: echo "VERSION=$(date +%s)" >> $GITHUB_ENV
+    
     - name: Package Lambda functions
       run: |
         mkdir -p dist
@@ -33,13 +37,13 @@ jobs:
         mkdir -p build/geolocation
         cp -r lambda/geolocation/* build/geolocation/
         pip install -r lambda/geolocation/requirements.txt -t build/geolocation/
-        cd build/geolocation && zip -r ../../dist/geolocation.zip . && cd ../..
+        cd build/geolocation && zip -r ../../dist/geolocation-${VERSION}.zip . && cd ../..
         
         # Audio Generation Lambda
         mkdir -p build/audio-generation
         cp -r lambda/audio-generation/* build/audio-generation/
         pip install -r lambda/audio-generation/requirements.txt -t build/audio-generation/
-        cd build/audio-generation && zip -r ../../dist/audio-generation.zip . && cd ../..
+        cd build/audio-generation && zip -r ../../dist/audio-generation-${VERSION}.zip . && cd ../..
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -50,10 +54,22 @@ jobs:
     
     - name: Upload Lambda packages to S3
       run: |
-        aws s3 sync dist/ s3://${{ secrets.LAMBDA_BUCKET }}/
+        aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
+        aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         
-    - name: Trigger Infrastructure Deployment
-      uses: peter-evans/repository-dispatch@v2
+        # Also upload a version.json file with the current version
+        echo '{"version": "'${VERSION}'"}' > version.json
+        aws s3 cp version.json s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
+    
+    - name: Trigger Infrastructure Deploy
+      uses: peter-evans/repository-dispatch@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        event-type: trigger-infra-deploy
+        token: ${{ secrets.WORKFLOW_PAT }}
+        repository: ${{ github.repository_owner }}/audio-tour-infrastructure
+        event-type: lambda-changed
+        client-payload: |
+          {
+            "version": "${{ env.VERSION }}",
+            "geolocation_lambda": "geolocation-${{ env.VERSION }}.zip",
+            "audio_generation_lambda": "audio-generation-${{ env.VERSION }}.zip"
+          }
