@@ -17,7 +17,15 @@ secrets_client = boto3.client('secretsmanager')
 
 # Secret name for Google Maps API key
 GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
-PLACES_API_BASE_URL = 'https://maps.googleapis.com/maps/api/place'
+
+# New Google Places API v1 endpoint
+PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
+
+# Default cache expiration (24 hours)
+CACHE_TTL = 24 * 60 * 60
+
+# Maximum number of results to fetch with pagination
+MAX_RESULTS = 100
 
 # Function to retrieve secret from AWS Secrets Manager
 def get_secret(secret_name):
@@ -40,9 +48,6 @@ def get_google_maps_api_key():
         # If it's not JSON, return the string directly
         return secret
 
-# Default cache expiration (24 hours)
-CACHE_TTL = 24 * 60 * 60
-
 def handler(event, context):
     """
     Lambda handler for the geolocation places API.
@@ -52,36 +57,25 @@ def handler(event, context):
     - lng: Longitude
     - radius: Search radius in meters (default: 500)
     - tour_type: Type of tour (history, cultural, etc.)
-    
-    Or for preview mode:
-    - city: City name (extracted from path)
     """
     try:
-        # Check if this is a preview request (by city) or regular request (by coordinates)
-        path_params = event.get('pathParameters', {}) or {}
         query_params = event.get('queryStringParameters', {}) or {}
         
         # Default values
         tour_type = query_params.get('tour_type', 'history')
-        radius = query_params.get('radius', '500')
+        radius = query_params.get('radius', '2000')
         
-        is_preview = 'city' in path_params
+        # Required parameters for coordinate-based search
+        if 'lat' not in query_params or 'lng' not in query_params:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': 'Missing required parameters: lat and lng'})
+            }
         
-        if is_preview:
-            city = path_params['city']
-            return get_city_highlights(city, tour_type)
-        else:
-            # Required parameters for coordinate-based search
-            if 'lat' not in query_params or 'lng' not in query_params:
-                return {
-                    'statusCode': 400,
-                    'body': json.dumps({'error': 'Missing required parameters: lat and lng'})
-                }
-            
-            lat = query_params['lat']
-            lng = query_params['lng']
-            
-            return get_nearby_places(lat, lng, radius, tour_type)
+        lat = query_params['lat']
+        lng = query_params['lng']
+        
+        return get_nearby_places(lat, lng, radius, tour_type)
     
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
@@ -91,7 +85,7 @@ def handler(event, context):
         }
 
 def get_nearby_places(lat, lng, radius, tour_type):
-    """Get nearby places based on coordinates and tour type"""
+    """Get nearby places based on coordinates and tour type using the new Places API v1"""
     
     # Generate a cache key based on location and tour type
     # We round coordinates to reduce cache fragmentation while maintaining proximity
@@ -119,33 +113,113 @@ def get_nearby_places(lat, lng, radius, tour_type):
     except Exception as e:
         logger.warning(f"Cache retrieval error: {str(e)}")
     
-    # Cache miss or expired - fetch from Google Maps API
+    # Cache miss or expired - fetch from Google Places API v1
     place_types = get_place_types_for_tour(tour_type)
     
     # Get API key from Secrets Manager
     api_key = get_google_maps_api_key()
     
-    # First search for nearby places
-    nearby_url = f"{PLACES_API_BASE_URL}/nearbysearch/json"
-    params = {
-        'location': f"{lat},{lng}",
-        'radius': radius,
-        'types': '|'.join(place_types),
-        'key': api_key
+    # Define the field mask for the response
+    field_mask = [
+        "places.displayName",
+        "places.formattedAddress",
+        "places.location",
+        "places.rating",
+        "places.userRatingCount",
+        "places.types",
+        "places.primaryType",
+        "places.id",
+        "places.photos",
+        "places.editorialSummary"
+    ]
+    
+    # Fetch places using the new Places API v1 with pagination
+    all_places = []
+    
+    # Request headers
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': api_key,
+        'X-Goog-FieldMask': ','.join(field_mask)
     }
     
-    response = requests.get(nearby_url, params=params)
+    # Determine how many API calls we need to make to reach MAX_RESULTS
+    # Each call can return up to 20 results
+    max_api_calls = (MAX_RESULTS + 19) // 20  # Ceiling division
     
-    if response.status_code != 200:
-        return {
-            'statusCode': response.status_code,
-            'body': json.dumps({'error': 'Failed to fetch data from Google Places API'})
+    for i in range(max_api_calls):
+        # If we already have enough results, break
+        if len(all_places) >= MAX_RESULTS:
+            break
+            
+        # Calculate how many more results we need
+        remaining_results = MAX_RESULTS - len(all_places)
+        batch_size = min(20, remaining_results)  # API max is 20 per request
+        
+        # Request payload
+        payload = {
+            "includedTypes": place_types,
+            "maxResultCount": batch_size,
+            "locationRestriction": {
+                "circle": {
+                    "center": {
+                        "latitude": float(lat),
+                        "longitude": float(lng)
+                    },
+                    "radius": float(radius)
+                }
+            },
+            "rankPreference": "POPULARITY"  # Use POPULARITY for most interesting places
         }
-    
-    places_data = response.json()
+        
+        # For subsequent requests, increase the radius to find more places
+        if i > 0:
+            # Increase radius by 50% each time
+            payload["locationRestriction"]["circle"]["radius"] = float(radius) * (1.5 ** i)
+        
+        # Make the POST request
+        response = requests.post(f"{PLACES_API_BASE_URL}:searchNearby", 
+                                headers=headers, 
+                                json=payload)
+        
+        if response.status_code != 200:
+            logger.error(f"API error: {response.status_code}, {response.text}")
+            # If the first request fails, return error
+            if i == 0:
+                return {
+                    'statusCode': response.status_code,
+                    'body': json.dumps({'error': 'Failed to fetch data from Google Places API'})
+                }
+            # Otherwise, just use what we have so far
+            break
+        
+        result = response.json()
+        places = result.get("places", [])
+        
+        # If no new places found, break
+        if not places:
+            break
+            
+        # Add new places to our collection
+        all_places.extend(places)
+        
+        # Deduplicate based on place ID
+        seen_ids = set()
+        unique_places = []
+        for place in all_places:
+            place_id = place.get("id")
+            if place_id and place_id not in seen_ids:
+                seen_ids.add(place_id)
+                unique_places.append(place)
+        
+        all_places = unique_places
+        
+        # Small delay to avoid rate limiting
+        if i < max_api_calls - 1:
+            time.sleep(0.2)
     
     # Process and enrich the places data
-    enriched_places = process_places_data(places_data, tour_type)
+    enriched_places = process_places_data(all_places, tour_type)
     
     # Cache the result
     try:
@@ -165,146 +239,78 @@ def get_nearby_places(lat, lng, radius, tour_type):
         'body': json.dumps(enriched_places, parse_float=str)
     }
 
-def get_city_highlights(city, tour_type):
-    """Get highlight attractions for a specific city (preview mode)"""
-    
-    # Check cache first with the city as the key
-    cache_key = f"city_{city}"
-    
-    try:
-        response = table.get_item(
-            Key={
-                'placeId': cache_key,
-                'tourType': tour_type
-            }
-        )
-        
-        if 'Item' in response:
-            item = response['Item']
-            if 'expiresAt' not in item or item['expiresAt'] > int(time.time()):
-                return {
-                    'statusCode': 200,
-                    'body': json.dumps(item['data'], parse_float=str)
-                }
-    except Exception as e:
-        logger.warning(f"Cache retrieval error: {str(e)}")
-    
-    # Cache miss or expired - fetch from Google Maps API
-    # Get API key from Secrets Manager
-    api_key = get_google_maps_api_key()
-    
-    # First, geocode the city to get coordinates
-    geocode_url = f"https://maps.googleapis.com/maps/api/geocode/json"
-    params = {
-        'address': city,
-        'key': api_key
-    }
-    
-    response = requests.get(geocode_url, params=params)
-    
-    if response.status_code != 200:
-        return {
-            'statusCode': response.status_code,
-            'body': json.dumps({'error': 'Failed to geocode city'})
-        }
-    
-    geocode_data = response.json()
-    
-    if not geocode_data.get('results'):
-        return {
-            'statusCode': 404,
-            'body': json.dumps({'error': 'City not found'})
-        }
-    
-    # Get the city coordinates
-    location = geocode_data['results'][0]['geometry']['location']
-    lat = location['lat']
-    lng = location['lng']
-    
-    # Search for top attractions in this city
-    place_types = get_place_types_for_tour(tour_type)
-    text_search_url = f"{PLACES_API_BASE_URL}/textsearch/json"
-    
-    params = {
-        'query': f"top attractions in {city}",
-        'type': '|'.join(place_types),
-        'key': GOOGLE_MAPS_API_KEY
-    }
-    
-    response = requests.get(text_search_url, params=params)
-    
-    if response.status_code != 200:
-        return {
-            'statusCode': response.status_code,
-            'body': json.dumps({'error': 'Failed to fetch data from Google Places API'})
-        }
-    
-    places_data = response.json()
-    
-    # Process and limit to top attractions
-    enriched_places = process_places_data(places_data, tour_type)
-    top_places = enriched_places['places'][:5]  # Limit to top 5 for preview
-    enriched_places['places'] = top_places
-    
-    # Cache the result
-    try:
-        table.put_item(
-            Item={
-                'placeId': cache_key,
-                'tourType': tour_type,
-                'data': json.loads(json.dumps(enriched_places), parse_float=Decimal),
-                'expiresAt': int(time.time()) + CACHE_TTL
-            }
-        )
-    except Exception as e:
-        logger.warning(f"Cache storage error: {str(e)}")
-    
-    return {
-        'statusCode': 200,
-        'body': json.dumps(enriched_places, parse_float=str)
-    }
+
 
 def get_place_types_for_tour(tour_type):
-    """Map tour types to relevant Google Places API types"""
+    """Map tour types to relevant Google Places API v1 types"""
     tour_type_mapping = {
-        'history': ['museum', 'church', 'hindu_temple', 'mosque', 'synagogue', 'city_hall', 'landmark', 'historic'],
-        'cultural': ['art_gallery', 'museum', 'movie_theater', 'tourist_attraction', 'performing_arts_theater'],
-        'food': ['restaurant', 'cafe', 'bakery', 'food'],
-        'nature': ['park', 'natural_feature', 'campground', 'zoo'],
-        'architecture': ['church', 'hindu_temple', 'mosque', 'synagogue', 'city_hall', 'stadium'],
+        'history': ['historical_place', 'museum', 'landmark', 'church', 'hindu_temple', 'mosque', 'synagogue'],
+        'cultural': ['art_gallery', 'museum', 'performing_arts_theater', 'tourist_attraction'],
+        'food': ['restaurant', 'cafe', 'bakery', 'meal_takeaway'],
+        'nature': ['park', 'campground', 'zoo', 'aquarium'],
+        'architecture': ['landmark', 'church', 'hindu_temple', 'mosque', 'synagogue', 'stadium'],
     }
     
     # Default to tourist attractions if tour type not recognized
     return tour_type_mapping.get(tour_type.lower(), ['tourist_attraction'])
 
-def process_places_data(places_data, tour_type):
-    """Process and enrich the places data from Google API"""
-    places = places_data.get('results', [])
-    
-    # Filter out places without sufficient information
+def process_places_data(places, tour_type):
+    """Process and enrich the places data from Google Places API v1"""
     processed_places = []
     
     for place in places:
-        # Only include places with names and place_ids
-        if 'name' in place and 'place_id' in place:
+        # Only include places with display names and IDs
+        if 'displayName' in place and 'id' in place:
+            # Extract location data
+            location = {}
+            if 'location' in place:
+                location = {
+                    'lat': place['location'].get('latitude', 0),
+                    'lng': place['location'].get('longitude', 0)
+                }
+            
+            # Extract photo references
+            photos = []
+            if 'photos' in place:
+                for photo in place['photos']:
+                    if 'name' in photo:
+                        photos.append({
+                            'photo_reference': photo['name'],
+                            'width': photo.get('width', 0),
+                            'height': photo.get('height', 0)
+                        })
+            
+            # Create processed place object
             processed_place = {
-                'place_id': place['place_id'],
-                'name': place['name'],
-                'location': place.get('geometry', {}).get('location', {}),
+                'place_id': place['id'],
+                'name': place['displayName'].get('text', ''),
+                'location': location,
                 'rating': place.get('rating', 0),
-                'user_ratings_total': place.get('user_ratings_total', 0),
-                'vicinity': place.get('vicinity', ''),
+                'user_ratings_total': place.get('userRatingCount', 0),
+                'vicinity': place.get('formattedAddress', ''),
                 'types': place.get('types', []),
-                'photos': place.get('photos', []),
+                'primary_type': place.get('primaryType', ''),
+                'photos': photos,
                 'tour_type': tour_type,
                 # Flag whether this place has audio content (will be determined by the audio generation service)
-                'has_audio': False  
+                'has_audio': False
             }
+            
+            # Add editorial summary if available
+            if 'editorialSummary' in place:
+                processed_place['description'] = place['editorialSummary'].get('text', '')
             
             processed_places.append(processed_place)
     
-    # Sort by rating (if available) or default order
-    processed_places.sort(key=lambda x: (x.get('rating', 0) * min(x.get('user_ratings_total', 0), 1000) / 1000), reverse=True)
+    # Sort by a combination of rating and popularity
+    # This creates an "interestingness" score
+    def interestingness_score(place):
+        rating = place.get('rating', 0)
+        user_count = min(place.get('user_ratings_total', 0), 1000) / 1000  # Normalize to 0-1
+        has_description = 1 if 'description' in place else 0
+        return (rating * 0.6) + (user_count * 0.3) + (has_description * 0.1)
+    
+    processed_places.sort(key=interestingness_score, reverse=True)
     
     return {
         'places': processed_places,
