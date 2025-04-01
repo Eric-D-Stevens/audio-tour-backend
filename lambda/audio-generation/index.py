@@ -10,7 +10,7 @@ from botocore.exceptions import ClientError
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Initialize AWS clients
+# Initialize AWS clients!
 s3 = boto3.client('s3')
 secrets_client = boto3.client('secretsmanager')
 BUCKET_NAME = os.environ['CONTENT_BUCKET_NAME']
