@@ -244,11 +244,11 @@ def get_nearby_places(lat, lng, radius, tour_type):
 def get_place_types_for_tour(tour_type):
     """Map tour types to relevant Google Places API v1 types"""
     tour_type_mapping = {
-        'history': ['historical_place', 'museum', 'landmark', 'church', 'hindu_temple', 'mosque', 'synagogue'],
-        'cultural': ['art_gallery', 'museum', 'performing_arts_theater', 'tourist_attraction'],
-        'food': ['restaurant', 'cafe', 'bakery', 'meal_takeaway'],
-        'nature': ['park', 'campground', 'zoo', 'aquarium'],
-        'architecture': ['landmark', 'church', 'hindu_temple', 'mosque', 'synagogue', 'stadium'],
+        'history': ['historical_place', 'monument', 'historical_landmark', 'cultural_landmark'],
+        'cultural': ['art_gallery', 'museum', 'performing_arts_theater', 'cultural_center', 'tourist_attraction'],
+        'art': ['art_gallery', 'art_studio', 'sculpture'],
+        'nature': ['park', 'national_park', 'state_park', 'botanical_garden', 'garden', 'wildlife_park', 'zoo', 'aquarium'],
+        'architecture': ['cultural_landmark', 'monument', 'church', 'hindu_temple', 'mosque', 'synagogue', 'stadium', 'opera_house'],
     }
     
     # Default to tourist attractions if tour type not recognized
