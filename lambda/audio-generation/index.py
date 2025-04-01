@@ -27,7 +27,7 @@ def get_secret(secret_name):
         if 'SecretString' in response:
             return response['SecretString']
     except ClientError as e:
-        logger.error(f"Error retrieving secret {secret_name}: {str(e)}")
+        logger.exception(f"Error retrieving secret {secret_name}")
         raise e
 
 # Get API keys from Secrets Manager
@@ -152,7 +152,7 @@ def handler(event, context):
                 script_content = get_script_content(script_key)
                 response_data['script'] = script_content
             except Exception as e:
-                logger.warning(f"Could not retrieve script content: {str(e)}")
+                logger.exception("Could not retrieve script content")
         
         return {
             'statusCode': 200,
@@ -160,10 +160,13 @@ def handler(event, context):
         }
     
     except Exception as e:
-        logger.error(f"Error processing request: {str(e)}")
+        logger.exception("Error processing request")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error': f'Internal server error: {str(e)}'})
+            'body': json.dumps({
+                'error': f'Internal server error: {str(e)}',
+                'details': str(e)
+            })
         }
 
 def check_if_file_exists(key):
@@ -175,7 +178,7 @@ def check_if_file_exists(key):
         if e.response['Error']['Code'] == '404':
             return False
         else:
-            logger.error(f"Error checking S3 object: {str(e)}")
+            logger.exception(f"Error checking S3 object")
             raise
 
 def upload_to_s3(key, data, content_type, binary=False):
@@ -197,7 +200,7 @@ def upload_to_s3(key, data, content_type, binary=False):
             )
         return True
     except Exception as e:
-        logger.error(f"Error uploading to S3: {str(e)}")
+        logger.exception(f"Error uploading to S3")
         return False
 
 def get_script_content(key):

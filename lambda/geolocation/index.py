@@ -34,7 +34,7 @@ def get_secret(secret_name):
         if 'SecretString' in response:
             return response['SecretString']
     except ClientError as e:
-        logger.error(f"Error retrieving secret {secret_name}: {str(e)}")
+        logger.exception(f"Error retrieving secret {secret_name}")
         raise e
 
 # Get Google Maps API key from Secrets Manager
@@ -78,10 +78,10 @@ def handler(event, context):
         return get_nearby_places(lat, lng, radius, tour_type)
     
     except Exception as e:
-        logger.error(f"Error processing request: {str(e)}")
+        logger.exception("Error processing request")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error': 'Internal server error'})
+            'body': json.dumps({'error': 'Internal server error', 'details': str(e)})
         }
 
 def get_nearby_places(lat, lng, radius, tour_type):
@@ -111,7 +111,7 @@ def get_nearby_places(lat, lng, radius, tour_type):
                     'body': json.dumps(item['data'], parse_float=str)
                 }
     except Exception as e:
-        logger.warning(f"Cache retrieval error: {str(e)}")
+        logger.exception("Cache retrieval error")
     
     # Cache miss or expired - fetch from Google Places API v1
     place_types = get_place_types_for_tour(tour_type)
