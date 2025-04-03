@@ -211,8 +211,11 @@ def get_script_content(key):
         logger.error(f"Error getting script from S3: {str(e)}")
         raise
 
+# New Google Places API v1 endpoint
+PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
+
 def get_place_details(place_id):
-    """Get place details from Google Places API"""
+    """Get place details from Google Places API v1"""
     logger.info(f"Fetching place details for place_id: {place_id}")
     
     try:
@@ -220,26 +223,35 @@ def get_place_details(place_id):
         api_key = get_google_maps_api_key()
         logger.debug("Successfully retrieved Google Maps API key")
             
-        url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,rating,types,editorial_summary,website,formatted_phone_number&key={api_key}"
-        logger.debug(f"Making request to Google Places API for place_id: {place_id}")
+        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        logger.debug(f"Making request to Google Places API v1 for place_id: {place_id}")
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': api_key,
+            'X-Goog-FieldMask': 'displayName,formattedAddress,rating,types,editorialSummary,websiteUri,nationalPhoneNumber'
+        }
         
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers)
             logger.info(f"Google Places API response status: {response.status_code}")
             
             if response.status_code == 200:
-                data = response.json()
-                status = data.get('status')
-                logger.info(f"Google Places API returned status: {status}")
+                result = response.json()
+                logger.info(f"Successfully retrieved details for {result.get('displayName', 'unknown place')}")
                 
-                if status == 'OK':
-                    result = data.get('result', {})
-                    logger.info(f"Successfully retrieved details for {result.get('name', 'unknown place')}")
-                    return result
-                else:
-                    error_message = data.get('error_message', 'No error message provided')
-                    logger.error(f"Google Places API error status: {status}, message: {error_message}")
-                    return None
+                # Convert v1 API response to match old format for compatibility
+                converted_result = {
+                    'name': result.get('displayName'),
+                    'formatted_address': result.get('formattedAddress'),
+                    'rating': result.get('rating'),
+                    'types': result.get('types', []),
+                    'editorial_summary': {'overview': result.get('editorialSummary', {}).get('text', '')},
+                    'website': result.get('websiteUri'),
+                    'formatted_phone_number': result.get('nationalPhoneNumber')
+                }
+                
+                return converted_result
             else:
                 logger.error(f"Google Places API request failed with status {response.status_code}")
                 logger.error(f"Response content: {response.text}")
