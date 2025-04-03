@@ -108,7 +108,7 @@ def get_nearby_places(lat, lng, radius, tour_type):
             if 'expiresAt' not in item or item['expiresAt'] > int(time.time()):
                 return {
                     'statusCode': 200,
-                    'body': item['data']
+                    'body': json.dumps(item['data'])
                 }
     except Exception as e:
         logger.exception("Cache retrieval error")
@@ -227,7 +227,7 @@ def get_nearby_places(lat, lng, radius, tour_type):
             Item={
                 'placeId': cache_key,
                 'tourType': tour_type,
-                'data': json.dumps(enriched_places, default=str),
+                'data': json.loads(json.dumps(enriched_places), parse_float=Decimal),
                 'expiresAt': int(time.time()) + CACHE_TTL
             }
         )
@@ -236,7 +236,7 @@ def get_nearby_places(lat, lng, radius, tour_type):
     
     return {
         'statusCode': 200,
-        'body': json.dumps(enriched_places, default=str)
+        'body': json.dumps(enriched_places, parse_float=str)
     }
 
 
