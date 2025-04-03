@@ -94,6 +94,15 @@ def handler(event, context):
         
         response_data = {}
         
+        # Get place details from Google Places API
+        place_details = get_place_details(place_id)
+        
+        if not place_details:
+            return {
+                'statusCode': 404,
+                'body': json.dumps({'error': 'Place details not found'})
+            }
+        
         if script_exists and audio_exists:
             # Both script and audio exist, return their URLs
             script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
@@ -104,19 +113,11 @@ def handler(event, context):
                 'tour_type': tour_type,
                 'script_url': script_url,
                 'audio_url': audio_url,
-                'cached': True
+                'cached': True,
+                'place_details': place_details
             }
         else:
             # Need to generate content
-            # First, get place details from Google Places API
-            place_details = get_place_details(place_id)
-            
-            if not place_details:
-                return {
-                    'statusCode': 404,
-                    'body': json.dumps({'error': 'Place details not found'})
-                }
-            
             # Generate script with OpenAI
             script = generate_script(place_details, tour_type)
             
@@ -149,6 +150,7 @@ def handler(event, context):
                 'script_url': script_url,
                 'audio_url': audio_url,
                 'cached': False,
+                'place_details': place_details,
                 'place_details': place_details
             }
         
