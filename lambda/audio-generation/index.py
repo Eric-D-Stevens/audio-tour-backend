@@ -241,12 +241,16 @@ def get_place_details(place_id):
                 logger.info(f"Successfully retrieved details for {result.get('displayName', 'unknown place')}")
                 
                 # Convert v1 API response to match old format for compatibility
+                editorial_text = ''
+                if 'editorialSummary' in result:
+                    editorial_text = result['editorialSummary'].get('text', '')
+                
                 converted_result = {
                     'name': result.get('displayName'),
                     'formatted_address': result.get('formattedAddress'),
                     'rating': result.get('rating'),
                     'types': result.get('types', []),
-                    'editorial_summary': {'overview': result.get('editorialSummary', {}).get('text', '')},
+                    'editorial_summary': {'overview': editorial_text},
                     'website': result.get('websiteUri'),
                     'formatted_phone_number': result.get('nationalPhoneNumber')
                 }
