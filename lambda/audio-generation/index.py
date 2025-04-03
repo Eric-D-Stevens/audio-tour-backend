@@ -124,9 +124,13 @@ def handler(event, context):
             audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
             
             # Get photo URLs (either from cache or fetch new ones)
+            logger.info(f"Getting photos for place {place_id}")
             photo_urls = get_cached_photo_urls(place_id)
+            logger.info(f"Cached photos found: {photo_urls}")
             if not photo_urls:
+                logger.info("No cached photos found, fetching new ones")
                 photo_urls = cache_place_photos(place_id)
+                logger.info(f"New photos fetched: {photo_urls}")
             
             response_data = {
                 'place_id': place_id,
@@ -239,6 +243,7 @@ PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
 
 def get_place_photos(place_id):
     """Get photo references for a place from Google Places API"""
+    logger.info(f"Fetching photo references for place {place_id}")
     try:
         api_key = get_google_maps_api_key()
         url = f"{PLACES_API_BASE_URL}/{place_id}"
@@ -252,7 +257,9 @@ def get_place_photos(place_id):
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             result = response.json()
-            return result.get('photos', [])
+            photos = result.get('photos', [])
+            logger.info(f"Got {len(photos)} photo references: {photos}")
+            return photos
         else:
             logger.error(f"Failed to get photos for place {place_id}: {response.status_code}")
             return []
