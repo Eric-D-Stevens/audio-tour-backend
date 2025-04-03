@@ -19,6 +19,7 @@ CLOUDFRONT_DOMAIN = os.environ['CLOUDFRONT_DOMAIN']
 # Secret names for API keys
 OPENAI_API_KEY_SECRET_NAME = os.environ['OPENAI_API_KEY_SECRET_NAME']
 ELEVENLABS_API_KEY_SECRET_NAME = os.environ['ELEVENLABS_API_KEY_SECRET_NAME']
+GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
 
 # Function to retrieve secret from AWS Secrets Manager
 def get_secret(secret_name):
@@ -44,6 +45,14 @@ def get_elevenlabs_api_key():
     try:
         secret_dict = json.loads(secret)
         return secret_dict.get('ELEVENLABS_API_KEY', secret)
+    except json.JSONDecodeError:
+        return secret
+
+def get_google_maps_api_key():
+    secret = get_secret(GOOGLE_MAPS_API_KEY_SECRET_NAME)
+    try:
+        secret_dict = json.loads(secret)
+        return secret_dict.get('GOOGLE_MAPS_API_KEY', secret)
     except json.JSONDecodeError:
         return secret
 
@@ -206,22 +215,10 @@ def get_place_details(place_id):
     """Get place details from Google Places API"""
     logger.info(f"Fetching place details for place_id: {place_id}")
     
-    google_maps_api_key_secret_name = os.environ.get('GOOGLE_MAPS_API_KEY_SECRET_NAME', 'google-maps-api-key')
-    logger.debug(f"Using secret name: {google_maps_api_key_secret_name}")
-    
     try:
-        # Get the secret value
-        secret = get_secret(google_maps_api_key_secret_name)
+        # Get the API key
+        api_key = get_google_maps_api_key()
         logger.debug("Successfully retrieved Google Maps API key")
-        
-        # Parse it if it's JSON
-        try:
-            secret_dict = json.loads(secret)
-            api_key = secret_dict.get('GOOGLE_MAPS_API_KEY', secret)
-            logger.debug("Successfully parsed API key from JSON")
-        except json.JSONDecodeError:
-            api_key = secret
-            logger.debug("Using raw secret as API key (not JSON)")
             
         url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,rating,types,editorial_summary,website,formatted_phone_number&key={api_key}"
         logger.debug(f"Making request to Google Places API for place_id: {place_id}")
