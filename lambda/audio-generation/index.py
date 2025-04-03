@@ -277,7 +277,8 @@ def cache_place_photos(place_id):
             
             try:
                 # Get photo from Places API
-                photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={photo.get('photo_reference')}&key={api_key}"
+                photo_url = f"https://places.googleapis.com/v1/{photo.get('name')}/media?key={api_key}&maxHeightPx=800"
+                
                 photo_response = requests.get(photo_url)
                 
                 if photo_response.status_code == 200:
