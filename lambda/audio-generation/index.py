@@ -267,6 +267,7 @@ def generate_script(place_details, tour_type):
         Use a conversational, engaging tone as if speaking directly to the listener.
         Start with a brief introduction to the place and then share the most interesting facts or stories.
         End with a suggestion of what to observe or experience at the location.
+        Everything you return will be read out loud, so don't include any additional formatting.
         """
         
         user_prompt = f"""
@@ -287,13 +288,13 @@ def generate_script(place_details, tour_type):
         }
         
         payload = {
-            "model": "gpt-4-turbo",
+            "model": "gpt-4o-mini",
             "messages": [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ],
             "temperature": 0.7,
-            "max_tokens": 1000
+            "max_tokens": 5000
         }
         
         response = requests.post(OPENAI_API_URL, headers=headers, json=payload)
@@ -324,7 +325,7 @@ def generate_audio(script):
         
         payload = {
             "text": script,
-            "model_id": "eleven_monolingual_v1",
+            "model_id": "eleven_flash_v2_5",
             "voice_settings": {
                 "stability": 0.5,
                 "similarity_boost": 0.75
