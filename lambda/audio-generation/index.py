@@ -63,6 +63,21 @@ ELEVENLABS_API_URL = "https://api.elevenlabs.io/v1/text-to-speech"
 # Default voice ID for Eleven Labs (professional narrator voice)
 DEFAULT_VOICE_ID = "ThT5KcBeYPX3keUQqHPh"  # Josh - professional narrator voice
 
+def get_cached_photo_urls(place_id):
+    """Get CloudFront URLs for cached photos"""
+    photo_urls = []
+    photo_dir = f"photos/{place_id}"
+    idx = 0
+    
+    while True:
+        photo_key = f"{photo_dir}/{idx}.jpg"
+        if not check_if_file_exists(photo_key):
+            break
+        photo_urls.append(f"https://{CLOUDFRONT_DOMAIN}/{photo_key}")
+        idx += 1
+    
+    return photo_urls
+
 def handler(event, context):
     """
     Lambda handler for the audio tour generation API.
@@ -108,13 +123,19 @@ def handler(event, context):
             script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
             audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
             
+            # Get photo URLs (either from cache or fetch new ones)
+            photo_urls = get_cached_photo_urls(place_id)
+            if not photo_urls:
+                photo_urls = cache_place_photos(place_id)
+            
             response_data = {
                 'place_id': place_id,
                 'tour_type': tour_type,
                 'script_url': script_url,
                 'audio_url': audio_url,
                 'cached': True,
-                'place_details': place_details
+                'place_details': place_details,
+                'photos': photo_urls
             }
         else:
             # Need to generate content
@@ -216,6 +237,65 @@ def get_script_content(key):
 # New Google Places API v1 endpoint
 PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
 
+def get_place_photos(place_id):
+    """Get photo references for a place from Google Places API"""
+    try:
+        api_key = get_google_maps_api_key()
+        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': api_key,
+            'X-Goog-FieldMask': 'photos'
+        }
+        
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            result = response.json()
+            return result.get('photos', [])
+        else:
+            logger.error(f"Failed to get photos for place {place_id}: {response.status_code}")
+            return []
+    except Exception as e:
+        logger.error(f"Error getting photos for place {place_id}: {str(e)}")
+        return []
+
+def cache_place_photos(place_id):
+    """Cache photos for a place and return CloudFront URLs"""
+    photo_urls = []
+    photos = get_place_photos(place_id)
+    
+    if not photos:
+        return []
+    
+    try:
+        api_key = get_google_maps_api_key()
+        photo_dir = f"photos/{place_id}"
+        
+        for idx, photo in enumerate(photos):
+            photo_key = f"{photo_dir}/{idx}.jpg"
+            
+            try:
+                # Get photo from Places API
+                photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={photo.get('photo_reference')}&key={api_key}"
+                photo_response = requests.get(photo_url)
+                
+                if photo_response.status_code == 200:
+                    # Upload photo to S3
+                    upload_to_s3(photo_key, photo_response.content, 'image/jpeg', binary=True)
+                    logger.info(f"Cached photo {idx} for place {place_id}")
+                    photo_urls.append(f"https://{CLOUDFRONT_DOMAIN}/{photo_key}")
+                else:
+                    logger.error(f"Failed to fetch photo {idx} for place {place_id}: {photo_response.status_code}")
+            except Exception as e:
+                logger.error(f"Error caching photo {idx} for place {place_id}: {str(e)}")
+                continue
+        
+        return photo_urls
+    except Exception as e:
+        logger.error(f"Error in cache_place_photos for place {place_id}: {str(e)}")
+        return []
+
 def get_place_details(place_id):
     """Get place details from Google Places API v1"""
     logger.info(f"Fetching place details for place_id: {place_id}")
@@ -255,7 +335,7 @@ def get_place_details(place_id):
                     'editorial_summary': {'overview': editorial_text},
                     'website': result.get('websiteUri'),
                     'formatted_phone_number': result.get('nationalPhoneNumber'),
-                    'photos': [f"https://places.googleapis.com/v1/{photo.get('name')}/media?key={api_key}" for photo in result.get('photos', [])]
+                    'photos': []  # Photos will be handled separately
                 }
                 
                 return converted_result
