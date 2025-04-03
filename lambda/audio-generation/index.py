@@ -231,7 +231,7 @@ def get_place_details(place_id):
         headers = {
             'Content-Type': 'application/json',
             'X-Goog-Api-Key': api_key,
-            'X-Goog-FieldMask': 'displayName,formattedAddress,rating,types,editorialSummary,websiteUri,nationalPhoneNumber'
+            'X-Goog-FieldMask': 'displayName,formattedAddress,rating,types,editorialSummary,websiteUri,nationalPhoneNumber,photos.photoUri'
         }
         
         try:
@@ -254,7 +254,8 @@ def get_place_details(place_id):
                     'types': result.get('types', []),
                     'editorial_summary': {'overview': editorial_text},
                     'website': result.get('websiteUri'),
-                    'formatted_phone_number': result.get('nationalPhoneNumber')
+                    'formatted_phone_number': result.get('nationalPhoneNumber'),
+                    'photos': [photo.get('photoUri') for photo in result.get('photos', [])]
                 }
                 
                 return converted_result
