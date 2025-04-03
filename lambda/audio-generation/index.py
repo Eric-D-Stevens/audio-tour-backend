@@ -76,9 +76,6 @@ def handler(event, context):
         place_id = path_params['placeId']
         tour_type = query_params.get('tourType', 'history')
         
-        # Check if this is a preview or authenticated request
-        is_preview = 'preview' in event.get('path', '')
-        
         # Check if content already exists in S3
         script_key = f"scripts/{place_id}_{tour_type}.txt"
         audio_key = f"audio/{place_id}_{tour_type}.mp3"
@@ -146,13 +143,6 @@ def handler(event, context):
                 'place_details': place_details
             }
         
-        # For preview mode, we include the actual script content as well
-        if is_preview:
-            try:
-                script_content = get_script_content(script_key)
-                response_data['script'] = script_content
-            except Exception as e:
-                logger.exception("Could not retrieve script content")
         
         return {
             'statusCode': 200,
