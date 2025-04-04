@@ -169,6 +169,15 @@ def handler(event, context):
             upload_to_s3(audio_key, audio_data, 'audio/mpeg', binary=True)
             audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
             
+            # Get photo URLs (either from cache or fetch new ones)
+            logger.info(f"Getting photos for place {place_id}")
+            photo_urls = get_cached_photo_urls(place_id)
+            logger.info(f"Cached photos found: {photo_urls}")
+            if not photo_urls:
+                logger.info("No cached photos found, fetching new ones")
+                photo_urls = cache_place_photos(place_id)
+                logger.info(f"New photos fetched: {photo_urls}")
+            
             response_data = {
                 'place_id': place_id,
                 'tour_type': tour_type,
@@ -176,7 +185,7 @@ def handler(event, context):
                 'audio_url': audio_url,
                 'cached': False,
                 'place_details': place_details,
-                'place_details': place_details
+                'photos': photo_urls
             }
         
         
