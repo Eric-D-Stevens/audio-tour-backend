@@ -23,8 +23,8 @@ GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
 # New Google Places API v1 endpoint
 PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
 
-# Default cache expiration (24 hours)
-CACHE_TTL = 24 * 60 * 60
+# Default cache expiration (1 hour)
+CACHE_TTL = 60 * 60
 
 # Maximum number of results to fetch with pagination
 MAX_RESULTS = 100
@@ -137,7 +137,8 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     try:
         rounded_lat = round(float(lat), 4)
         rounded_lng = round(float(lng), 4)
-        cache_key = f"{rounded_lat}_{rounded_lng}_{radius}_{tour_type}"
+        rounded_radius = round(float(radius), -1)  # Round to nearest 10m
+        cache_key = f"{rounded_lat}_{rounded_lng}_{rounded_radius}_{max_results}_{tour_type}"
         logger.info(f"Generated cache key: {cache_key}")
     except ValueError as e:
         logger.error(f"Error converting coordinates to float: {str(e)}")
