@@ -78,6 +78,7 @@ def handler(event, context):
     - lng: Longitude
     - radius: Search radius in meters (default: 500)
     - tour_type: Type of tour (history, cultural, etc.)
+    - max_results: Maximum number of places to return (default: 5)
     """
     logger.info(f"Received event: {json.dumps(event)}")
     try:
@@ -87,7 +88,8 @@ def handler(event, context):
         # Default values
         tour_type = query_params.get('tour_type', 'history')
         radius = query_params.get('radius', '2000')
-        logger.info(f"Using tour_type: {tour_type}, radius: {radius}")
+        max_results = int(query_params.get('max_results', '5'))
+        logger.info(f"Using tour_type: {tour_type}, radius: {radius}, max_results: {max_results}")
         
         # Required parameters for coordinate-based search
         if 'lat' not in query_params or 'lng' not in query_params:
@@ -101,7 +103,7 @@ def handler(event, context):
         lng = query_params['lng']
         logger.info(f"Coordinates: lat={lat}, lng={lng}")
         
-        return get_nearby_places(lat, lng, radius, tour_type)
+        return get_nearby_places(lat, lng, radius, tour_type, max_results)
     
     except Exception as e:
         error_traceback = traceback.format_exc()
@@ -116,9 +118,9 @@ def handler(event, context):
             })
         }
 
-def get_nearby_places(lat, lng, radius, tour_type):
+def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     """Get nearby places based on coordinates and tour type using the new Places API v1"""
-    logger.info(f"Starting get_nearby_places with lat={lat}, lng={lng}, radius={radius}, tour_type={tour_type}")
+    logger.info(f"Starting get_nearby_places with lat={lat}, lng={lng}, radius={radius}, tour_type={tour_type}, max_results={max_results}")
     
     # Generate a cache key based on location and tour type
     # We round coordinates to reduce cache fragmentation while maintaining proximity
@@ -225,17 +227,17 @@ def get_nearby_places(lat, lng, radius, tour_type):
         'X-Goog-FieldMask': ','.join(field_mask)
     }
     
-    # Determine how many API calls we need to make to reach MAX_RESULTS
+    # Determine how many API calls we need to make to reach max_results
     # Each call can return up to 20 results
-    max_api_calls = (MAX_RESULTS + 19) // 20  # Ceiling division
+    max_api_calls = (max_results + 19) // 20  # Ceiling division
     
     for i in range(max_api_calls):
         # If we already have enough results, break
-        if len(all_places) >= MAX_RESULTS:
+        if len(all_places) >= max_results:
             break
             
         # Calculate how many more results we need
-        remaining_results = MAX_RESULTS - len(all_places)
+        remaining_results = max_results - len(all_places)
         batch_size = min(20, remaining_results)  # API max is 20 per request
         
         # Request payload
