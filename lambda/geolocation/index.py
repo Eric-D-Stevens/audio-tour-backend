@@ -122,6 +122,16 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     """Get nearby places based on coordinates and tour type using the new Places API v1"""
     logger.info(f"Starting get_nearby_places with lat={lat}, lng={lng}, radius={radius}, tour_type={tour_type}, max_results={max_results}")
     
+    # Validate max_results to prevent abuse
+    if not isinstance(max_results, (int, float)) or max_results <= 0 or max_results > 100:
+        return {
+            'statusCode': 400,
+            'body': json.dumps({
+                'error': 'Invalid max_results parameter',
+                'details': 'max_results must be a positive number between 1 and 100'
+            })
+        }
+    
     # Generate a cache key based on location and tour type
     # We round coordinates to reduce cache fragmentation while maintaining proximity
     try:
@@ -227,117 +237,69 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
         'X-Goog-FieldMask': ','.join(field_mask)
     }
     
-    # Determine how many API calls we need to make to reach max_results
-    # Each call can return up to 20 results
-    max_api_calls = (max_results + 19) // 20  # Ceiling division
+    # Make a single request with the desired number of results
+    # Google Places API allows up to 20 results per request
+    batch_size = min(20, max_results)  # API max is 20 per request
     
-    for i in range(max_api_calls):
-        # If we already have enough results, break
-        if len(all_places) >= max_results:
-            break
-            
-        # Calculate how many more results we need
-        remaining_results = max_results - len(all_places)
-        batch_size = min(20, remaining_results)  # API max is 20 per request
+    # Request payload
+    payload = {
+        "includedTypes": place_types,
+        "maxResultCount": batch_size,
+        "locationRestriction": {
+            "circle": {
+                "center": {
+                    "latitude": float(lat),
+                    "longitude": float(lng)
+                },
+                "radius": float(radius)
+            }
+        },
+        "rankPreference": "POPULARITY"  # Use POPULARITY for most interesting places
+    }
+    # Make the POST request
+    request_url = f"{PLACES_API_BASE_URL}:searchNearby"
+    logger.info(f"Making API request to: {request_url}")
+    logger.info(f"Request payload: {json.dumps(payload)}")
+    
+    try:
+        response = requests.post(request_url, headers=headers, json=payload, timeout=10)
+        logger.info(f"API response status code: {response.status_code}")
         
-        # Request payload
-        payload = {
-            "includedTypes": place_types,
-            "maxResultCount": batch_size,
-            "locationRestriction": {
-                "circle": {
-                    "center": {
-                        "latitude": float(lat),
-                        "longitude": float(lng)
-                    },
-                    "radius": float(radius)
-                }
-            },
-            "rankPreference": "POPULARITY"  # Use POPULARITY for most interesting places
+        if response.status_code != 200:
+            logger.error(f"API error: {response.status_code}")
+            logger.error(f"Response body: {response.text}")
+            return {
+                'statusCode': response.status_code,
+                'body': json.dumps({
+                    'error': 'Failed to fetch data from Google Places API',
+                    'details': response.text
+                })
+            }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request exception: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                'error': 'Failed to connect to Google Places API',
+                'details': str(e)
+            })
         }
-        
-        # For subsequent requests, increase the radius to find more places
-        if i > 0:
-            # Increase radius by 50% each time
-            payload["locationRestriction"]["circle"]["radius"] = float(radius) * (1.5 ** i)
-        
-        # Make the POST request
-        request_url = f"{PLACES_API_BASE_URL}:searchNearby"
-        logger.info(f"Making API request to: {request_url}")
-        logger.info(f"Request payload: {json.dumps(payload)}")
-        
-        try:
-            response = requests.post(request_url, headers=headers, json=payload, timeout=10)
-            logger.info(f"API response status code: {response.status_code}")
-            
-            if response.status_code != 200:
-                logger.error(f"API error: {response.status_code}")
-                logger.error(f"Response body: {response.text}")
-                # If the first request fails, return error
-                if i == 0:
-                    return {
-                        'statusCode': response.status_code,
-                        'body': json.dumps({
-                            'error': 'Failed to fetch data from Google Places API',
-                            'details': response.text
-                        })
-                    }
-                # Otherwise, just use what we have so far
-                logger.info("Continuing with places already collected")
-                break
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Request exception: {str(e)}")
-            if i == 0:
-                return {
-                    'statusCode': 500,
-                    'body': json.dumps({
-                        'error': 'Failed to connect to Google Places API',
-                        'details': str(e)
-                    })
-                }
-            logger.info("Continuing with places already collected despite request error")
-            break
-        
-        try:
-            result = response.json()
-            logger.info(f"Successfully parsed JSON response")
-            places = result.get("places", [])
-            logger.info(f"Found {len(places)} places in this batch")
-            
-            # If no new places found, break
-            if not places:
-                logger.info("No places returned in this batch, stopping pagination")
-                break
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse JSON response: {str(e)}")
-            logger.error(f"Response content: {response.text[:500]}...")
-            if i == 0:
-                return {
-                    'statusCode': 500,
-                    'body': json.dumps({
-                        'error': 'Invalid response from Google Places API',
-                        'details': str(e)
-                    })
-                }
-            break
-            
-        # Add new places to our collection
-        all_places.extend(places)
-        
-        # Deduplicate based on place ID
-        seen_ids = set()
-        unique_places = []
-        for place in all_places:
-            place_id = place.get("id")
-            if place_id and place_id not in seen_ids:
-                seen_ids.add(place_id)
-                unique_places.append(place)
-        
-        all_places = unique_places
-        
-        # Small delay to avoid rate limiting
-        if i < max_api_calls - 1:
-            time.sleep(0.2)
+    
+    try:
+        result = response.json()
+        logger.info(f"Successfully parsed JSON response")
+        all_places = result.get("places", [])
+        logger.info(f"Found {len(all_places)} places")
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse JSON response: {str(e)}")
+        logger.error(f"Response content: {response.text[:500]}...")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                'error': 'Invalid response from Google Places API',
+                'details': str(e)
+            })
+        }
     
     # Process and enrich the places data
     logger.info(f"Processing {len(all_places)} places")
