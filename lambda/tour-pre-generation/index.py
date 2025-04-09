@@ -5,6 +5,7 @@ import boto3
 import requests
 import base64
 import logging
+import traceback
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
@@ -14,8 +15,13 @@ logger.setLevel(logging.INFO)
 s3 = boto3.client('s3')
 secrets_client = boto3.client('secretsmanager')
 sqs = boto3.client('sqs')
+dynamodb = boto3.resource('dynamodb')
 BUCKET_NAME = os.environ['CONTENT_BUCKET_NAME']
 CLOUDFRONT_DOMAIN = os.environ['CLOUDFRONT_DOMAIN']
+
+# DynamoDB table for caching place data (same as used by geolocation service)
+PLACES_TABLE_NAME = os.environ.get('PLACES_TABLE_NAME', 'tensortours-places')
+places_table = dynamodb.Table(PLACES_TABLE_NAME)
 
 # Secret names for API keys
 OPENAI_API_KEY_SECRET_NAME = os.environ['OPENAI_API_KEY_SECRET_NAME']
@@ -111,6 +117,24 @@ def handler(event, context):
                 
                 logger.info(f"Processing place_id: {place_id}, tour_type: {tour_type}")
                 
+                # First check if content is already cached in DynamoDB
+                cache_key = f"{place_id}_{tour_type}"
+                try:
+                    # Try to get the item from DynamoDB
+                    response = places_table.get_item(
+                        Key={
+                            'placeId': cache_key
+                        }
+                    )
+                    
+                    # Check if item exists and is marked as pre-generated
+                    if 'Item' in response and response['Item'].get('pre_generated', False):
+                        logger.info(f"Content already cached in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+                        continue
+                except Exception as e:
+                    logger.warning(f"Error checking DynamoDB cache: {str(e)}")
+                    # Continue with S3 check if DynamoDB check fails
+                
                 # Check if content already exists in S3
                 script_key = f"scripts/{place_id}_{tour_type}.txt"
                 audio_key = f"audio/{place_id}_{tour_type}.mp3"
@@ -120,7 +144,52 @@ def handler(event, context):
                 
                 # Skip if both script and audio already exist
                 if script_exists and audio_exists:
-                    logger.info(f"Content already exists for place_id: {place_id}, tour_type: {tour_type}")
+                    logger.info(f"Content already exists in S3 for place_id: {place_id}, tour_type: {tour_type}")
+                    
+                    # If content exists in S3 but not in DynamoDB, update DynamoDB
+                    try:
+                        script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
+                        audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
+                        photo_urls = get_cached_photo_urls(place_id)
+                        
+                        # Get place details if we need them for the record
+                        if not photo_urls:
+                            place_details = get_place_details(place_id)
+                            photo_urls = cache_place_photos(place_id)
+                        else:
+                            place_details = {}
+                        
+                        # Prepare the data to store in DynamoDB
+                        place_data = {
+                            'place_id': place_id,
+                            'tour_type': tour_type,
+                            'script_url': script_url,
+                            'audio_url': audio_url,
+                            'cached': True,
+                            'place_details': place_details,
+                            'photos': photo_urls,
+                            'pre_generated': True,
+                            'generation_time': int(time.time())
+                        }
+                        
+                        # Store in DynamoDB with TTL (30 days)
+                        current_time = int(time.time())
+                        expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
+                        
+                        places_table.put_item(
+                            Item={
+                                'placeId': cache_key,
+                                'data': json.dumps(place_data, default=str),
+                                'expiresAt': expiration_time,
+                                'createdAt': current_time,
+                                'pre_generated': True
+                            }
+                        )
+                        logger.info(f"Updated DynamoDB with existing S3 content for place_id: {place_id}, tour_type: {tour_type}")
+                    except Exception as e:
+                        logger.error(f"Error updating DynamoDB with existing S3 content: {str(e)}")
+                        logger.error(f"Traceback: {traceback.format_exc()}")
+                    
                     continue
                 
                 # Get place details from Google Places API
@@ -162,6 +231,45 @@ def handler(event, context):
                     logger.info("No cached photos found, fetching new ones")
                     photo_urls = cache_place_photos(place_id)
                     logger.info(f"New photos fetched: {photo_urls}")
+                
+                # Create a record in DynamoDB to mark this content as pre-generated
+                # This allows the frontend to find it when querying the API
+                try:
+                    # Prepare the data to store in DynamoDB
+                    place_data = {
+                        'place_id': place_id,
+                        'tour_type': tour_type,
+                        'script_url': script_url,
+                        'audio_url': audio_url,
+                        'cached': True,
+                        'place_details': place_details,
+                        'photos': photo_urls,
+                        'pre_generated': True,
+                        'generation_time': int(time.time())
+                    }
+                    
+                    # Create a cache key for this place and tour type
+                    # This matches the format used by the geolocation service
+                    cache_key = f"{place_id}_{tour_type}"
+                    
+                    # Store in DynamoDB with TTL (30 days)
+                    current_time = int(time.time())
+                    expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
+                    
+                    places_table.put_item(
+                        Item={
+                            'placeId': cache_key,
+                            'data': json.dumps(place_data, default=str),
+                            'expiresAt': expiration_time,
+                            'createdAt': current_time,
+                            'pre_generated': True
+                        }
+                    )
+                    logger.info(f"Successfully stored pre-generated content metadata in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+                except Exception as e:
+                    logger.error(f"Error storing metadata in DynamoDB: {str(e)}")
+                    logger.error(f"Traceback: {traceback.format_exc()}")
+                    # Continue processing - this is not critical
                 
                 logger.info(f"Successfully pre-generated tour for place_id: {place_id}, tour_type: {tour_type}")
             
