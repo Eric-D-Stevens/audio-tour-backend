@@ -179,6 +179,7 @@ def handler(event, context):
                         places_table.put_item(
                             Item={
                                 'placeId': cache_key,
+                                'tourType': tour_type,  # Required as sort key in DynamoDB table
                                 'data': json.dumps(place_data, default=str),
                                 'expiresAt': expiration_time,
                                 'createdAt': current_time,
@@ -259,6 +260,7 @@ def handler(event, context):
                     places_table.put_item(
                         Item={
                             'placeId': cache_key,
+                            'tourType': tour_type,  # Required as sort key in DynamoDB table
                             'data': json.dumps(place_data, default=str),
                             'expiresAt': expiration_time,
                             'createdAt': current_time,
