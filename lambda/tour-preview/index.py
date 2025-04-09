@@ -135,8 +135,14 @@ def get_preview_audio(place_id, tour_type="history"):
     logger.info(f"Invoking audio-generation Lambda with event: {json.dumps(event)}")
     response = invoke_lambda("tensortours-audio-generation", event)
     
+    # Parse the response body if it's a string
+    if isinstance(response.get('body'), str):
+        response_data = json.loads(response['body'])
+    else:
+        response_data = response
+
     # Check if the response contains audio_url
-    if not response.get('audio_url'):
+    if not response_data.get('audio_url'):
         return {
             'statusCode': 404,
             'headers': {
@@ -148,8 +154,15 @@ def get_preview_audio(place_id, tour_type="history"):
             })
         }
 
-    # Return the response if audio is available
-    return response
+    # Return the response with proper API Gateway format
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        'body': json.dumps(response_data)
+    }
 
 def lambda_handler(event, context):
     """Lambda handler for the tour preview API"""
