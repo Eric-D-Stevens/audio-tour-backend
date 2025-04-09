@@ -44,6 +44,12 @@ jobs:
         cp -r lambda/audio-generation/* build/audio-generation/
         pip install -r lambda/audio-generation/requirements.txt -t build/audio-generation/
         cd build/audio-generation && zip -r ../../dist/audio-generation-${VERSION}.zip . && cd ../..
+        
+        # Tour Pre-Generation Lambda
+        mkdir -p build/tour-pre-generation
+        cp -r lambda/tour-pre-generation/* build/tour-pre-generation/
+        pip install -r lambda/audio-generation/requirements.txt -t build/tour-pre-generation/
+        cd build/tour-pre-generation && zip -r ../../dist/tour-pre-generation-${VERSION}.zip . && cd ../..
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -57,10 +63,12 @@ jobs:
         # Upload versioned packages
         aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
+        aws s3 cp dist/tour-pre-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         
         # Also upload non-versioned copies for manual deployments
         aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/geolocation.zip
         aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/audio-generation.zip
+        aws s3 cp dist/tour-pre-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/tour-pre-generation.zip
         
         # Also upload a version.json file with the current version
         echo '{"version": "'${VERSION}'"}' > version.json
@@ -76,5 +84,6 @@ jobs:
           {
             "version": "${{ env.VERSION }}",
             "geolocation_lambda": "geolocation-${{ env.VERSION }}.zip",
-            "audio_generation_lambda": "audio-generation-${{ env.VERSION }}.zip"
+            "audio_generation_lambda": "audio-generation-${{ env.VERSION }}.zip",
+            "tour_pre_generation_lambda": "tour-pre-generation-${{ env.VERSION }}.zip"
           }
