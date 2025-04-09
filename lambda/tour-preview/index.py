@@ -91,33 +91,46 @@ def get_city_preview(city_name, tour_type="history"):
     response = invoke_lambda("tensortours-geolocation", event)
     
     # Process the response
-    if isinstance(response, dict) and 'statusCode' in response and response['statusCode'] == 200:
-        try:
-            body = json.loads(response['body'])
-            return {
-                "statusCode": 200,
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                },
-                "body": json.dumps({
-                    "city": city_name,
-                    "places": body.get("places", []),
-                    "tour_type": tour_type
-                })
-            }
-        except Exception as e:
-            logger.error(f"Error processing geolocation response: {str(e)}")
-    
-    # Return error if something went wrong
-    return {
-        "statusCode": response.get("statusCode", 500),
-        "headers": {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-        },
-        "body": response.get("body", json.dumps({"error": "Failed to get city preview"}))
-    }
+    try:
+        # Parse the response body if it's a string
+        if isinstance(response.get('body'), str):
+            response_data = json.loads(response['body'])
+        else:
+            response_data = response
+
+        # Ensure we have places data
+        places = response_data.get('places', [])
+        if not isinstance(places, list):
+            logger.error(f"Invalid places data format: {places}")
+            places = []
+
+        # Return success response
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'city': city_name,
+                'places': places,
+                'tour_type': tour_type
+            })
+        }
+    except Exception as e:
+        logger.error(f"Error processing geolocation response: {str(e)}")
+        # Return error response
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'error': 'Failed to get city preview',
+                'details': str(e)
+            })
+        }
 
 def get_preview_audio(place_id, tour_type="history"):
     """Get preview audio for a specific place"""
