@@ -7,6 +7,7 @@ import base64
 import logging
 import traceback
 import concurrent.futures
+import re
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
@@ -425,13 +426,16 @@ def generate_script(place_details, tour_type):
         # Craft the prompt for OpenAI
         system_prompt = f"""
         You are an expert tour guide creating an audio script for {tour_type} tours.
-        Write an engaging, informative, and factual script about this place.
+        Write an engaging, informative, and factual script about this place IN ENGLISH ONLY.
         The script should be 2-3 minutes when read aloud (approximately 300-400 words).
         Focus on the most interesting aspects relevant to a {tour_type} tour.
         Use a conversational, engaging tone as if speaking directly to the listener.
         Start with a brief introduction to the place and then share the most interesting facts or stories.
         End with a suggestion of what to observe or experience at the location.
         Everything you return will be read out loud, so don't include any additional formatting.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the location's country or region.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the language of the rest of this prompt.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN SPOKEN ENGLISH so that a text-to-speech engine can read it aloud.
         """
         
         user_prompt = f"""
