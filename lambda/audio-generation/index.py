@@ -16,8 +16,13 @@ logger.setLevel(logging.INFO)
 # Initialize AWS clients
 s3 = boto3.client('s3')
 secrets_client = boto3.client('secretsmanager')
+dynamodb = boto3.resource('dynamodb')
 BUCKET_NAME = os.environ['CONTENT_BUCKET_NAME']
 CLOUDFRONT_DOMAIN = os.environ['CLOUDFRONT_DOMAIN']
+
+# DynamoDB table for caching place data (same as used by pregeneration service)
+PLACES_TABLE_NAME = os.environ.get('PLACES_TABLE_NAME', 'tensortours-places')
+places_table = dynamodb.Table(PLACES_TABLE_NAME)
 
 # Secret names for API keys
 OPENAI_API_KEY_SECRET_NAME = os.environ['OPENAI_API_KEY_SECRET_NAME']
@@ -103,6 +108,45 @@ def handler(event, context):
         place_id = path_params['placeId']
         tour_type = query_params.get('tourType', 'history')
         
+        # First check if content is already cached in DynamoDB
+        cache_key = f"{place_id}_{tour_type}"
+        ddb_cache_hit = False
+        place_data = None
+        
+        try:
+            # Try to get the item from DynamoDB
+            logger.info(f"Checking DynamoDB for cached content with key: {cache_key}")
+            response = places_table.get_item(
+                Key={
+                    'placeId': cache_key,
+                    'tourType': tour_type
+                }
+            )
+            
+            # Check if item exists and is marked as pre-generated
+            if 'Item' in response and response['Item'].get('pre_generated', False):
+                logger.info(f"Found pre-generated content in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+                try:
+                    # Extract the cached data
+                    place_data = json.loads(response['Item'].get('data', '{}'))
+                    if place_data and 'script_url' in place_data and 'audio_url' in place_data:
+                        ddb_cache_hit = True
+                        logger.info(f"Successfully retrieved pre-generated content from DynamoDB")
+                except Exception as e:
+                    logger.warning(f"Error parsing DynamoDB data: {str(e)}")
+                    # Continue with S3 check if DynamoDB data parsing fails
+        except Exception as e:
+            logger.warning(f"Error checking DynamoDB cache: {str(e)}")
+            # Continue with S3 check if DynamoDB check fails
+        
+        # If we found pre-generated content in DynamoDB, return it directly
+        if ddb_cache_hit and place_data:
+            logger.info(f"Returning pre-generated content from DynamoDB cache")
+            return {
+                'statusCode': 200,
+                'body': json.dumps(place_data)
+            }
+        
         # Check if content already exists in S3
         script_key = f"scripts/{place_id}_{tour_type}.txt"
         audio_key = f"audio/{place_id}_{tour_type}.mp3"
@@ -144,6 +188,27 @@ def handler(event, context):
                 'place_details': place_details,
                 'photos': photo_urls
             }
+            
+            # Update DynamoDB with this information for future use
+            try:
+                # Store in DynamoDB with TTL (30 days)
+                current_time = int(time.time())
+                expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
+                
+                places_table.put_item(
+                    Item={
+                        'placeId': cache_key,
+                        'tourType': tour_type,  # Required as sort key in DynamoDB table
+                        'data': json.dumps(response_data, default=str),
+                        'expiresAt': expiration_time,
+                        'createdAt': current_time,
+                        'pre_generated': True
+                    }
+                )
+                logger.info(f"Updated DynamoDB with existing S3 content for place_id: {place_id}, tour_type: {tour_type}")
+            except Exception as e:
+                logger.warning(f"Error updating DynamoDB: {str(e)}")
+                # Continue processing - this is not critical
         else:
             # Need to generate content
             # Generate script with OpenAI
@@ -224,6 +289,27 @@ def handler(event, context):
                 'place_details': place_details,
                 'photos': photo_urls
             }
+            
+            # Update DynamoDB with this newly generated content
+            try:
+                # Store in DynamoDB with TTL (30 days)
+                current_time = int(time.time())
+                expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
+                
+                places_table.put_item(
+                    Item={
+                        'placeId': cache_key,
+                        'tourType': tour_type,  # Required as sort key in DynamoDB table
+                        'data': json.dumps(response_data, default=str),
+                        'expiresAt': expiration_time,
+                        'createdAt': current_time,
+                        'pre_generated': True
+                    }
+                )
+                logger.info(f"Stored newly generated content in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+            except Exception as e:
+                logger.warning(f"Error storing in DynamoDB: {str(e)}")
+                # Continue processing - this is not critical
         
         
         return {
