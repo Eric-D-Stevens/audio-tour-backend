@@ -6,6 +6,7 @@ import requests
 import base64
 import logging
 import traceback
+import concurrent.futures
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
@@ -212,26 +213,59 @@ def handler(event, context):
                 script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
                 logger.info(f"Script generated and saved for place_id: {place_id}")
                 
-                # Generate audio with Eleven Labs
-                audio_data = generate_audio(script)
+                # Start parallel processing for audio generation and photo gathering
+                logger.info(f"Starting parallel processing for place_id: {place_id}")
                 
-                if not audio_data:
+                # Define functions for parallel execution
+                def process_audio():
+                    try:
+                        # Generate audio with Eleven Labs
+                        audio_data = generate_audio(script)
+                        if not audio_data:
+                            logger.error(f"Failed to generate audio for place_id: {place_id}")
+                            return None
+                        
+                        # Save audio to S3
+                        upload_to_s3(audio_key, audio_data, 'audio/mpeg', binary=True)
+                        audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
+                        logger.info(f"Audio generated and saved for place_id: {place_id}")
+                        return audio_url
+                    except Exception as e:
+                        logger.error(f"Error in audio generation: {str(e)}")
+                        logger.error(f"Traceback: {traceback.format_exc()}")
+                        return None
+                
+                def process_photos():
+                    try:
+                        # Get photo URLs (either from cache or fetch new ones)
+                        logger.info(f"Getting photos for place {place_id}")
+                        photo_urls = get_cached_photo_urls(place_id)
+                        logger.info(f"Cached photos found: {photo_urls}")
+                        if not photo_urls:
+                            logger.info("No cached photos found, fetching new ones")
+                            photo_urls = cache_place_photos(place_id)
+                            logger.info(f"New photos fetched: {photo_urls}")
+                        return photo_urls
+                    except Exception as e:
+                        logger.error(f"Error in photo gathering: {str(e)}")
+                        logger.error(f"Traceback: {traceback.format_exc()}")
+                        return []
+                
+                # Execute both tasks in parallel using ThreadPoolExecutor
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                    audio_future = executor.submit(process_audio)
+                    photos_future = executor.submit(process_photos)
+                    
+                    # Wait for both tasks to complete
+                    audio_url = audio_future.result()
+                    photo_urls = photos_future.result()
+                
+                # Check if audio generation was successful
+                if not audio_url:
                     logger.error(f"Failed to generate audio for place_id: {place_id}")
                     continue
                 
-                # Save audio to S3
-                upload_to_s3(audio_key, audio_data, 'audio/mpeg', binary=True)
-                audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
-                logger.info(f"Audio generated and saved for place_id: {place_id}")
-                
-                # Get photo URLs (either from cache or fetch new ones)
-                logger.info(f"Getting photos for place {place_id}")
-                photo_urls = get_cached_photo_urls(place_id)
-                logger.info(f"Cached photos found: {photo_urls}")
-                if not photo_urls:
-                    logger.info("No cached photos found, fetching new ones")
-                    photo_urls = cache_place_photos(place_id)
-                    logger.info(f"New photos fetched: {photo_urls}")
+                logger.info(f"Parallel processing completed for place_id: {place_id}")
                 
                 # Create a record in DynamoDB to mark this content as pre-generated
                 # This allows the frontend to find it when querying the API
