@@ -292,7 +292,7 @@ def get_place_photos(place_id):
     logger.info(f"Fetching photo references for place {place_id}")
     try:
         api_key = get_google_maps_api_key()
-        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
         
         headers = {
             'Content-Type': 'application/json',
@@ -359,7 +359,7 @@ def get_place_details(place_id):
         api_key = get_google_maps_api_key()
         logger.debug("Successfully retrieved Google Maps API key")
             
-        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
         logger.debug(f"Making request to Google Places API v1 for place_id: {place_id}")
         
         headers = {

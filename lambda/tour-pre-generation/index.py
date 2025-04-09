@@ -369,7 +369,7 @@ def get_place_photos(place_id):
     logger.info(f"Fetching photo references for place {place_id}")
     try:
         api_key = get_google_maps_api_key()
-        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
         
         headers = {
             'Content-Type': 'application/json',
@@ -436,7 +436,7 @@ def get_place_details(place_id):
         api_key = get_google_maps_api_key()
         logger.debug("Successfully retrieved Google Maps API key")
             
-        url = f"{PLACES_API_BASE_URL}/{place_id}"
+        url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
         logger.debug(f"Making request to Google Places API v1 for place_id: {place_id}")
         
         headers = {
@@ -502,7 +502,7 @@ def generate_script(place_details, tour_type):
         
         # Craft the prompt for OpenAI
         system_prompt = f"""
-        You are an expert tour guide creating an audio script for {tour_type} tours.
+        You are an expert tour guide creating an audio script for {tour_type} tours IN ENGLISH ONLY.
         Write an engaging, informative, and factual script about this place.
         The script should be 2-3 minutes when read aloud (approximately 300-400 words).
         Focus on the most interesting aspects relevant to a {tour_type} tour.
@@ -510,6 +510,9 @@ def generate_script(place_details, tour_type):
         Start with a brief introduction to the place and then share the most interesting facts or stories.
         End with a suggestion of what to observe or experience at the location.
         Everything you return will be read out loud, so don't include any additional formatting.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the location's country or region.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the language of the rest of this prompt.
+        IMPORTANT: ALWAYS WRITE THE SCRIPT IN SPOKEN ENGLISH so that a text-to-speech engine can read it aloud.
         """
         
         user_prompt = f"""
