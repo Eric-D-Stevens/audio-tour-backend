@@ -142,7 +142,7 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     try:
         rounded_lat = round(float(lat), 4)
         rounded_lng = round(float(lng), 4)
-        rounded_radius = round(float(radius), -1)  # Round to nearest 10m
+        rounded_radius = round(float(radius), -2)  # Round to nearest 100m
         cache_key = f"{rounded_lat}_{rounded_lng}_{rounded_radius}_{max_results}_{tour_type}"
         logger.info(f"Generated cache key: {cache_key}")
     except ValueError as e:
