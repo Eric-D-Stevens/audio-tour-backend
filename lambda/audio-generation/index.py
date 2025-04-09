@@ -106,7 +106,12 @@ def handler(event, context):
             }
         
         place_id = path_params['placeId']
-        tour_type = query_params.get('tourType', 'history')
+        tour_type = query_params.get('tourType')
+        if not tour_type:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': 'Missing required parameter: tourType', 'query_params': query_params})
+            }
         
         # First check if content is already cached in DynamoDB
         cache_key = f"{place_id}_{tour_type}"
