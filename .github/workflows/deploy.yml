@@ -50,6 +50,12 @@ jobs:
         cp -r lambda/tour-pre-generation/* build/tour-pre-generation/
         pip install -r lambda/audio-generation/requirements.txt -t build/tour-pre-generation/
         cd build/tour-pre-generation && zip -r ../../dist/tour-pre-generation-${VERSION}.zip . && cd ../..
+        
+        # Tour Preview Lambda for Guest Mode
+        mkdir -p build/tour-preview
+        cp -r lambda/tour-preview/* build/tour-preview/
+        pip install boto3 -t build/tour-preview/
+        cd build/tour-preview && zip -r ../../dist/tour-preview-${VERSION}.zip . && cd ../..
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -64,11 +70,13 @@ jobs:
         aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         aws s3 cp dist/tour-pre-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
+        aws s3 cp dist/tour-preview-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
         
         # Also upload non-versioned copies for manual deployments
         aws s3 cp dist/geolocation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/geolocation.zip
         aws s3 cp dist/audio-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/audio-generation.zip
         aws s3 cp dist/tour-pre-generation-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/tour-pre-generation.zip
+        aws s3 cp dist/tour-preview-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/tour-preview.zip
         
         # Also upload a version.json file with the current version
         echo '{"version": "'${VERSION}'"}' > version.json
@@ -85,5 +93,6 @@ jobs:
             "version": "${{ env.VERSION }}",
             "geolocation_lambda": "geolocation-${{ env.VERSION }}.zip",
             "audio_generation_lambda": "audio-generation-${{ env.VERSION }}.zip",
-            "tour_pre_generation_lambda": "tour-pre-generation-${{ env.VERSION }}.zip"
+            "tour_pre_generation_lambda": "tour-pre-generation-${{ env.VERSION }}.zip",
+            "tour_preview_lambda": "tour-preview-${{ env.VERSION }}.zip"
           }
