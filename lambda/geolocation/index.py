@@ -7,6 +7,7 @@ from decimal import Decimal
 import logging
 import traceback
 from botocore.exceptions import ClientError
+import uuid
 
 # Configure logging
 logger = logging.getLogger()
@@ -16,6 +17,10 @@ logger.setLevel(logging.INFO)
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['PLACES_TABLE_NAME'])
 secrets_client = boto3.client('secretsmanager')
+sqs = boto3.client('sqs')
+
+# SQS Queue URL for tour pre-generation (will be set in environment variables)
+TOUR_PREGENERATION_QUEUE_URL = os.environ.get('TOUR_PREGENERATION_QUEUE_URL', '')
 
 # Secret name for Google Maps API key
 GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
@@ -307,6 +312,12 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     try:
         enriched_places = process_places_data(all_places, tour_type)
         logger.info(f"Successfully processed {len(enriched_places)} places")
+        
+        # Send place IDs to the pre-generation queue if the queue URL is configured
+        if TOUR_PREGENERATION_QUEUE_URL:
+            send_places_to_pregeneration_queue(enriched_places.get('places', []), tour_type)
+        else:
+            logger.warning("Tour pre-generation queue URL not configured, skipping pre-generation")
     except Exception as e:
         logger.error(f"Error processing places data: {str(e)}")
         logger.error(f"Traceback: {traceback.format_exc()}")
@@ -377,6 +388,51 @@ def get_place_types_for_tour(tour_type):
     place_types = tour_type_mapping.get(tour_type.lower(), ['tourist_attraction'])
     logger.info(f"Mapped '{tour_type}' to place types: {place_types}")
     return place_types
+
+def send_places_to_pregeneration_queue(places, tour_type):
+    """Send place IDs to the SQS queue for pre-generation"""
+    if not places:
+        logger.info("No places to send to pre-generation queue")
+        return
+    
+    logger.info(f"Sending {len(places)} places to pre-generation queue for tour type: {tour_type}")
+    
+    try:
+        for place in places:
+            place_id = place.get('place_id')
+            if not place_id:
+                logger.warning("Skipping place without ID")
+                continue
+                
+            # Prepare message for SQS queue
+            message = {
+                'placeId': place_id,
+                'tourType': tour_type,
+                'requestId': str(uuid.uuid4())
+            }
+            
+            # Send message to SQS queue
+            try:
+                response = sqs.send_message(
+                    QueueUrl=TOUR_PREGENERATION_QUEUE_URL,
+                    MessageBody=json.dumps(message),
+                    MessageAttributes={
+                        'PlaceId': {
+                            'DataType': 'String',
+                            'StringValue': place_id
+                        },
+                        'TourType': {
+                            'DataType': 'String',
+                            'StringValue': tour_type
+                        }
+                    }
+                )
+                logger.info(f"Successfully sent place {place_id} to pre-generation queue: {response['MessageId']}")
+            except Exception as e:
+                logger.error(f"Error sending place {place_id} to pre-generation queue: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error in send_places_to_pregeneration_queue: {str(e)}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
 
 def process_places_data(places, tour_type):
     """Process and enrich the places data from Google Places API v1"""
