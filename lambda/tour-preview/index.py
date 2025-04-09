@@ -92,14 +92,27 @@ def get_city_preview(city_name, tour_type="history"):
     
     # Process the response
     try:
-        # Parse the response body if it's a string
-        if isinstance(response.get('body'), str):
-            response_data = json.loads(response['body'])
-        else:
-            response_data = response
+        # Ensure we have a valid response
+        if not response or not isinstance(response, dict):
+            raise ValueError(f"Invalid response format from geolocation Lambda: {response}")
 
-        # Ensure we have places data
-        places = response_data.get('places', [])
+        # Get the response body
+        response_body = response.get('body')
+        if not response_body:
+            raise ValueError("Empty response body from geolocation Lambda")
+
+        # Parse the response body if it's a string
+        if isinstance(response_body, str):
+            try:
+                response_data = json.loads(response_body)
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse response body as JSON: {str(e)}")
+                raise
+        else:
+            response_data = response_body
+
+        # Ensure we have valid places data
+        places = response_data.get('places')
         if not isinstance(places, list):
             logger.error(f"Invalid places data format: {places}")
             places = []
