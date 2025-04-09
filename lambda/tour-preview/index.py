@@ -135,62 +135,92 @@ def get_preview_audio(place_id, tour_type="history"):
     logger.info(f"Invoking audio-generation Lambda with event: {json.dumps(event)}")
     response = invoke_lambda("tensortours-audio-generation", event)
     
-    # Return the response directly
+    # Check if the response contains audio_url
+    if not response.get('audio_url'):
+        return {
+            'statusCode': 404,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'error': 'Audio preview not available for this location yet. Please try again later.'
+            })
+        }
+
+    # Return the response if audio is available
     return response
 
 def lambda_handler(event, context):
-    """Main handler for the tour-preview Lambda"""
+    """Lambda handler for the tour preview API"""
     logger.info(f"Received event: {json.dumps(event)}")
     
     try:
-        # Extract path and method from the event
-        path = event.get("path", "")
-        method = event.get("httpMethod", "GET")
+        # Extract parameters
+        path_params = event.get('pathParameters', {}) or {}
+        query_params = event.get('queryStringParameters', {}) or {}
+        resource = event.get('resource', '')
         
-        # Route the request based on the path
-        if path.startswith("/preview/"):
-            # Extract city name from path
-            parts = path.split("/")
-            if len(parts) >= 3:
-                city_name = parts[2]
-                
-                # Get query parameters
-                query_params = event.get("queryStringParameters", {}) or {}
-                tour_type = query_params.get("tour_type", "history")
-                
-                return get_city_preview(city_name, tour_type)
-                
-        elif path.startswith("/preview/audio/"):
-            # Extract place ID from path
-            parts = path.split("/")
-            if len(parts) >= 4:
-                place_id = parts[3]
-                
-                # Get query parameters
-                query_params = event.get("queryStringParameters", {}) or {}
-                tour_type = query_params.get("tourType", "history")
-                
-                return get_preview_audio(place_id, tour_type)
+        # Handle different endpoints based on the resource path
+        if resource == '/preview/audio/{placeId}':
+            # Audio preview endpoint
+            place_id = path_params.get('placeId')
+            tour_type = query_params.get('tour_type', 'history')
+            
+            if not place_id:
+                return {
+                    'statusCode': 400,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({
+                        'error': 'Missing required parameter: placeId'
+                    })
+                }
+            
+            # Get audio preview for the place
+            return get_preview_audio(place_id, tour_type)
+            
+        elif resource == '/preview/{city}':
+            # City preview endpoint
+            city_name = path_params.get('city')
+            tour_type = query_params.get('tour_type', 'history')
+            
+            if not city_name:
+                return {
+                    'statusCode': 400,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({
+                        'error': 'Missing required parameter: city'
+                    })
+                }
+            
+            # Get city preview data
+            return get_city_preview(city_name, tour_type)
         
         # Default response for unrecognized paths
         return {
-            "statusCode": 404,
-            "headers": {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
+            'statusCode': 404,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
-            "body": json.dumps({"error": "Not found"})
+            'body': json.dumps({'error': 'Not found'})
         }
         
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
         return {
-            "statusCode": 500,
-            "headers": {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
-            "body": json.dumps({"error": f"Internal server error: {str(e)}"})
+            'body': json.dumps({'error': f'Internal server error: {str(e)}'})
         }
 
 
