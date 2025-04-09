@@ -395,15 +395,51 @@ def send_places_to_pregeneration_queue(places, tour_type):
         logger.info("No places to send to pre-generation queue")
         return
     
-    logger.info(f"Sending {len(places)} places to pre-generation queue for tour type: {tour_type}")
+    logger.info(f"Checking {len(places)} places for pre-generation for tour type: {tour_type}")
     
     try:
+        places_to_generate = []
+        
+        # First check which places don't already have pre-generated content
         for place in places:
             place_id = place.get('place_id')
             if not place_id:
                 logger.warning("Skipping place without ID")
                 continue
+            
+            # Check if this place already has pre-generated content in DynamoDB
+            cache_key = f"{place_id}_{tour_type}"
+            try:
+                # Try to get the item from DynamoDB
+                response = table.get_item(
+                    Key={
+                        'placeId': cache_key,
+                        'tourType': tour_type
+                    }
+                )
                 
+                # Check if item exists and is marked as pre-generated
+                if 'Item' in response and response['Item'].get('pre_generated', False):
+                    logger.info(f"Place {place_id} already has pre-generated content, skipping")
+                    continue
+                
+                # Also check if the content exists in S3 (without checking DynamoDB)
+                # This would require importing the S3 client and implementing a check_if_file_exists function
+                # For now, we'll just rely on the DynamoDB check
+                
+                # If we get here, the place needs pre-generation
+                places_to_generate.append(place)
+            except Exception as e:
+                logger.warning(f"Error checking if place {place_id} has pre-generated content: {str(e)}")
+                # If we can't check, assume it needs pre-generation
+                places_to_generate.append(place)
+        
+        # Now send only the places that need pre-generation to the queue
+        logger.info(f"Sending {len(places_to_generate)} places to pre-generation queue for tour type: {tour_type}")
+        
+        for place in places_to_generate:
+            place_id = place.get('place_id')
+            
             # Prepare message for SQS queue
             message = {
                 'placeId': place_id,
