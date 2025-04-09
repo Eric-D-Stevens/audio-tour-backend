@@ -80,9 +80,9 @@ def get_city_preview(city_name, tour_type="history"):
         query_params={
             "lat": str(coordinates['lat']),
             "lng": str(coordinates['lng']),
-            "radius": "2000",
+            "radius": "10000",
             "tour_type": tour_type,
-            "max_results": "10"
+            "max_results": "30"
         }
     )
     
