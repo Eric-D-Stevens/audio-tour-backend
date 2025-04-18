@@ -35,13 +35,13 @@ jobs:
         
         # Create a single package with both code and dependencies
         echo "Building consolidated Lambda package..."
-        mkdir -p "build/lambda-package/python"
+        mkdir -p "build/lambda-package"
         
         # Install all dependencies directly to the Lambda package directory
-        pip install -r requirements.txt -t "build/lambda-package/python/"
+        pip install -r requirements.txt -t "build/lambda-package/"
         
-        # Copy our tensortours package to the Lambda package directory
-        cp -r "tensortours" "build/lambda-package/python/"
+        # Copy our tensortours package to the root of the Lambda package directory
+        cp -r "tensortours" "build/lambda-package/"
         
         # Package everything together
         cd "build/lambda-package" && zip -r "../../dist/tensortours-${VERSION}.zip" . && cd ../..
