@@ -70,24 +70,10 @@ def test_get_place_details(google_places_client):
         assert 'displayName' in details
         assert 'formattedAddress' in details
         
-        # Print some basic details
+        # Print some details
         print(f"\nDetails for place {place_id}:")
         print(f"Name: {details.get('displayName', {}).get('text', 'Unknown')}")
         print(f"Address: {details.get('formattedAddress', 'N/A')}")
-        
-        # Print the photos structure if available
-        if 'photos' in details and details['photos']:
-            print("\nPhotos structure:")
-            for i, photo in enumerate(details['photos'][:2]):  # Show first 2 photos
-                print(f"\nPhoto {i+1}:")
-                print(json.dumps(photo, indent=2))
-                print(f"Photo reference: {photo.get('name', 'N/A')}")
-        else:
-            print("\nNo photos available for this place")
-        
-        # Print other important fields
-        print("\nAvailable fields in details:")
-        print(list(details.keys()))
         
     except requests.exceptions.HTTPError as e:
         # Print the full error response
@@ -121,29 +107,26 @@ def test_get_place_photo(google_places_client):
         if 'photos' not in details or not details['photos']:
             pytest.skip("No photos available for this place")
         
-        # Get the first photo reference - this is the full name from the API
+        # Get the first photo reference
         photo_reference = details['photos'][0]['name']
-        print(f"\nPhoto reference: {photo_reference}")
+        print(f"\nFound photo reference: {photo_reference}")
         
-        # Get the photo data using the full reference
+        # Get the photo data
         photo_data = google_places_client.get_place_photo(photo_reference)
         
-        # Verify the response is binary data
-        assert isinstance(photo_data, bytes)
-        assert len(photo_data) > 0, "Empty photo data"
+        # Verify the response structure
+        assert isinstance(photo_data, dict)
+        assert 'mediaItems' in photo_data, "No mediaItems in response"
+        assert len(photo_data['mediaItems']) > 0, "Empty mediaItems list"
         
-        # Print some information about the photo data
-        print(f"\nReceived binary photo data: {len(photo_data)} bytes")
+        # Check the first media item
+        media_item = photo_data['mediaItems'][0]
+        assert 'name' in media_item
         
-        # Check if the data starts with known image format signatures
-        if photo_data.startswith(b'\xff\xd8\xff'):  # JPEG signature
-            print("Image format: JPEG")
-        elif photo_data.startswith(b'\x89PNG\r\n\x1a\n'):  # PNG signature
-            print("Image format: PNG")
-        elif photo_data.startswith(b'GIF8'):  # GIF signature
-            print("Image format: GIF")
-        else:
-            print("Unknown image format")
+        # Print some information about the photo
+        print(f"Photo name: {media_item.get('name')}")
+        if 'uri' in media_item:
+            print(f"Photo URI: {media_item.get('uri')}")
         
     except requests.exceptions.HTTPError as e:
         # Print the full error response
