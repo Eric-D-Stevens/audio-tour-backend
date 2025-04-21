@@ -20,9 +20,24 @@ class TourTableItem(BaseModel):
     place_info: TTPlaceInfo
     status: GenerationStatus
     photos: Optional[List[TTPlacePhotos]]
-    scripts: Optional[TTScript]
+    script: Optional[TTScript]
     audio: Optional[TTAudio]
     created_at: datetime = Field(default_factory=datetime.now)
+
+    def dump(self) -> Dict:
+        return {
+            'place_id': self.place_id,
+            'tour_type': self.tour_type.value,
+            'status': self.status.value,
+            'created_at': self.created_at.isoformat(),
+            'data': self.model_dump_json()
+        }
+
+    @classmethod
+    def load(cls, data: Dict) -> 'TourTableItem':
+        if 'data' in data:
+            data = data['data']
+        return cls.model_validate_json(data)
 
 
 class TourTableClient:
@@ -33,27 +48,22 @@ class TourTableClient:
 
     def get_item(self, place_id: str, tour_type: TourType) -> Optional[TourTableItem]:
         """Get a tour item by place_id and tour_type."""
-        item = self._table.get_item(
+        response = self._table.get_item(
             Key={
                 'place_id': place_id,
                 'tour_type': tour_type.value
             }
         )
-        return TourTableItem(**item['Item']) if item['Item'] else None
+        
+        # Check if the item exists in the response
+        if 'Item' not in response or not response['Item']:
+            return None
+            
+        return TourTableItem.load(response['Item'])
 
     def put_item(self, item: TourTableItem):
         """Put a tour item into the table."""
-        self._table.put_item(Item=item.model_dump())
-
-    def update_item(self, item: TourTableItem, attributes: Dict):
-        """Update a tour item in the table."""
-        self._table.update_item(
-            Key={
-                'place_id': item.place_id,
-                'tour_type': item.tour_type.value
-            },
-            AttributeUpdates=attributes
-        )
+        self._table.put_item(Item=item.dump())
 
     def delete_item(self, place_id: str, tour_type: TourType):
         """Delete a tour item from the table."""
