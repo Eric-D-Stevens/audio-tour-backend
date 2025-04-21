@@ -1,13 +1,72 @@
 """API models for TensorTours backend API Gateway integration."""
 
-from typing import List
+from typing import Dict, List, Optional
+from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, root_validator
 
 from ..models.tour import TourType, TTour, TTPlaceInfo
 
 
-class GetPlacesRequest(BaseModel):
+class CognitoUser(BaseModel):
+    """Model for Cognito user information extracted from the request context"""
+
+    user_id: str = Field(..., description="Cognito user ID (sub)")
+    username: Optional[str] = Field(None, description="Cognito username")
+    email: Optional[str] = Field(None, description="User email address")
+    groups: List[str] = Field(default_factory=list, description="Cognito user groups")
+
+    @classmethod
+    def from_request_context(cls, request_context: Dict) -> Optional["CognitoUser"]:
+        """Extract user information from the API Gateway request context"""
+        if not request_context or "authorizer" not in request_context:
+            return None
+
+        authorizer = request_context.get("authorizer", {})
+        if not authorizer or "claims" not in authorizer:
+            return None
+
+        claims = authorizer.get("claims", {})
+        if not claims or "sub" not in claims:
+            return None
+
+        # Extract user groups if available
+        groups = []
+        cognito_groups = claims.get("cognito:groups")
+        if cognito_groups:
+            if isinstance(cognito_groups, str):
+                groups = [g.strip() for g in cognito_groups.split(",")]
+            elif isinstance(cognito_groups, list):
+                groups = cognito_groups
+
+        return cls(
+            user_id=claims.get("sub"),
+            username=claims.get("cognito:username"),
+            email=claims.get("email"),
+            groups=groups,
+        )
+
+
+class BaseRequest(BaseModel):
+    """Base request model with user information"""
+
+    user: Optional[CognitoUser] = Field(None, description="User information from Cognito")
+    request_id: Optional[str] = Field(None, description="Unique request identifier")
+    timestamp: Optional[datetime] = Field(None, description="Request timestamp")
+
+    @root_validator(pre=True)
+    def extract_context_data(cls, values: Dict) -> Dict:
+        """Extract context data from the raw event if available"""
+        # This is used when parsing the raw Lambda event
+        if "requestContext" in values:
+            request_context = values.get("requestContext", {})
+            values["user"] = CognitoUser.from_request_context(request_context)
+            values["request_id"] = request_context.get("requestId")
+            values["timestamp"] = datetime.now()
+        return values
+
+
+class GetPlacesRequest(BaseRequest):
     """Request model for getting places near a location"""
 
     tour_type: TourType = Field(..., description="Type of tour to get places for")
@@ -22,9 +81,10 @@ class GetPlacesResponse(BaseModel):
 
     places: List[TTPlaceInfo]
     total_count: int
+    is_authenticated: bool = Field(False, description="Whether the request was authenticated")
 
 
-class GetPregeneratedTourRequest(BaseModel):
+class GetPregeneratedTourRequest(BaseRequest):
     """Request model for getting a pregenerated tour"""
 
     place_id: str = Field(..., description="ID of the place to get a tour for")
@@ -35,9 +95,10 @@ class GetPregeneratedTourResponse(BaseModel):
     """Response model for getting a pregenerated tour"""
 
     tour: TTour
+    is_authenticated: bool = Field(False, description="Whether the request was authenticated")
 
 
-class GenerateTourRequest(BaseModel):
+class GenerateTourRequest(BaseRequest):
     """Request model for generating a new tour"""
 
     place_id: str = Field(..., description="ID of the place to generate a tour for")
@@ -49,3 +110,4 @@ class GenerateTourResponse(BaseModel):
     """Response model for generating a new tour"""
 
     tour: TTour
+    is_authenticated: bool = Field(False, description="Whether the request was authenticated")
