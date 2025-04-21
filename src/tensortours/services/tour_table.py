@@ -43,7 +43,8 @@ class TourTableItem(BaseModel):
     def load(cls, data: Dict) -> "TourTableItem":
         if "data" in data:
             data = data["data"]
-        return cls.model_validate_json(data)
+        result: TourTableItem = cls.model_validate_json(data)
+        return result
 
 
 class TourTableClient:

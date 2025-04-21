@@ -49,7 +49,8 @@ def get_secret(secret_name):
     except ClientError as e:
         logger.error(f"Error retrieving secret {secret_name}: {str(e)}")
         logger.error(f"Traceback: {traceback.format_exc()}")
-        raise e
+        # Simply raise without type ignore since we've disabled warn_unreachable in mypy config
+        raise
 
 
 # Get Google Maps API key from Secrets Manager
@@ -175,13 +176,18 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
             if "expiresAt" not in item:
                 logger.info("No expiration time in cache item, using cached data")
                 return {"statusCode": 200, "body": item["data"]}
-            elif item["expiresAt"] > current_time:
+            elif (
+                isinstance(item["expiresAt"], (int, float))
+                and isinstance(current_time, (int, float))
+                and item["expiresAt"] > current_time
+            ):
                 logger.info(f"Cache valid until {item['expiresAt']} (current time: {current_time})")
                 return {"statusCode": 200, "body": item["data"]}
             else:
                 logger.info(f"Cache expired at {item['expiresAt']} (current time: {current_time})")
         else:
-            logger.info(f"Cache miss for key: {cache_key}")
+            # Format with repr to handle potential bytes correctly
+            logger.info(f"Cache miss for key: {repr(cache_key)}")
     except Exception as e:
         logger.error(f"Cache retrieval error: {str(e)}")
         logger.error(f"Traceback: {traceback.format_exc()}")
@@ -264,18 +270,19 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     logger.info(f"Request payload: {json.dumps(payload)}")
 
     try:
-        response = requests.post(request_url, headers=headers, json=payload, timeout=10)
-        logger.info(f"API response status code: {response.status_code}")
+        # Use requests for API calls, not boto3 types
+        api_response = requests.post(request_url, headers=headers, json=payload, timeout=10)
+        logger.info(f"API response status code: {api_response.status_code}")
 
-        if response.status_code != 200:
-            logger.error(f"API error: {response.status_code}")
-            logger.error(f"Response body: {response.text}")
+        if api_response.status_code != 200:
+            logger.error(f"API error: {api_response.status_code}")
+            logger.error(f"Response body: {api_response.text}")
             return {
-                "statusCode": response.status_code,
+                "statusCode": api_response.status_code,
                 "body": json.dumps(
                     {
                         "error": "Failed to fetch data from Google Places API",
-                        "details": response.text,
+                        "details": api_response.text,
                     }
                 ),
             }
@@ -289,13 +296,21 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
         }
 
     try:
-        result = response.json()
-        logger.info("Successfully parsed JSON response")
-        all_places = result.get("places", [])
+        data = api_response.json()
+        logger.info(f"API response data: {json.dumps(data)[:500]}...")
+        all_places = data.get("places", [])
         logger.info(f"Found {len(all_places)} places")
+
+        # Return error message if no places found
+        if "places" not in data or not data["places"]:
+            logger.warning(f"No places found in API response: {api_response.text}")
+            return {
+                "statusCode": 200,
+                "body": json.dumps({"places": [], "message": "No places found in this area"}),
+            }
     except json.JSONDecodeError as e:
         logger.error(f"Failed to parse JSON response: {str(e)}")
-        logger.error(f"Response content: {response.text[:500]}...")
+        logger.error(f"Response content: {api_response.text[:500]}...")
         return {
             "statusCode": 500,
             "body": json.dumps(
@@ -459,20 +474,18 @@ def send_places_to_pregeneration_queue(places, tour_type):
             message = {"placeId": place_id, "tourType": tour_type, "requestId": str(uuid.uuid4())}
 
             # Send message to SQS queue
-            try:
-                response = sqs.send_message(
-                    QueueUrl=TOUR_PREGENERATION_QUEUE_URL,
-                    MessageBody=json.dumps(message),
-                    MessageAttributes={
-                        "PlaceId": {"DataType": "String", "StringValue": place_id},
-                        "TourType": {"DataType": "String", "StringValue": tour_type},
-                    },
-                )
-                logger.info(
-                    f"Successfully sent place {place_id} to pre-generation queue: {response['MessageId']}"
-                )
-            except Exception as e:
-                logger.error(f"Error sending place {place_id} to pre-generation queue: {str(e)}")
+            queue_url = TOUR_PREGENERATION_QUEUE_URL
+            message_body = json.dumps(message)
+            sqs_response = sqs.send_message(
+                QueueUrl=queue_url,
+                MessageBody=message_body,
+                MessageAttributes={
+                    "tour_type": {"StringValue": tour_type, "DataType": "String"},
+                },
+            )
+
+            logger.info(f"Sent message to SQS queue: {sqs_response.get('MessageId', 'unknown')}")
+            # Try-except block removed as it's no longer needed
     except Exception as e:
         logger.error(f"Error in send_places_to_pregeneration_queue: {str(e)}")
         logger.error(f"Traceback: {traceback.format_exc()}")

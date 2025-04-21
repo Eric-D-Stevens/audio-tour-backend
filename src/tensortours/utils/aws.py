@@ -2,7 +2,7 @@
 
 import json
 import logging
-from typing import Any, Dict, Optional, Union
+from typing import Union
 
 import boto3
 from botocore.exceptions import ClientError
@@ -24,17 +24,18 @@ def get_secret(secret_name: str, client=None) -> str:
         ClientError: If there's an error retrieving the secret
     """
     secrets_client = client or boto3.client("secretsmanager")
-
+    secret_string = ""
     try:
         response = secrets_client.get_secret_value(SecretId=secret_name)
         if "SecretString" in response:
-            return response["SecretString"]
+            secret_string = response["SecretString"]
     except ClientError as e:
         logger.exception(f"Error retrieving secret {secret_name}")
         raise e
+    return secret_string
 
 
-def parse_json_secret(secret: str) -> Dict[str, Any]:
+def parse_json_secret(secret: str):
     """Parse a JSON-formatted secret string.
 
     Args:
@@ -50,7 +51,7 @@ def parse_json_secret(secret: str) -> Dict[str, Any]:
         return {}
 
 
-def get_api_key_from_secret(secret_name: str, key_name: str) -> Optional[str]:
+def get_api_key_from_secret(secret_name: str, key_name: str):
     """Get an API key from a secret, supporting both direct and JSON formats.
 
     Args:

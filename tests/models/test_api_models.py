@@ -31,12 +31,7 @@ def sample_cognito_claims():
 @pytest.fixture
 def sample_request_context(sample_cognito_claims):
     """Create a sample API Gateway request context with Cognito authorizer."""
-    return {
-        "requestId": "request-123",
-        "authorizer": {
-            "claims": sample_cognito_claims
-        }
-    }
+    return {"requestId": "request-123", "authorizer": {"claims": sample_cognito_claims}}
 
 
 @pytest.fixture
@@ -45,12 +40,8 @@ def sample_lambda_event(sample_request_context):
     return {
         "httpMethod": "GET",
         "path": "/places",
-        "queryStringParameters": {
-            "lat": "37.7749",
-            "lng": "-122.4194",
-            "tour_type": "history"
-        },
-        "requestContext": sample_request_context
+        "queryStringParameters": {"lat": "37.7749", "lng": "-122.4194", "tour_type": "history"},
+        "requestContext": sample_request_context,
     }
 
 
@@ -158,7 +149,7 @@ def test_get_places_response(sample_place_info):
     assert response.places[0].place_id == "test_place_id"
     assert response.total_count == 1
     assert response.is_authenticated is False  # Default value
-    
+
     # Test with authentication flag
     response = GetPlacesResponse(places=[sample_place_info], total_count=1, is_authenticated=True)
     assert response.is_authenticated is True
@@ -182,7 +173,7 @@ def test_get_pregenerated_tour_response(sample_tour):
     assert response.tour.tour_type == TourType.ARCHITECTURE
     assert len(response.tour.photos) == 1
     assert response.is_authenticated is False  # Default value
-    
+
     # Test with authentication flag
     response = GetPregeneratedTourResponse(tour=sample_tour, is_authenticated=True)
     assert response.is_authenticated is True
@@ -213,7 +204,7 @@ def test_generate_tour_response(sample_tour):
     assert response.tour.place_id == "test_place_id"
     assert response.tour.tour_type == TourType.ARCHITECTURE
     assert response.is_authenticated is False  # Default value
-    
+
     # Test with authentication flag
     response = GenerateTourResponse(tour=sample_tour, is_authenticated=True)
     assert response.is_authenticated is True
@@ -226,27 +217,27 @@ def test_cognito_user(sample_cognito_claims):
         user_id="12345678-1234-1234-1234-123456789012",
         username="testuser",
         email="test@example.com",
-        groups=["premium", "beta-tester"]
+        groups=["premium", "beta-tester"],
     )
-    
+
     assert user.user_id == "12345678-1234-1234-1234-123456789012"
     assert user.username == "testuser"
     assert user.email == "test@example.com"
     assert "premium" in user.groups
     assert "beta-tester" in user.groups
-    
+
     # Test creation from request context
     context = {"authorizer": {"claims": sample_cognito_claims}}
-    user = CognitoUser.from_request_context(context)
-    
-    assert user is not None
-    assert user.user_id == "12345678-1234-1234-1234-123456789012"
-    assert user.username == "testuser"
-    assert user.email == "test@example.com"
-    assert len(user.groups) == 2
-    assert "premium" in user.groups
-    assert "beta-tester" in user.groups
-    
+    user_from_context = CognitoUser.from_request_context(context)
+
+    assert user_from_context is not None
+    assert user_from_context.user_id == "12345678-1234-1234-1234-123456789012"
+    assert user_from_context.username == "testuser"
+    assert user_from_context.email == "test@example.com"
+    assert len(user_from_context.groups) == 2
+    assert "premium" in user_from_context.groups
+    assert "beta-tester" in user_from_context.groups
+
     # Test with invalid context
     assert CognitoUser.from_request_context({}) is None
     assert CognitoUser.from_request_context({"authorizer": {}}) is None
@@ -256,13 +247,13 @@ def test_base_request_with_user(sample_lambda_event):
     """Test BaseRequest model with user information."""
     # Test with request context
     request = BaseRequest(**sample_lambda_event)
-    
+
     assert request.user is not None
     assert request.user.user_id == "12345678-1234-1234-1234-123456789012"
     assert request.user.username == "testuser"
     assert request.request_id == "request-123"
     assert request.timestamp is not None
-    
+
     # Test without request context
     request = BaseRequest()
     assert request.user is None
@@ -276,13 +267,12 @@ def test_get_places_request_with_user(sample_lambda_event):
     event["queryStringParameters"]["tour_type"] = "history"
     event["queryStringParameters"]["latitude"] = 37.7749
     event["queryStringParameters"]["longitude"] = -122.4194
-    
+
     # Create request from event
     request = GetPlacesRequest(
-        **event["queryStringParameters"],
-        requestContext=event["requestContext"]
+        **event["queryStringParameters"], requestContext=event["requestContext"]
     )
-    
+
     assert request.tour_type == TourType.HISTORY
     assert request.latitude == 37.7749
     assert request.longitude == -122.4194

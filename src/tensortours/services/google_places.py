@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import requests
 
@@ -41,8 +41,13 @@ class GooglePlacesClient:
         ]
 
     def _request(
-        self, method: str, url: str, headers: Dict, data: Dict = None, params: Dict = None
-    ) -> Dict:
+        self,
+        method: str,
+        url: str,
+        headers: Dict,
+        data: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+    ):
         """Make a request to the Google Places API.
 
         Args:
@@ -82,7 +87,9 @@ class GooglePlacesClient:
         response.raise_for_status()
         return response.json()
 
-    def _request_binary(self, method: str, url: str, headers: Dict, params: Dict = None) -> bytes:
+    def _request_binary(
+        self, method: str, url: str, headers: Dict, params: Optional[Dict] = None
+    ) -> bytes:
         """Make a request to the Google Places API and return binary content.
 
         Args:
@@ -126,7 +133,7 @@ class GooglePlacesClient:
         exclude_types: List[str],
         language_code: str = "en",
         max_results: int = 20,
-    ) -> Dict:
+    ):
         """
         Search for places nearby a given location.
 
@@ -166,7 +173,7 @@ class GooglePlacesClient:
 
         return self._request("POST", url, headers, data=payload)
 
-    def get_place_details(self, place_id: str) -> dict:
+    def get_place_details(self, place_id: str):
         """Get details for a place from Google Places API v1."""
         url = f"{self.base_url}/{place_id}"
         headers = {

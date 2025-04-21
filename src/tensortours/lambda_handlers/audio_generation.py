@@ -138,7 +138,9 @@ def handler(event, context):
                 )
                 try:
                     # Extract the cached data
-                    place_data = json.loads(response["Item"].get("data", "{}"))
+                    # Ensure we're passing a string or bytes to json.loads
+                    data_str = str(response["Item"].get("data", "{}"))
+                    place_data = json.loads(data_str)
                     if place_data and "script_url" in place_data and "audio_url" in place_data:
                         ddb_cache_hit = True
                         logger.info("Successfully retrieved pre-generated content from DynamoDB")
