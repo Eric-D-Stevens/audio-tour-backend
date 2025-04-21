@@ -53,6 +53,10 @@ if [ "$run_linting" = true ]; then
     run_check "Running black to check code formatting..." \
              "black --check src tests integration_tests scripts" \
              "Black formatting checks failed. Please run 'black src tests integration_tests scripts' to fix formatting." || exit 1
+             
+    run_check "Running mypy for type checking..." \
+             "mypy src tests integration_tests scripts" \
+             "Mypy type checks failed. Please fix the type issues." || exit 1
 fi
 
 # Run tests if requested
