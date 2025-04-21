@@ -1,6 +1,8 @@
 import os
 from functools import lru_cache
 
+import boto3
+
 from ..services.google_places import GooglePlacesClient
 from ..services.tour_table import TourTableClient
 from ..services.user_event_table import UserEventTableClient
@@ -15,6 +17,23 @@ def get_tour_table_client() -> TourTableClient:
 @lru_cache
 def get_user_event_table_client() -> UserEventTableClient:
     return UserEventTableClient()
+
+
+@lru_cache
+def get_generation_queue():
+    """Get a cached SQS queue resource for the generation queue.
+
+    Returns:
+        The SQS queue resource object
+    """
+    queue_url = os.environ.get("TOUR_GENERATION_QUEUE_URL")
+    if not queue_url:
+        raise ValueError("TOUR_GENERATION_QUEUE_URL environment variable not set")
+
+    # Use the resource API instead of the client API
+    sqs = boto3.resource("sqs")
+    queue = sqs.Queue(queue_url)
+    return queue
 
 
 # Constants

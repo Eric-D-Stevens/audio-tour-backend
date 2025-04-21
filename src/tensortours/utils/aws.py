@@ -2,7 +2,7 @@
 
 import json
 import logging
-from typing import Union, Optional
+from typing import Optional, Union
 
 import boto3
 from botocore.exceptions import ClientError
