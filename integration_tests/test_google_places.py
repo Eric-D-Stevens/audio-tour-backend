@@ -1,8 +1,10 @@
-import os
-import pytest
 import json
+import os
+
+import pytest
 import requests
 from dotenv import load_dotenv
+
 from tensortours.services.google_places import GooglePlacesClient
 
 # Load environment variables from .env file
@@ -89,7 +91,7 @@ def test_get_place_details(google_places_client):
         try:
             error_details = response.json()
             print(f"Error details: {json.dumps(error_details, indent=2)}")
-        except Exception as json_error:
+        except Exception:
             print(f"Raw response: {response.text}")
 
         # Re-raise the exception
@@ -142,7 +144,7 @@ def test_get_place_photo(google_places_client):
         try:
             error_details = response.json()
             print(f"Error details: {json.dumps(error_details, indent=2)}")
-        except Exception as json_error:
+        except Exception:
             print(f"Raw response: {response.text}")
 
         # Re-raise the exception

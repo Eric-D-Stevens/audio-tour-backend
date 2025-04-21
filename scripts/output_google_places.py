@@ -1,8 +1,6 @@
 import json
 import os
 
-from dotenv import load_dotenv
-
 from tensortours.services.google_places import GooglePlacesClient
 
 client = GooglePlacesClient(os.environ.get("GOOGLE_MAPS_API_KEY"))

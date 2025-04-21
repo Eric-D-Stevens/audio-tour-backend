@@ -1,18 +1,18 @@
 """Unit tests for API models using pytest."""
 
-import pytest
 from datetime import datetime
-from typing import Dict, List
+
+import pytest
 
 from tensortours.models.api import (
+    GenerateTourRequest,
+    GenerateTourResponse,
     GetPlacesRequest,
     GetPlacesResponse,
     GetPregeneratedTourRequest,
     GetPregeneratedTourResponse,
-    GenerateTourRequest,
-    GenerateTourResponse,
 )
-from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
+from tensortours.models.tour import TourType, TTAudio, TTour, TTPlaceInfo, TTPlacePhotos, TTScript
 
 
 @pytest.fixture

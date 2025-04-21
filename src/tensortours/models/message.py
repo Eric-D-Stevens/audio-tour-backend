@@ -1,9 +1,8 @@
 """Message models for TensorTours backend."""
 
-from typing import Optional, Dict, Any
-from pydantic import BaseModel
+from typing import Any, Dict, Optional
 
-from tensortours.models.tour import TourType
+from pydantic import BaseModel
 
 
 class SQSMessage(BaseModel):

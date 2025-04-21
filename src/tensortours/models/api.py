@@ -1,10 +1,10 @@
 """API models for TensorTours backend API Gateway integration."""
 
-from typing import List, Dict, Optional
-from datetime import datetime
-from pydantic import BaseModel, Field, HttpUrl
+from typing import List
 
-from ..models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
+from pydantic import BaseModel, Field
+
+from ..models.tour import TourType, TTour, TTPlaceInfo
 
 
 class GetPlacesRequest(BaseModel):

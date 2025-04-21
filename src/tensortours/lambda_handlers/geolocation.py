@@ -1,13 +1,13 @@
 import json
+import logging
 import os
 import time
+import traceback
+import uuid
+
 import boto3
 import requests
-from decimal import Decimal
-import logging
-import traceback
 from botocore.exceptions import ClientError
-import uuid
 
 # Configure logging
 logger = logging.getLogger()

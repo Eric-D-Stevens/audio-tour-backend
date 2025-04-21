@@ -1,16 +1,14 @@
 """Unit tests for Tour table service using pytest and moto."""
 
 import os
-import pytest
-import json
 from datetime import datetime
-from typing import Dict, List
 
 import boto3
+import pytest
 from moto import mock_aws
 
-from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
-from tensortours.services.tour_table import TourTableClient, TourTableItem, GenerationStatus
+from tensortours.models.tour import TourType, TTAudio, TTour, TTPlaceInfo, TTPlacePhotos, TTScript
+from tensortours.services.tour_table import GenerationStatus, TourTableClient, TourTableItem
 
 
 @pytest.fixture(scope="function")

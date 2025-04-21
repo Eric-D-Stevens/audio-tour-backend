@@ -1,13 +1,15 @@
 """Tour-related models for TensorTours backend."""
 
 import os
-from typing import List, Optional, Dict
-from enum import Enum
 from datetime import datetime
-from pydantic import BaseModel, Field
-from ..models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio
+from enum import Enum
+from typing import Dict, List, Optional
+
 import boto3
 from mypy_boto3_dynamodb.service_resource import Table
+from pydantic import BaseModel, Field
+
+from ..models.tour import TourType, TTAudio, TTPlaceInfo, TTPlacePhotos, TTScript
 
 
 class GenerationStatus(Enum):

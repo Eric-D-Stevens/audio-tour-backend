@@ -1,10 +1,10 @@
-import logging
 import json
+import logging
 from typing import Optional
 
 from ..models.api import GetPregeneratedTourRequest, GetPregeneratedTourResponse
-from ..services.tour_table import TourTableClient, TourTableItem
 from ..models.tour import TTour
+from ..services.tour_table import TourTableClient, TourTableItem
 from ..utils.general_utils import get_tour_table_client
 
 logger = logging.getLogger(__name__)

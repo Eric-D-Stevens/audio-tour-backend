@@ -1,6 +1,7 @@
 """Place-related models for TensorTours backend."""
 
-from typing import List, Dict, Optional, Any
+from typing import Any, Dict, List, Optional
+
 from pydantic import BaseModel, HttpUrl
 
 

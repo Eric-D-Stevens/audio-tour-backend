@@ -1,13 +1,12 @@
+import concurrent.futures
 import json
+import logging
 import os
 import time
+import traceback
+
 import boto3
 import requests
-import base64
-import logging
-import traceback
-import concurrent.futures
-import re
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
@@ -353,7 +352,7 @@ def upload_to_s3(key, data, content_type, binary=False):
                 Bucket=BUCKET_NAME, Key=key, Body=data.encode("utf-8"), ContentType=content_type
             )
         return True
-    except Exception as e:
+    except Exception:
         logger.exception(f"Error uploading to S3")
         return False
 

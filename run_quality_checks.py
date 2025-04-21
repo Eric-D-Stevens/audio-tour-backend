@@ -31,9 +31,9 @@ def main():
     )
     success = success and black_success
     
-    # Run flake8 linter
+    # Run flake8 linter with pyproject.toml configuration
     flake8_success = run_command(
-        "flake8 src tests integration_tests", 
+        "flake8 src tests integration_tests scripts", 
         "flake8 code style check"
     )
     success = success and flake8_success

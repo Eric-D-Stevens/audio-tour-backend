@@ -1,10 +1,10 @@
 """Unit tests for Tour models using pytest."""
 
-import pytest
 from datetime import datetime
-from typing import Dict, List
 
-from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
+import pytest
+
+from tensortours.models.tour import TourType, TTAudio, TTour, TTPlaceInfo, TTPlacePhotos, TTScript
 
 
 @pytest.fixture

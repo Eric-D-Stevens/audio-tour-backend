@@ -2,8 +2,7 @@
 
 import json
 import logging
-import os
-from typing import Dict, Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import boto3
 from botocore.exceptions import ClientError
@@ -123,6 +122,6 @@ def upload_to_s3(
         body = data if binary else data if isinstance(data, bytes) else data.encode("utf-8")
         client.put_object(Bucket=bucket_name, Key=key, Body=body, ContentType=content_type)
         return True
-    except Exception as e:
+    except Exception:
         logger.exception(f"Error uploading to S3: {key}")
         return False

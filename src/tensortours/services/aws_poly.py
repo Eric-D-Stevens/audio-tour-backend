@@ -1,11 +1,12 @@
 """AWS Polly client for TensorTours backend."""
 
-import boto3
 import logging
 from typing import Dict, Optional
+
+import boto3
 from botocore.exceptions import ClientError
 from mypy_boto3_polly.client import PollyClient
-from mypy_boto3_polly.type_defs import SynthesizeSpeechOutputTypeDef, DescribeVoicesOutputTypeDef
+from mypy_boto3_polly.type_defs import DescribeVoicesOutputTypeDef, SynthesizeSpeechOutputTypeDef
 
 logger = logging.getLogger(__name__)
 

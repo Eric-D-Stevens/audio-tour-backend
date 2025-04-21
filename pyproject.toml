@@ -64,6 +64,12 @@ exclude = '''
 profile = "black"
 line_length = 100
 
+[tool.autoflake]
+remove_all_unused_imports = true
+remove_unused_variables = true
+remove_duplicate_keys = true
+expand_star_imports = true
+
 [tool.pytest.ini_options]
 addopts = "--flake8 --black"
 testpaths = ["src/tensortours", "tests"]
@@ -76,10 +82,12 @@ markers = [
 ]
 
 [tool.flake8]
-max-line-length = 100
-exclude = ".git,__pycache__,build,dist,.venv,venv"
-ignore = "E203, W503"  # Recommended when using Black
-per-file-ignores = [
+max_line_length = 80
+exclude = [".git", "__pycache__", "build", "dist", ".venv", "venv"]
+ignore = ["E203", "W503", "E501", "W391"]  # Recommended when using Black
+per_file_ignores = [
     "__init__.py:F401,F403",
-    "tests/*:E501"
+    "tests/*:F401",
+    "scripts/*:F401",
+    "integration_tests/*:F401,F841"
 ]

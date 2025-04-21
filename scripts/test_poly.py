@@ -4,9 +4,8 @@ Test script for AWS Polly client.
 This script demonstrates how to use the AWSPollyClient to synthesize speech and save it to a file.
 """
 
-import os
-import sys
 import logging
+import sys
 from pathlib import Path
 
 # Add the project root to the Python path so we can import the tensortours package

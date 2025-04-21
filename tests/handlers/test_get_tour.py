@@ -1,17 +1,17 @@
 """Unit tests for the get_tour Lambda handler."""
 
-import os
 import json
-import pytest
-from unittest.mock import patch, MagicMock
+import os
 from datetime import datetime
+from unittest.mock import MagicMock, patch
 
 import boto3
+import pytest
 from moto import mock_aws
 
 from tensortours.lambda_handlers.get_tour import handler
-from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
-from tensortours.services.tour_table import TourTableClient, TourTableItem, GenerationStatus
+from tensortours.models.tour import TourType, TTAudio, TTPlaceInfo, TTPlacePhotos, TTScript
+from tensortours.services.tour_table import GenerationStatus, TourTableClient, TourTableItem
 
 
 @pytest.fixture(scope="function")
