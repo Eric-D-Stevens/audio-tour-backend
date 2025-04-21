@@ -1,4 +1,5 @@
 """AWS Polly client for TensorTours backend."""
+
 import boto3
 import logging
 from typing import Dict, Optional
@@ -28,24 +29,24 @@ class AWSPollyClient:
         """
         self.voice_id = voice_id
         self.engine = engine
-        
+
         # Validate engine type
         if engine not in [self.ENGINE_STANDARD, self.ENGINE_NEURAL, self.ENGINE_GENERATIVE]:
             raise ValueError(
                 f"Invalid engine type: {engine}. Must be one of: "
                 f"{self.ENGINE_STANDARD}, {self.ENGINE_NEURAL}, or {self.ENGINE_GENERATIVE}"
             )
-            
+
         # Initialize the Polly client
-        self.client: PollyClient = boto3.client('polly')
+        self.client: PollyClient = boto3.client("polly")
 
     def synthesize_speech(
-        self, 
-        text: str, 
+        self,
+        text: str,
         output_format: str = "mp3",
         sample_rate: str = "22050",
         voice_id: Optional[str] = None,
-        engine: Optional[str] = None
+        engine: Optional[str] = None,
     ) -> Dict:
         """
         Synthesize speech from text using Amazon Polly.
@@ -68,15 +69,11 @@ class AWSPollyClient:
         # Use instance defaults if not specified
         voice_id = voice_id or self.voice_id
         engine = engine or self.engine
-        
+
         # Set content type based on output format
-        content_types = {
-            "mp3": "audio/mpeg",
-            "ogg_vorbis": "audio/ogg",
-            "pcm": "audio/pcm"
-        }
+        content_types = {"mp3": "audio/mpeg", "ogg_vorbis": "audio/ogg", "pcm": "audio/pcm"}
         content_type = content_types.get(output_format, "application/octet-stream")
-        
+
         try:
             # Prepare the synthesis request
             params = {
@@ -84,26 +81,26 @@ class AWSPollyClient:
                 "OutputFormat": output_format,
                 "SampleRate": sample_rate,
                 "Text": text,
-                "VoiceId": voice_id
+                "VoiceId": voice_id,
             }
-            
+
             # Add TextType parameter for standard engine
             if engine == self.ENGINE_STANDARD:
                 params["TextType"] = "text"
-            
+
             # Make the API call
             response: SynthesizeSpeechOutputTypeDef = self.client.synthesize_speech(**params)
-            
+
             # Extract and return the audio content
             audio_content = response["AudioStream"].read() if "AudioStream" in response else None
-            
+
             # Return a structured response
             return {
                 "audio_content": audio_content,
                 "content_type": content_type,
-                "request_characters": len(text)
+                "request_characters": len(text),
             }
-            
+
         except ClientError as e:
             # Log the error and re-raise
             logger.exception(f"Error in Polly synthesis: {str(e)}")
@@ -121,18 +118,16 @@ class AWSPollyClient:
             dict: Dictionary with voice information
         """
         engine = engine or self.engine
-        
+
         try:
             if engine:
                 response: DescribeVoicesOutputTypeDef = self.client.describe_voices(Engine=engine)
             else:
                 response: DescribeVoicesOutputTypeDef = self.client.describe_voices()
-                
+
             # Return a structured response
-            return {
-                "voices": response.get("Voices", [])
-            }
-            
+            return {"voices": response.get("Voices", [])}
+
         except ClientError as e:
             logger.exception(f"Error listing Polly voices: {str(e)}")
             raise

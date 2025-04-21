@@ -19,7 +19,7 @@ class GooglePlacesClient:
             "places.primaryType",
             "places.id",
             "places.photos",
-            "places.editorialSummary"
+            "places.editorialSummary",
         ]
 
         # Define fields to include in the place details response
@@ -36,19 +36,21 @@ class GooglePlacesClient:
             "photos",
             "websiteUri",
             "internationalPhoneNumber",
-            "currentOpeningHours"
+            "currentOpeningHours",
         ]
 
-    def _request(self, method: str, url: str, headers: Dict, data: Dict = None, params: Dict = None) -> Dict:
+    def _request(
+        self, method: str, url: str, headers: Dict, data: Dict = None, params: Dict = None
+    ) -> Dict:
         """Make a request to the Google Places API.
-        
+
         Args:
             method: HTTP method (GET, POST, etc.)
             url: URL to request
             headers: HTTP headers
             data: JSON data for POST requests
             params: Query parameters for GET requests
-            
+
         Returns:
             JSON response from the API
         """
@@ -57,7 +59,7 @@ class GooglePlacesClient:
             response = requests.request(method, url, headers=headers, params=params)
         else:  # POST, PUT, etc.
             response = requests.request(method, url, headers=headers, json=data)
-            
+
         # Check if the response was successful
         if response.status_code != 200:
             # Print the error details
@@ -66,33 +68,34 @@ class GooglePlacesClient:
             print(f"Headers: {headers}")
             if method.upper() == "POST" and data:
                 import json
+
                 print(f"Request data: {json.dumps(data, indent=2)}")
             try:
                 error_details = response.json()
                 import json
+
                 print(f"Error details: {json.dumps(error_details, indent=2)}")
             except Exception:
                 print(f"Raw response: {response.text}")
-        
+
         response.raise_for_status()
         return response.json()
 
-
     def _request_binary(self, method: str, url: str, headers: Dict, params: Dict = None) -> bytes:
         """Make a request to the Google Places API and return binary content.
-        
+
         Args:
             method: HTTP method (GET, POST, etc.)
             url: URL to request
             headers: HTTP headers
             params: Query parameters for GET requests
-            
+
         Returns:
             Binary content from the API response
         """
         # For GET requests, use params
         response = requests.request(method, url, headers=headers, params=params)
-            
+
         # Check if the response was successful
         if response.status_code != 200:
             # Print the error details
@@ -102,16 +105,16 @@ class GooglePlacesClient:
             try:
                 error_details = response.json()
                 import json
+
                 print(f"Error details: {json.dumps(error_details, indent=2)}")
             except Exception:
                 print(f"Raw response: {response.text}")
-        
+
         # Now raise the exception if needed
         response.raise_for_status()
-        
+
         # Return the response with binary data in content field
         return response.content
-    
 
     def search_nearby(
         self,
@@ -121,7 +124,7 @@ class GooglePlacesClient:
         include_types: List[str],
         exclude_types: List[str],
         language_code: str = "en",
-        max_results: int = 20
+        max_results: int = 20,
     ) -> Dict:
         """
         Search for places nearby a given location.
@@ -143,18 +146,12 @@ class GooglePlacesClient:
         headers = {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": self.api_key,
-            "X-Goog-FieldMask": ",".join(self.field_mask)  # Use field_mask for search_nearby
+            "X-Goog-FieldMask": ",".join(self.field_mask),  # Use field_mask for search_nearby
         }
 
         # build the locationRestriction object
         location_restriction = {
-            "circle": {
-                "center": {
-                    "latitude": latitude,
-                    "longitude": longitude
-                },
-                "radius": radius
-            }
+            "circle": {"center": {"latitude": latitude, "longitude": longitude}, "radius": radius}
         }
 
         # build the params object
@@ -163,11 +160,10 @@ class GooglePlacesClient:
             "includedTypes": include_types,
             "excludedTypes": exclude_types,
             "languageCode": language_code,
-            "maxResultCount": max_results
+            "maxResultCount": max_results,
         }
-        
-        return self._request("POST", url, headers, data=payload)
 
+        return self._request("POST", url, headers, data=payload)
 
     def get_place_details(self, place_id: str) -> dict:
         """Get details for a place from Google Places API v1."""
@@ -175,16 +171,15 @@ class GooglePlacesClient:
         headers = {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": self.api_key,
-            "X-Goog-FieldMask": ",".join(self.place_details_fields)  # Use place_details_fields for get_place_details
+            "X-Goog-FieldMask": ",".join(
+                self.place_details_fields
+            ),  # Use place_details_fields for get_place_details
         }
-        
+
         return self._request("GET", url, headers)
 
     def get_place_photo(
-        self,
-        photo_reference: str,
-        max_height_px: int = 400,
-        max_width_px: int = 400
+        self, photo_reference: str, max_height_px: int = 400, max_width_px: int = 400
     ) -> bytes:
         """
         Get photo binary data for a place from Google Places API v1.
@@ -200,22 +195,19 @@ class GooglePlacesClient:
         """
         # According to the documentation, the format should be:
         # https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
-        
+
         # The base API URL without the 'places' part
         base_api_url = "https://places.googleapis.com/v1"
-        
+
         # Construct the URL with the photo reference and /media suffix
         url = f"{base_api_url}/{photo_reference}/media"
-        
-        headers = {
-            "Accept": "image/*",  # Accept image content
-            "X-Goog-Api-Key": self.api_key
-        }
-        
+
+        headers = {"Accept": "image/*", "X-Goog-Api-Key": self.api_key}  # Accept image content
+
         params = {
             "maxHeightPx": max_height_px,
             "maxWidthPx": max_width_px,
         }
-        
+
         # Use the binary request method
         return self._request_binary("GET", url, headers, params=params)

@@ -1,10 +1,12 @@
 """Place-related models for TensorTours backend."""
+
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, HttpUrl
 
 
 class PlacePhoto(BaseModel):
     """Google Places photo model"""
+
     photo_reference: str
     height: int
     width: int
@@ -14,6 +16,7 @@ class PlacePhoto(BaseModel):
 
 class PlaceDetails(BaseModel):
     """Google Places details model"""
+
     place_id: str
     name: str
     formatted_address: str

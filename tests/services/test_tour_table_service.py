@@ -1,4 +1,5 @@
 """Unit tests for Tour table service using pytest and moto."""
+
 import os
 import pytest
 import json
@@ -8,14 +9,7 @@ from typing import Dict, List
 import boto3
 from moto import mock_aws
 
-from tensortours.models.tour import (
-    TourType, 
-    TTPlaceInfo, 
-    TTPlacePhotos, 
-    TTScript, 
-    TTAudio, 
-    TTour
-)
+from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
 from tensortours.services.tour_table import TourTableClient, TourTableItem, GenerationStatus
 
 
@@ -41,7 +35,7 @@ def dynamodb_table(dynamodb):
     """DynamoDB table."""
     # Set the table name for testing
     os.environ["TOUR_TABLE_NAME"] = "test-tour-table"
-    
+
     # Create the table
     table = dynamodb.create_table(
         TableName="test-tour-table",
@@ -55,7 +49,7 @@ def dynamodb_table(dynamodb):
         ],
         ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
     )
-    
+
     # Return the table
     return table
 
@@ -76,7 +70,7 @@ def sample_place_info():
         place_address="123 Test St, Test City, TS 12345",
         place_primary_type="test_type",
         place_types=["test_type", "another_type"],
-        place_location={"lat": 37.7749, "lng": -122.4194}
+        place_location={"lat": 37.7749, "lng": -122.4194},
     )
 
 
@@ -90,7 +84,7 @@ def sample_place_photos():
         s3_url="https://s3.amazonaws.com/bucket/photos/test.jpg",
         attribution={"html": "Test Attribution", "source": "Test Source"},
         size_width=800,
-        size_height=600
+        size_height=600,
     )
 
 
@@ -104,7 +98,7 @@ def sample_script():
         tour_type=TourType.ARCHITECTURE,
         model_info={"model": "gpt-4", "version": "1.0"},
         s3_url="https://s3.amazonaws.com/bucket/scripts/test.txt",
-        cloudfront_url="https://example.com/scripts/test.txt"
+        cloudfront_url="https://example.com/scripts/test.txt",
     )
 
 
@@ -117,7 +111,7 @@ def sample_audio():
         script_id="test_script_id",
         cloudfront_url="https://example.com/audio/test.mp3",
         s3_url="https://s3.amazonaws.com/bucket/audio/test.mp3",
-        model_info={"model": "elevenlabs", "voice": "en-US-Neural2-F"}
+        model_info={"model": "elevenlabs", "voice": "en-US-Neural2-F"},
     )
 
 
@@ -132,7 +126,7 @@ def sample_tour_table_item(sample_place_info, sample_place_photos, sample_script
         photos=[sample_place_photos],
         script=sample_script,  # Note: changed from scripts to script
         audio=sample_audio,
-        created_at=datetime(2025, 4, 20, 18, 17, 45, 602044)
+        created_at=datetime(2025, 4, 20, 18, 17, 45, 602044),
     )
 
 
@@ -140,13 +134,12 @@ def test_put_and_get_item(tour_table_client, sample_tour_table_item):
     """Test putting and getting an item from the table."""
     # Put the item in the table
     tour_table_client.put_item(sample_tour_table_item)
-    
+
     # Get the item from the table
     retrieved_item = tour_table_client.get_item(
-        place_id=sample_tour_table_item.place_id,
-        tour_type=sample_tour_table_item.tour_type
+        place_id=sample_tour_table_item.place_id, tour_type=sample_tour_table_item.tour_type
     )
-    
+
     # Verify the item was retrieved correctly
     assert retrieved_item is not None
     assert retrieved_item.place_id == sample_tour_table_item.place_id
@@ -163,10 +156,9 @@ def test_get_nonexistent_item(tour_table_client):
     """Test getting a nonexistent item from the table."""
     # Get a nonexistent item
     retrieved_item = tour_table_client.get_item(
-        place_id="nonexistent_place_id",
-        tour_type=TourType.ARCHITECTURE
+        place_id="nonexistent_place_id", tour_type=TourType.ARCHITECTURE
     )
-    
+
     # Verify the item is None
     assert retrieved_item is None
 
@@ -175,19 +167,17 @@ def test_delete_item(tour_table_client, sample_tour_table_item):
     """Test deleting an item from the table."""
     # Put the item in the table
     tour_table_client.put_item(sample_tour_table_item)
-    
+
     # Delete the item
     tour_table_client.delete_item(
-        place_id=sample_tour_table_item.place_id,
-        tour_type=sample_tour_table_item.tour_type
+        place_id=sample_tour_table_item.place_id, tour_type=sample_tour_table_item.tour_type
     )
-    
+
     # Try to get the deleted item
     retrieved_item = tour_table_client.get_item(
-        place_id=sample_tour_table_item.place_id,
-        tour_type=sample_tour_table_item.tour_type
+        place_id=sample_tour_table_item.place_id, tour_type=sample_tour_table_item.tour_type
     )
-    
+
     # Verify the item is None
     assert retrieved_item is None
 
@@ -196,13 +186,12 @@ def test_convert_to_tour(tour_table_client, sample_tour_table_item):
     """Test converting a TourTableItem to a TTour."""
     # Put the item in the table
     tour_table_client.put_item(sample_tour_table_item)
-    
+
     # Get the item from the table
     retrieved_item = tour_table_client.get_item(
-        place_id=sample_tour_table_item.place_id,
-        tour_type=sample_tour_table_item.tour_type
+        place_id=sample_tour_table_item.place_id, tour_type=sample_tour_table_item.tour_type
     )
-    
+
     # Convert to TTour
     tour = TTour(
         place_id=retrieved_item.place_id,
@@ -210,9 +199,9 @@ def test_convert_to_tour(tour_table_client, sample_tour_table_item):
         place_info=retrieved_item.place_info,
         photos=retrieved_item.photos,
         script=retrieved_item.script,
-        audio=retrieved_item.audio
+        audio=retrieved_item.audio,
     )
-    
+
     # Verify the tour was created correctly
     assert tour.place_id == sample_tour_table_item.place_id
     assert tour.tour_type == sample_tour_table_item.tour_type

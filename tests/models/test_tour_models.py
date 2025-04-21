@@ -1,16 +1,10 @@
 """Unit tests for Tour models using pytest."""
+
 import pytest
 from datetime import datetime
 from typing import Dict, List
 
-from tensortours.models.tour import (
-    TourType,
-    TTPlaceInfo,
-    TTPlacePhotos,
-    TTScript,
-    TTAudio,
-    TTour
-)
+from tensortours.models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio, TTour
 
 
 @pytest.fixture
@@ -23,7 +17,7 @@ def sample_place_info():
         place_address="123 Test St, Test City, TS 12345",
         place_primary_type="test_type",
         place_types=["test_type", "another_type"],
-        place_location={"lat": 37.7749, "lng": -122.4194}
+        place_location={"lat": 37.7749, "lng": -122.4194},
     )
 
 
@@ -37,7 +31,7 @@ def sample_photo():
         s3_url="https://s3.example.com/photo.jpg",
         attribution={"author": "Test Author", "source": "Test Source"},
         size_width=800,
-        size_height=600
+        size_height=600,
     )
 
 
@@ -51,7 +45,7 @@ def sample_script():
         tour_type=TourType.ARCHITECTURE,
         model_info={"model": "test_model", "version": "1.0"},
         s3_url="https://s3.example.com/script.txt",
-        cloudfront_url="https://example.com/script.txt"
+        cloudfront_url="https://example.com/script.txt",
     )
 
 
@@ -64,7 +58,7 @@ def sample_audio():
         script_id="test_script_id",
         cloudfront_url="https://example.com/audio.mp3",
         s3_url="https://s3.example.com/audio.mp3",
-        model_info={"model": "test_model", "version": "1.0"}
+        model_info={"model": "test_model", "version": "1.0"},
     )
 
 
@@ -77,7 +71,7 @@ def sample_tour(sample_place_info, sample_photo, sample_script, sample_audio):
         place_info=sample_place_info,
         photos=[sample_photo],
         script=sample_script,
-        audio=sample_audio
+        audio=sample_audio,
     )
 
 
@@ -127,7 +121,7 @@ def test_script_model(sample_script):
     assert str(sample_script.s3_url) == "https://s3.example.com/script.txt"
     assert str(sample_script.cloudfront_url) == "https://example.com/script.txt"
     assert isinstance(sample_script.generated_at, datetime)
-    
+
     # Test with a different tour type
     history_script = TTScript(
         script_id="history_script_id",
@@ -136,9 +130,9 @@ def test_script_model(sample_script):
         tour_type=TourType.HISTORY,
         model_info={"model": "test_model", "version": "1.0"},
         s3_url="https://s3.example.com/script.txt",
-        cloudfront_url="https://example.com/script.txt"
+        cloudfront_url="https://example.com/script.txt",
     )
-    
+
     assert history_script.tour_type == TourType.HISTORY
 
 

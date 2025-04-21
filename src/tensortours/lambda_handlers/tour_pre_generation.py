@@ -13,56 +13,61 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Initialize AWS clients
-s3 = boto3.client('s3')
-secrets_client = boto3.client('secretsmanager')
-sqs = boto3.client('sqs')
-dynamodb = boto3.resource('dynamodb')
-BUCKET_NAME = os.environ['CONTENT_BUCKET_NAME']
-CLOUDFRONT_DOMAIN = os.environ['CLOUDFRONT_DOMAIN']
+s3 = boto3.client("s3")
+secrets_client = boto3.client("secretsmanager")
+sqs = boto3.client("sqs")
+dynamodb = boto3.resource("dynamodb")
+BUCKET_NAME = os.environ["CONTENT_BUCKET_NAME"]
+CLOUDFRONT_DOMAIN = os.environ["CLOUDFRONT_DOMAIN"]
 
 # DynamoDB table for caching place data (same as used by geolocation service)
-PLACES_TABLE_NAME = os.environ.get('PLACES_TABLE_NAME', 'tensortours-places')
+PLACES_TABLE_NAME = os.environ.get("PLACES_TABLE_NAME", "tensortours-places")
 places_table = dynamodb.Table(PLACES_TABLE_NAME)
 
 # Secret names for API keys
-OPENAI_API_KEY_SECRET_NAME = os.environ['OPENAI_API_KEY_SECRET_NAME']
-ELEVENLABS_API_KEY_SECRET_NAME = os.environ['ELEVENLABS_API_KEY_SECRET_NAME']
-GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ['GOOGLE_MAPS_API_KEY_SECRET_NAME']
+OPENAI_API_KEY_SECRET_NAME = os.environ["OPENAI_API_KEY_SECRET_NAME"]
+ELEVENLABS_API_KEY_SECRET_NAME = os.environ["ELEVENLABS_API_KEY_SECRET_NAME"]
+GOOGLE_MAPS_API_KEY_SECRET_NAME = os.environ["GOOGLE_MAPS_API_KEY_SECRET_NAME"]
+
 
 # Function to retrieve secret from AWS Secrets Manager
 def get_secret(secret_name):
     try:
         response = secrets_client.get_secret_value(SecretId=secret_name)
-        if 'SecretString' in response:
-            return response['SecretString']
+        if "SecretString" in response:
+            return response["SecretString"]
     except ClientError as e:
         logger.exception(f"Error retrieving secret {secret_name}")
         raise e
+
 
 # Get API keys from Secrets Manager
 def get_openai_api_key():
     secret = get_secret(OPENAI_API_KEY_SECRET_NAME)
     try:
         secret_dict = json.loads(secret)
-        return secret_dict.get('OPENAI_API_KEY', secret)
+        return secret_dict.get("OPENAI_API_KEY", secret)
     except json.JSONDecodeError:
         return secret
+
 
 def get_elevenlabs_api_key():
     secret = get_secret(ELEVENLABS_API_KEY_SECRET_NAME)
     try:
         secret_dict = json.loads(secret)
-        return secret_dict.get('ELEVENLABS_API_KEY', secret)
+        return secret_dict.get("ELEVENLABS_API_KEY", secret)
     except json.JSONDecodeError:
         return secret
+
 
 def get_google_maps_api_key():
     secret = get_secret(GOOGLE_MAPS_API_KEY_SECRET_NAME)
     try:
         secret_dict = json.loads(secret)
-        return secret_dict.get('GOOGLE_MAPS_API_KEY', secret)
+        return secret_dict.get("GOOGLE_MAPS_API_KEY", secret)
     except json.JSONDecodeError:
         return secret
+
 
 # API endpoints
 OPENAI_API_URL = "https://api.openai.com/v1/chat/completions"
@@ -72,27 +77,29 @@ ELEVENLABS_API_URL = "https://api.elevenlabs.io/v1/text-to-speech"
 DEFAULT_VOICE_ID = "ThT5KcBeYPX3keUQqHPh"  # Josh - professional narrator voice
 
 # New Google Places API v1 endpoint
-PLACES_API_BASE_URL = 'https://places.googleapis.com/v1/places'
+PLACES_API_BASE_URL = "https://places.googleapis.com/v1/places"
+
 
 def get_cached_photo_urls(place_id):
     """Get CloudFront URLs for cached photos"""
     photo_urls = []
     photo_dir = f"photos/{place_id}"
     idx = 0
-    
+
     while True:
         photo_key = f"{photo_dir}/{idx}.jpg"
         if not check_if_file_exists(photo_key):
             break
         photo_urls.append(f"https://{CLOUDFRONT_DOMAIN}/{photo_key}")
         idx += 1
-    
+
     return photo_urls
+
 
 def handler(event, context):
     """
     Lambda handler for pre-generating audio tours triggered by SQS events.
-    
+
     Expected SQS message format:
     {
         "placeId": "Google Place ID",
@@ -101,121 +108,123 @@ def handler(event, context):
     """
     try:
         logger.info("Received event: " + json.dumps(event))
-        
+
         # Process each record from SQS
-        for record in event.get('Records', []):
+        for record in event.get("Records", []):
             try:
                 # Parse the message body
-                message_body = json.loads(record['body'])
-                
+                message_body = json.loads(record["body"])
+
                 # Extract parameters
-                place_id = message_body.get('placeId')
-                tour_type = message_body.get('tourType', 'history')
-                
+                place_id = message_body.get("placeId")
+                tour_type = message_body.get("tourType", "history")
+
                 if not place_id:
                     logger.error("Missing required parameter: placeId")
                     continue
-                
+
                 logger.info(f"Processing place_id: {place_id}, tour_type: {tour_type}")
-                
+
                 # First check if content is already cached in DynamoDB
                 cache_key = f"{place_id}_{tour_type}"
                 try:
                     # Try to get the item from DynamoDB
-                    response = places_table.get_item(
-                        Key={
-                            'placeId': cache_key
-                        }
-                    )
-                    
+                    response = places_table.get_item(Key={"placeId": cache_key})
+
                     # Check if item exists and is marked as pre-generated
-                    if 'Item' in response and response['Item'].get('pre_generated', False):
-                        logger.info(f"Content already cached in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+                    if "Item" in response and response["Item"].get("pre_generated", False):
+                        logger.info(
+                            f"Content already cached in DynamoDB for place_id: {place_id}, tour_type: {tour_type}"
+                        )
                         continue
                 except Exception as e:
                     logger.warning(f"Error checking DynamoDB cache: {str(e)}")
                     # Continue with S3 check if DynamoDB check fails
-                
+
                 # Check if content already exists in S3
                 script_key = f"scripts/{place_id}_{tour_type}.txt"
                 audio_key = f"audio/{place_id}_{tour_type}.mp3"
-                
+
                 script_exists = check_if_file_exists(script_key)
                 audio_exists = check_if_file_exists(audio_key)
-                
+
                 # Skip if both script and audio already exist
                 if script_exists and audio_exists:
-                    logger.info(f"Content already exists in S3 for place_id: {place_id}, tour_type: {tour_type}")
-                    
+                    logger.info(
+                        f"Content already exists in S3 for place_id: {place_id}, tour_type: {tour_type}"
+                    )
+
                     # If content exists in S3 but not in DynamoDB, update DynamoDB
                     try:
                         script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
                         audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
                         photo_urls = get_cached_photo_urls(place_id)
-                        
+
                         # Get place details if we need them for the record
                         if not photo_urls:
                             place_details = get_place_details(place_id)
                             photo_urls = cache_place_photos(place_id)
                         else:
                             place_details = {}
-                        
+
                         # Prepare the data to store in DynamoDB
                         place_data = {
-                            'place_id': place_id,
-                            'tour_type': tour_type,
-                            'script_url': script_url,
-                            'audio_url': audio_url,
-                            'cached': True,
-                            'place_details': place_details,
-                            'photos': photo_urls,
-                            'pre_generated': True,
-                            'generation_time': int(time.time())
+                            "place_id": place_id,
+                            "tour_type": tour_type,
+                            "script_url": script_url,
+                            "audio_url": audio_url,
+                            "cached": True,
+                            "place_details": place_details,
+                            "photos": photo_urls,
+                            "pre_generated": True,
+                            "generation_time": int(time.time()),
                         }
-                        
+
                         # Store in DynamoDB with TTL (30 days)
                         current_time = int(time.time())
                         expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
-                        
+
                         places_table.put_item(
                             Item={
-                                'placeId': cache_key,
-                                'tourType': tour_type,  # Required as sort key in DynamoDB table
-                                'data': json.dumps(place_data, default=str),
-                                'expiresAt': expiration_time,
-                                'createdAt': current_time,
-                                'pre_generated': True
+                                "placeId": cache_key,
+                                "tourType": tour_type,  # Required as sort key in DynamoDB table
+                                "data": json.dumps(place_data, default=str),
+                                "expiresAt": expiration_time,
+                                "createdAt": current_time,
+                                "pre_generated": True,
                             }
                         )
-                        logger.info(f"Updated DynamoDB with existing S3 content for place_id: {place_id}, tour_type: {tour_type}")
+                        logger.info(
+                            f"Updated DynamoDB with existing S3 content for place_id: {place_id}, tour_type: {tour_type}"
+                        )
                     except Exception as e:
                         logger.error(f"Error updating DynamoDB with existing S3 content: {str(e)}")
                         logger.error(f"Traceback: {traceback.format_exc()}")
-                    
+
                     continue
-                
+
                 # Get place details from Google Places API
                 place_details = get_place_details(place_id)
-                
+
                 if not place_details:
                     logger.error(f"Place details not found for place_id: {place_id}")
                     continue
-                
+
                 # Generate script with OpenAI
                 script = generate_script(place_details, tour_type)
-                
+
                 if not script:
                     logger.error(f"Failed to generate script for place_id: {place_id}")
                     continue
-                
+
                 # Save script to S3
-                upload_to_s3(script_key, script, 'text/plain')
+                upload_to_s3(script_key, script, "text/plain")
                 script_url = f"https://{CLOUDFRONT_DOMAIN}/{script_key}"
                 logger.info(f"Script generated and saved for place_id: {place_id}")
-                
+
                 # Start parallel processing for audio generation and photo gathering
                 logger.info(f"Starting parallel processing for place_id: {place_id}")
-                
+
                 # Define functions for parallel execution
                 def process_audio():
                     try:
@@ -224,9 +233,9 @@ def handler(event, context):
                         if not audio_data:
                             logger.error(f"Failed to generate audio for place_id: {place_id}")
                             return None
-                        
+
                         # Save audio to S3
-                        upload_to_s3(audio_key, audio_data, 'audio/mpeg', binary=True)
+                        upload_to_s3(audio_key, audio_data, "audio/mpeg", binary=True)
                         audio_url = f"https://{CLOUDFRONT_DOMAIN}/{audio_key}"
                         logger.info(f"Audio generated and saved for place_id: {place_id}")
                         return audio_url
@@ -234,7 +243,7 @@ def handler(event, context):
                         logger.error(f"Error in audio generation: {str(e)}")
                         logger.error(f"Traceback: {traceback.format_exc()}")
                         return None
-                
+
                 def process_photos():
                     try:
                         # Get photo URLs (either from cache or fetch new ones)
@@ -250,85 +259,85 @@ def handler(event, context):
                         logger.error(f"Error in photo gathering: {str(e)}")
                         logger.error(f"Traceback: {traceback.format_exc()}")
                         return []
-                
+
                 # Execute both tasks in parallel using ThreadPoolExecutor
                 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
                     audio_future = executor.submit(process_audio)
                     photos_future = executor.submit(process_photos)
-                    
+
                     # Wait for both tasks to complete
                     audio_url = audio_future.result()
                     photo_urls = photos_future.result()
-                
+
                 # Check if audio generation was successful
                 if not audio_url:
                     logger.error(f"Failed to generate audio for place_id: {place_id}")
                     continue
-                
+
                 logger.info(f"Parallel processing completed for place_id: {place_id}")
-                
+
                 # Create a record in DynamoDB to mark this content as pre-generated
                 # This allows the frontend to find it when querying the API
                 try:
                     # Prepare the data to store in DynamoDB
                     place_data = {
-                        'place_id': place_id,
-                        'tour_type': tour_type,
-                        'script_url': script_url,
-                        'audio_url': audio_url,
-                        'cached': True,
-                        'place_details': place_details,
-                        'photos': photo_urls,
-                        'pre_generated': True,
-                        'generation_time': int(time.time())
+                        "place_id": place_id,
+                        "tour_type": tour_type,
+                        "script_url": script_url,
+                        "audio_url": audio_url,
+                        "cached": True,
+                        "place_details": place_details,
+                        "photos": photo_urls,
+                        "pre_generated": True,
+                        "generation_time": int(time.time()),
                     }
-                    
+
                     # Create a cache key for this place and tour type
                     # This matches the format used by the geolocation service
                     cache_key = f"{place_id}_{tour_type}"
-                    
+
                     # Store in DynamoDB with TTL (30 days)
                     current_time = int(time.time())
                     expiration_time = current_time + (30 * 24 * 60 * 60)  # 30 days
-                    
+
                     places_table.put_item(
                         Item={
-                            'placeId': cache_key,
-                            'tourType': tour_type,  # Required as sort key in DynamoDB table
-                            'data': json.dumps(place_data, default=str),
-                            'expiresAt': expiration_time,
-                            'createdAt': current_time,
-                            'pre_generated': True
+                            "placeId": cache_key,
+                            "tourType": tour_type,  # Required as sort key in DynamoDB table
+                            "data": json.dumps(place_data, default=str),
+                            "expiresAt": expiration_time,
+                            "createdAt": current_time,
+                            "pre_generated": True,
                         }
                     )
-                    logger.info(f"Successfully stored pre-generated content metadata in DynamoDB for place_id: {place_id}, tour_type: {tour_type}")
+                    logger.info(
+                        f"Successfully stored pre-generated content metadata in DynamoDB for place_id: {place_id}, tour_type: {tour_type}"
+                    )
                 except Exception as e:
                     logger.error(f"Error storing metadata in DynamoDB: {str(e)}")
                     logger.error(f"Traceback: {traceback.format_exc()}")
                     # Continue processing - this is not critical
-                
-                logger.info(f"Successfully pre-generated tour for place_id: {place_id}, tour_type: {tour_type}")
-            
+
+                logger.info(
+                    f"Successfully pre-generated tour for place_id: {place_id}, tour_type: {tour_type}"
+                )
+
             except Exception as e:
                 logger.exception(f"Error processing record: {str(e)}")
                 continue
-        
+
         return {
-            'statusCode': 200,
-            'body': json.dumps({
-                'message': 'Tour pre-generation processing completed'
-            })
+            "statusCode": 200,
+            "body": json.dumps({"message": "Tour pre-generation processing completed"}),
         }
-    
+
     except Exception as e:
         logger.exception("Error processing event")
         return {
-            'statusCode': 500,
-            'body': json.dumps({
-                'error': f'Internal server error: {str(e)}',
-                'details': str(e)
-            })
+            "statusCode": 500,
+            "body": json.dumps({"error": f"Internal server error: {str(e)}", "details": str(e)}),
         }
+
 
 def check_if_file_exists(key):
     """Check if a file exists in S3 bucket"""
@@ -336,33 +345,27 @@ def check_if_file_exists(key):
         s3.head_object(Bucket=BUCKET_NAME, Key=key)
         return True
     except ClientError as e:
-        if e.response['Error']['Code'] == '404':
+        if e.response["Error"]["Code"] == "404":
             return False
         else:
             logger.exception(f"Error checking S3 object")
             raise
 
+
 def upload_to_s3(key, data, content_type, binary=False):
     """Upload data to S3 bucket"""
     try:
         if binary:
-            s3.put_object(
-                Bucket=BUCKET_NAME,
-                Key=key,
-                Body=data,
-                ContentType=content_type
-            )
+            s3.put_object(Bucket=BUCKET_NAME, Key=key, Body=data, ContentType=content_type)
         else:
             s3.put_object(
-                Bucket=BUCKET_NAME,
-                Key=key,
-                Body=data.encode('utf-8'),
-                ContentType=content_type
+                Bucket=BUCKET_NAME, Key=key, Body=data.encode("utf-8"), ContentType=content_type
             )
         return True
     except Exception as e:
         logger.exception(f"Error uploading to S3")
         return False
+
 
 def get_place_photos(place_id):
     """Get photo references for a place from Google Places API"""
@@ -370,17 +373,17 @@ def get_place_photos(place_id):
     try:
         api_key = get_google_maps_api_key()
         url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
-        
+
         headers = {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': api_key,
-            'X-Goog-FieldMask': 'photos'
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": api_key,
+            "X-Goog-FieldMask": "photos",
         }
-        
+
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             result = response.json()
-            photos = result.get('photos', [])
+            photos = result.get("photos", [])
             logger.info(f"Got {len(photos)} photo references: {photos}")
             return photos
         else:
@@ -390,100 +393,107 @@ def get_place_photos(place_id):
         logger.error(f"Error getting photos for place {place_id}: {str(e)}")
         return []
 
+
 def cache_place_photos(place_id):
     """Cache photos for a place and return CloudFront URLs"""
     photo_urls = []
     photos = get_place_photos(place_id)
-    
+
     if not photos:
         return []
-    
+
     try:
         api_key = get_google_maps_api_key()
         photo_dir = f"photos/{place_id}"
-        
+
         for idx, photo in enumerate(photos):
             photo_key = f"{photo_dir}/{idx}.jpg"
-            
+
             try:
                 # Get photo from Places API
                 photo_url = f"https://places.googleapis.com/v1/{photo.get('name')}/media?key={api_key}&maxHeightPx=800"
-                
+
                 photo_response = requests.get(photo_url)
-                
+
                 if photo_response.status_code == 200:
                     # Upload photo to S3
-                    upload_to_s3(photo_key, photo_response.content, 'image/jpeg', binary=True)
+                    upload_to_s3(photo_key, photo_response.content, "image/jpeg", binary=True)
                     logger.info(f"Cached photo {idx} for place {place_id}")
                     photo_urls.append(f"https://{CLOUDFRONT_DOMAIN}/{photo_key}")
                 else:
-                    logger.error(f"Failed to fetch photo {idx} for place {place_id}: {photo_response.status_code}")
+                    logger.error(
+                        f"Failed to fetch photo {idx} for place {place_id}: {photo_response.status_code}"
+                    )
             except Exception as e:
                 logger.error(f"Error caching photo {idx} for place {place_id}: {str(e)}")
                 continue
-        
+
         return photo_urls
     except Exception as e:
         logger.error(f"Error in cache_place_photos for place {place_id}: {str(e)}")
         return []
 
+
 def get_place_details(place_id):
     """Get place details from Google Places API v1"""
     logger.info(f"Fetching place details for place_id: {place_id}")
-    
+
     try:
         # Get the API key
         api_key = get_google_maps_api_key()
         logger.debug("Successfully retrieved Google Maps API key")
-            
+
         url = f"{PLACES_API_BASE_URL}/{place_id}?languageCode=en"
         logger.debug(f"Making request to Google Places API v1 for place_id: {place_id}")
-        
+
         headers = {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': api_key,
-            'X-Goog-FieldMask': 'displayName,formattedAddress,rating,types,editorialSummary,websiteUri,nationalPhoneNumber,photos'
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": api_key,
+            "X-Goog-FieldMask": "displayName,formattedAddress,rating,types,editorialSummary,websiteUri,nationalPhoneNumber,photos",
         }
-        
+
         try:
             response = requests.get(url, headers=headers)
             logger.info(f"Google Places API response status: {response.status_code}")
-            
+
             if response.status_code == 200:
                 result = response.json()
-                logger.info(f"Successfully retrieved details for {result.get('displayName', 'unknown place')}")
-                
+                logger.info(
+                    f"Successfully retrieved details for {result.get('displayName', 'unknown place')}"
+                )
+
                 # Convert v1 API response to match old format for compatibility
-                editorial_text = ''
-                if 'editorialSummary' in result:
-                    editorial_text = result['editorialSummary'].get('text', '')
-                
+                editorial_text = ""
+                if "editorialSummary" in result:
+                    editorial_text = result["editorialSummary"].get("text", "")
+
                 converted_result = {
-                    'name': result.get('displayName'),
-                    'formatted_address': result.get('formattedAddress'),
-                    'rating': result.get('rating'),
-                    'types': result.get('types', []),
-                    'editorial_summary': {'overview': editorial_text},
-                    'website': result.get('websiteUri'),
-                    'formatted_phone_number': result.get('nationalPhoneNumber'),
-                    'photos': []  # Photos will be handled separately
+                    "name": result.get("displayName"),
+                    "formatted_address": result.get("formattedAddress"),
+                    "rating": result.get("rating"),
+                    "types": result.get("types", []),
+                    "editorial_summary": {"overview": editorial_text},
+                    "website": result.get("websiteUri"),
+                    "formatted_phone_number": result.get("nationalPhoneNumber"),
+                    "photos": [],  # Photos will be handled separately
                 }
-                
+
                 return converted_result
             else:
                 logger.error(f"Google Places API request failed with status {response.status_code}")
                 logger.error(f"Response content: {response.text}")
                 return None
-                
+
         except requests.exceptions.RequestException as e:
             logger.error(f"Request error fetching place details: {str(e)}")
             logger.exception("Full traceback:")
             return None
-            
+
     except Exception as e:
         logger.error(f"Error retrieving Google Maps API key: {str(e)}")
         logger.exception("Full traceback:")
         return None
+
 
 def generate_script(place_details, tour_type):
     """Generate script for the audio tour using OpenAI"""
@@ -491,15 +501,15 @@ def generate_script(place_details, tour_type):
         # Log input parameters
         logger.info(f"Generating script for tour_type: {tour_type}")
         logger.debug(f"Place details received: {json.dumps(place_details, indent=2)}")
-        
+
         # Prepare the place information for prompt
-        place_name = place_details.get('name', 'this location')
-        place_address = place_details.get('formatted_address', '')
-        place_types = place_details.get('types', [])
-        place_summary = place_details.get('editorial_summary', {}).get('overview', '')
-        
+        place_name = place_details.get("name", "this location")
+        place_address = place_details.get("formatted_address", "")
+        place_types = place_details.get("types", [])
+        place_summary = place_details.get("editorial_summary", {}).get("overview", "")
+
         logger.info(f"Generating script for: {place_name}")
-        
+
         # Craft the prompt for OpenAI
         system_prompt = f"""
         You are an expert tour guide creating an audio script for {tour_type} tours IN ENGLISH ONLY.
@@ -514,7 +524,7 @@ def generate_script(place_details, tour_type):
         IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the language of the rest of this prompt.
         IMPORTANT: ALWAYS WRITE THE SCRIPT IN SPOKEN ENGLISH so that a text-to-speech engine can read it aloud.
         """
-        
+
         user_prompt = f"""
         Create an audio tour script for: {place_name}
         Address: {place_address}
@@ -523,38 +533,35 @@ def generate_script(place_details, tour_type):
         
         This is for a {tour_type} focused tour.
         """
-        
+
         logger.debug(f"System prompt length: {len(system_prompt)} chars")
         logger.debug(f"User prompt length: {len(user_prompt)} chars")
-        
+
         # Get OpenAI API key from Secrets Manager
         logger.debug("Retrieving OpenAI API key")
         openai_api_key = get_openai_api_key()
-        
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {openai_api_key}"
-        }
-        
+
+        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {openai_api_key}"}
+
         payload = {
             "model": "gpt-4o-mini",
             "messages": [
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
+                {"role": "user", "content": user_prompt},
             ],
             "temperature": 0.7,
-            "max_tokens": 5000
+            "max_tokens": 5000,
         }
-        
+
         logger.info(f"Making request to OpenAI API with model: {payload['model']}")
-        
+
         try:
             response = requests.post(OPENAI_API_URL, headers=headers, json=payload)
             logger.info(f"OpenAI API response status: {response.status_code}")
-            
+
             if response.status_code == 200:
                 result = response.json()
-                script = result['choices'][0]['message']['content'].strip()
+                script = result["choices"][0]["message"]["content"].strip()
                 script_length = len(script)
                 logger.info(f"Successfully generated script of length: {script_length} chars")
                 logger.debug(f"Generated script preview: {script[:100]}...")
@@ -567,16 +574,17 @@ def generate_script(place_details, tour_type):
                 except:
                     logger.error(f"Raw response text: {response.text}")
                 return None
-                
+
         except requests.exceptions.RequestException as e:
             logger.error(f"Request error calling OpenAI API: {str(e)}")
             logger.exception("Full traceback:")
             return None
-    
+
     except Exception as e:
         logger.error(f"Error generating script: {str(e)}")
         logger.exception("Full traceback:")
         return None
+
 
 def generate_audio(script):
     """Generate audio from script using Eleven Labs API"""
@@ -584,34 +592,31 @@ def generate_audio(script):
         script_length = len(script)
         logger.info(f"Generating audio for script of length: {script_length} chars")
         logger.debug(f"Script preview: {script[:100]}...")
-        
+
         # Get ElevenLabs API key from Secrets Manager
         logger.debug("Retrieving ElevenLabs API key")
         elevenlabs_api_key = get_elevenlabs_api_key()
-        
+
         headers = {
             "Accept": "audio/mpeg",
             "Content-Type": "application/json",
-            "xi-api-key": elevenlabs_api_key
+            "xi-api-key": elevenlabs_api_key,
         }
-        
+
         payload = {
             "text": script,
             "model_id": "eleven_flash_v2_5",
-            "voice_settings": {
-                "stability": 0.5,
-                "similarity_boost": 0.75
-            }
+            "voice_settings": {"stability": 0.5, "similarity_boost": 0.75},
         }
-        
+
         url = f"{ELEVENLABS_API_URL}/{DEFAULT_VOICE_ID}"
         logger.info(f"Making request to ElevenLabs API with model: {payload['model_id']}")
         logger.debug(f"Using voice ID: {DEFAULT_VOICE_ID}")
-        
+
         try:
             response = requests.post(url, headers=headers, json=payload)
             logger.info(f"ElevenLabs API response status: {response.status_code}")
-            
+
             if response.status_code == 200:
                 audio_size = len(response.content)
                 logger.info(f"Successfully generated audio of size: {audio_size} bytes")
@@ -624,12 +629,12 @@ def generate_audio(script):
                 except:
                     logger.error(f"Raw response text: {response.text}")
                 return None
-                
+
         except requests.exceptions.RequestException as e:
             logger.error(f"Request error calling ElevenLabs API: {str(e)}")
             logger.exception("Full traceback:")
             return None
-    
+
     except Exception as e:
         logger.error(f"Error generating audio: {str(e)}")
         logger.exception("Full traceback:")

@@ -1,4 +1,5 @@
 """Tour-related models for TensorTours backend."""
+
 from typing import List, Dict
 from enum import Enum
 from datetime import datetime
@@ -7,6 +8,7 @@ from pydantic import BaseModel, Field, HttpUrl
 
 class TourType(str, Enum):
     """Types of tours available"""
+
     HISTORY = "history"
     CULTURE = "cultural"
     ARCHITECTURE = "architecture"
@@ -16,6 +18,7 @@ class TourType(str, Enum):
 
 class TTPlaceInfo(BaseModel):
     """Place information model"""
+
     place_id: str
     place_name: str
     place_editorial_summary: str
@@ -28,6 +31,7 @@ class TTPlaceInfo(BaseModel):
 
 class TTPlacePhotos(BaseModel):
     """Place photos model"""
+
     photo_id: str
     place_id: str
     cloudfront_url: HttpUrl
@@ -40,6 +44,7 @@ class TTPlacePhotos(BaseModel):
 
 class TTScript(BaseModel):
     """Tour script model"""
+
     script_id: str
     place_id: str
     place_name: str
@@ -58,6 +63,7 @@ class TTAudio(BaseModel):
     s3_url: HttpUrl
     model_info: Dict
     generated_at: datetime = Field(default_factory=datetime.now)
+
 
 class TTour(BaseModel):
     place_id: str
