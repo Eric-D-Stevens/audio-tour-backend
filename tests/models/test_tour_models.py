@@ -76,7 +76,7 @@ def sample_tour(sample_place_info, sample_photo, sample_script, sample_audio):
         tour_type=TourType.ARCHITECTURE,
         place_info=sample_place_info,
         photos=[sample_photo],
-        scripts=sample_script,
+        script=sample_script,
         audio=sample_audio
     )
 
@@ -162,5 +162,5 @@ def test_tour_model(sample_tour, sample_place_info, sample_photo, sample_script,
     assert sample_tour.place_info.place_name == "Test Place"
     assert len(sample_tour.photos) == 1
     assert sample_tour.photos[0].photo_id == "test_photo_id"
-    assert sample_tour.scripts.script_id == "test_script_id"
+    assert sample_tour.script.script_id == "test_script_id"
     assert sample_tour.audio.audio_id == "test_audio_id"

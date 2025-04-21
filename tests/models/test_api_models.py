@@ -80,7 +80,7 @@ def sample_tour(sample_place_info):
         tour_type=TourType.ARCHITECTURE,
         place_info=sample_place_info,
         photos=[photo],
-        scripts=script,
+        script=script,
         audio=audio
     )
 

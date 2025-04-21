@@ -64,5 +64,5 @@ class TTour(BaseModel):
     tour_type: TourType
     place_info: TTPlaceInfo
     photos: List[TTPlacePhotos]
-    scripts: TTScript
+    script: TTScript
     audio: TTAudio

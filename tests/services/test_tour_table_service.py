@@ -209,7 +209,7 @@ def test_convert_to_tour(tour_table_client, sample_tour_table_item):
         tour_type=retrieved_item.tour_type,
         place_info=retrieved_item.place_info,
         photos=retrieved_item.photos,
-        scripts=retrieved_item.script,
+        script=retrieved_item.script,
         audio=retrieved_item.audio
     )
     
@@ -219,5 +219,5 @@ def test_convert_to_tour(tour_table_client, sample_tour_table_item):
     assert tour.place_info.place_name == sample_tour_table_item.place_info.place_name
     assert len(tour.photos) == len(sample_tour_table_item.photos)
     assert tour.photos[0].photo_id == sample_tour_table_item.photos[0].photo_id
-    assert tour.scripts.script_id == sample_tour_table_item.script.script_id
+    assert tour.script.script_id == sample_tour_table_item.script.script_id
     assert tour.audio.audio_id == sample_tour_table_item.audio.audio_id

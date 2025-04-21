@@ -22,5 +22,11 @@ pytest>=7.0.0
 pytest-moto>=0.2.0
 moto>=4.0.0
 
+# Code quality
+flake8>=6.0.0
+black>=23.0.0
+pytest-flake8>=1.1.1
+pytest-black>=0.3.0
+
 # Install the package in development mode
 -e .
