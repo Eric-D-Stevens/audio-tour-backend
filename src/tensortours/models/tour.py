@@ -17,6 +17,65 @@ class TourType(str, Enum):
     NATURE = "nature"
 
 
+class TourTypeToGooglePlaceTypes(Enum):
+    """Mapping of tour types to Google Places API place types.
+
+    This enum provides a standardized mapping between TensorTours tour types
+    and the corresponding Google Places API place types to use when searching
+    for places of a specific tour type.
+    """
+
+    HISTORY = ["historical_place", "monument", "historical_landmark", "cultural_landmark"]
+
+    CULTURE = [
+        "art_gallery",
+        "museum",
+        "performing_arts_theater",
+        "cultural_center",
+        "tourist_attraction",
+    ]
+
+    ART = ["art_gallery", "art_studio", "sculpture"]
+
+    NATURE = [
+        "park",
+        "national_park",
+        "state_park",
+        "botanical_garden",
+        "garden",
+        "wildlife_park",
+        "zoo",
+        "aquarium",
+    ]
+
+    ARCHITECTURE = [
+        "cultural_landmark",
+        "monument",
+        "church",
+        "hindu_temple",
+        "mosque",
+        "synagogue",
+        "stadium",
+        "opera_house",
+    ]
+
+    @classmethod
+    def get_place_types(cls, tour_type: TourType) -> List[str]:
+        """Get Google Places API place types for a given tour type.
+
+        Args:
+            tour_type: The TourType to get place types for
+
+        Returns:
+            List of Google Places API place types corresponding to the tour type
+        """
+        try:
+            return cls[tour_type.name].value
+        except (KeyError, AttributeError):
+            # Default to tourist_attraction if no mapping exists
+            return ["tourist_attraction"]
+
+
 class TTPlaceInfo(BaseModel):
     """Place information model"""
 
