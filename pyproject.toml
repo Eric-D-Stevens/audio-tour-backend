@@ -2,6 +2,10 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["tensortours"]
+
 [project]
 name = "tensortours"
 version = "0.1.0"
@@ -62,7 +66,7 @@ line_length = 100
 
 [tool.pytest.ini_options]
 addopts = "--flake8 --black"
-testpaths = ["tensortours", "tests"]
+testpaths = ["src/tensortours", "tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"

@@ -26,21 +26,21 @@ def main():
     
     # Run black code formatter check (doesn't modify files)
     black_success = run_command(
-        "black --check .", 
+        "black --check src tests integration_tests", 
         "black code style check"
     )
     success = success and black_success
     
     # Run flake8 linter
     flake8_success = run_command(
-        "flake8 .", 
+        "flake8 src tests integration_tests", 
         "flake8 code style check"
     )
     success = success and flake8_success
     
     # Run pytest tests
     pytest_success = run_command(
-        "pytest .", 
+        "pytest", 
         "pytest tests"
     )
     success = success and pytest_success
