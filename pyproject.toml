@@ -71,14 +71,15 @@ remove_duplicate_keys = true
 expand_star_imports = true
 
 [tool.pytest.ini_options]
-addopts = "--flake8 --black"
-testpaths = ["src/tensortours", "tests"]
+addopts = ""
+testpaths = ["tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
 markers = [
     "flake8: Run flake8 on Python source files",
     "black: Run black on Python source files",
+    "lint: Run all linting checks",
 ]
 
 [tool.flake8]
