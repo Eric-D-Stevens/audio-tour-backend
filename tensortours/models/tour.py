@@ -1,8 +1,8 @@
 """Tour-related models for TensorTours backend."""
-from typing import List, Dict, Optional, Any, Union
+from typing import List, Dict
 from enum import Enum
 from datetime import datetime
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class TourType(str, Enum):
@@ -10,56 +10,59 @@ class TourType(str, Enum):
     HISTORY = "history"
     CULTURE = "cultural"
     ARCHITECTURE = "architecture"
-    FOOD = "food_drink"
     ART = "art"
     NATURE = "nature"
-    GENERAL = "general"
 
 
-class ScriptSegment(BaseModel):
-    """Individual segment of a tour script"""
-    title: str
-    content: str
-    duration_seconds: int
+class TTPlaceInfo(BaseModel):
+    """Place information model"""
+    place_id: str
+    place_name: str
+    place_editorial_summary: str
+    place_address: str
+    place_primary_type: str
+    place_types: List[str]
+    place_location: Dict[str, float]
+    retrieved_at: datetime = Field(default_factory=datetime.now)
 
 
-class TourScript(BaseModel):
-    """Complete tour script model"""
+class TTPlacePhotos(BaseModel):
+    """Place photos model"""
+    photo_id: str
+    place_id: str
+    cloudfront_url: HttpUrl
+    s3_url: HttpUrl
+    attribution: Dict[str, str]
+    size_width: int
+    size_height: int
+    retrieved_at: datetime = Field(default_factory=datetime.now)
+
+
+class TTScript(BaseModel):
+    """Tour script model"""
+    script_id: str
     place_id: str
     place_name: str
     tour_type: TourType
-    segments: List[ScriptSegment]
-    total_duration_seconds: int
+    model_info: Dict
+    s3_url: HttpUrl
+    cloudfront_url: HttpUrl
     generated_at: datetime = Field(default_factory=datetime.now)
 
 
-class AudioSegment(BaseModel):
-    """Audio segment model with metadata"""
-    segment_id: str
-    title: str
-    url: HttpUrl
-    duration_seconds: float
-    transcript: str
-
-
-class CompleteTour(BaseModel):
-    """Complete tour with all metadata and audio segments"""
-    tour_id: str
+class TTAudio(BaseModel):
+    audio_id: str
     place_id: str
-    place_name: str
+    script_id: str
+    cloudfront_url: HttpUrl
+    s3_url: HttpUrl
+    model_info: Dict
+    generated_at: datetime = Field(default_factory=datetime.now)
+
+class TTour(BaseModel):
+    place_id: str
     tour_type: TourType
-    duration_minutes: int
-    language: str
-    audio_segments: List[AudioSegment]
-    photos: List[str]
-    generated_at: datetime
-    status: str = "complete"
-
-
-class TourRequest(BaseModel):
-    """Request model for tour generation"""
-    place_id: str
-    tour_type: TourType = TourType.GENERAL
-    user_id: Optional[str] = None
-    duration_minutes: Optional[int] = 30
-    language: str = "en"
+    place_info: TTPlaceInfo
+    photos: List[TTPlacePhotos]
+    scripts: TTScript
+    audio: TTAudio

@@ -1,0 +1,65 @@
+"""Tour-related models for TensorTours backend."""
+import os
+from typing import List, Optional, Dict
+from enum import Enum
+from datetime import datetime
+from pydantic import BaseModel, Field
+from ..models.tour import TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio
+import boto3
+from mypy_boto3_dynamodb.service_resource import Table
+
+class GenerationStatus(Enum):
+    NOT_STARTED = "not_started"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+
+class TourTableItem(BaseModel):
+    """DDB Stored tour item model"""
+    place_id: str # Primary key
+    tour_type: TourType # Sort key
+    place_info: TTPlaceInfo
+    status: GenerationStatus
+    photos: Optional[List[TTPlacePhotos]]
+    scripts: Optional[TTScript]
+    audio: Optional[TTAudio]
+    created_at: datetime = Field(default_factory=datetime.now)
+
+
+class TourTableClient:
+    """DDB Tour table client"""
+    def __init__(self):
+        self.table_name = os.environ['TOUR_TABLE_NAME']
+        self._table: Table = boto3.resource('dynamodb').Table(self.table_name)
+
+    def get_item(self, place_id: str, tour_type: TourType) -> Optional[TourTableItem]:
+        """Get a tour item by place_id and tour_type."""
+        item = self._table.get_item(
+            Key={
+                'place_id': place_id,
+                'tour_type': tour_type.value
+            }
+        )
+        return TourTableItem(**item['Item']) if item['Item'] else None
+
+    def put_item(self, item: TourTableItem):
+        """Put a tour item into the table."""
+        self._table.put_item(Item=item.model_dump())
+
+    def update_item(self, item: TourTableItem, attributes: Dict):
+        """Update a tour item in the table."""
+        self._table.update_item(
+            Key={
+                'place_id': item.place_id,
+                'tour_type': item.tour_type.value
+            },
+            AttributeUpdates=attributes
+        )
+
+    def delete_item(self, place_id: str, tour_type: TourType):
+        """Delete a tour item from the table."""
+        self._table.delete_item(
+            Key={
+                'place_id': place_id,
+                'tour_type': tour_type.value
+            }
+        )
