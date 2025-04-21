@@ -76,6 +76,9 @@ testpaths = ["tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+filterwarnings = [
+    "ignore::DeprecationWarning:botocore.*",
+]
 markers = [
     "flake8: Run flake8 on Python source files",
     "black: Run black on Python source files",

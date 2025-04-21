@@ -34,11 +34,12 @@ def dynamodb(aws_credentials):
 @pytest.fixture(scope="function")
 def dynamodb_table(dynamodb):
     """DynamoDB table."""
-    # Set the table name for testing
+    # Set the table names for testing
     os.environ["TOUR_TABLE_NAME"] = "test-tour-table"
+    os.environ["USER_EVENT_TABLE_NAME"] = "test-user-event-table"
 
-    # Create the table
-    table = dynamodb.create_table(
+    # Create the tour table
+    tour_table = dynamodb.create_table(
         TableName="test-tour-table",
         KeySchema=[
             {"AttributeName": "place_id", "KeyType": "HASH"},  # Partition key
@@ -51,8 +52,22 @@ def dynamodb_table(dynamodb):
         ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
     )
 
-    # Return the table
-    return table
+    # Create the user event table
+    dynamodb.create_table(
+        TableName="test-user-event-table",
+        KeySchema=[
+            {"AttributeName": "user_id", "KeyType": "HASH"},  # Partition key
+            {"AttributeName": "timestamp", "KeyType": "RANGE"},  # Sort key
+        ],
+        AttributeDefinitions=[
+            {"AttributeName": "user_id", "AttributeType": "S"},
+            {"AttributeName": "timestamp", "AttributeType": "N"},
+        ],
+        ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
+    )
+
+    # Return the tour table
+    return tour_table
 
 
 @pytest.fixture
@@ -212,13 +227,18 @@ def test_get_tour_not_found(dynamodb_table, api_gateway_event):
     assert response_body["error"] == "Tour not found"
 
 
+@patch("tensortours.lambda_handlers.get_tour.get_user_event_table_client")
 @patch("tensortours.lambda_handlers.get_tour.get_tour_table_client")
-def test_get_tour_exception(mock_get_client, api_gateway_event):
+def test_get_tour_exception(mock_get_tour_client, mock_get_user_event_client, api_gateway_event):
     """Test handling an exception during tour retrieval."""
     # Mock the tour table client to raise an exception
-    mock_client = MagicMock()
-    mock_client.get_item.side_effect = Exception("Test exception")
-    mock_get_client.return_value = mock_client
+    mock_tour_client = MagicMock()
+    mock_tour_client.get_item.side_effect = Exception("Test exception")
+    mock_get_tour_client.return_value = mock_tour_client
+
+    # Mock the user event table client to avoid real DynamoDB calls
+    mock_user_client = MagicMock()
+    mock_get_user_event_client.return_value = mock_user_client
 
     # Parse the JSON string in the event body
     api_gateway_event["body"] = json.loads(api_gateway_event["body"])

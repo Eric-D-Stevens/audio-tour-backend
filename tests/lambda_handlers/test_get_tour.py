@@ -10,8 +10,8 @@ from moto import mock_aws
 
 from tensortours.lambda_handlers.get_tour import handler
 from tensortours.models.api import GetPregeneratedTourRequest
-from tensortours.models.tour import TTour, TourType, TTPlaceInfo, TTPlacePhotos, TTScript, TTAudio
-from tensortours.services.tour_table import TourTableClient, TourTableItem, GenerationStatus
+from tensortours.models.tour import TourType, TTAudio, TTPlaceInfo, TTPlacePhotos, TTScript
+from tensortours.services.tour_table import GenerationStatus, TourTableClient, TourTableItem
 from tensortours.services.user_event_table import UserEventTableClient
 
 
@@ -142,21 +142,18 @@ def test_handler_success(
 
     # Create a sample event with authenticated user context
     event = {
-        "body": {
-            "place_id": "test_place_id",
-            "tour_type": TourType.HISTORY.value
-        },
+        "body": {"place_id": "test_place_id", "tour_type": TourType.HISTORY.value},
         "requestContext": {
             "authorizer": {
                 "claims": {
                     "sub": "test_user_123",
                     "cognito:username": "testuser",
                     "email": "test@example.com",
-                    "cognito:groups": "users"
+                    "cognito:groups": "users",
                 }
             },
-            "requestId": "test-request-id"
-        }
+            "requestId": "test-request-id",
+        },
     }
 
     # Call the handler
@@ -174,7 +171,7 @@ def test_handler_success(
 
     # Verify that the user event table client was called to log the event
     mock_user_event_client.log_get_tour_event.assert_called_once()
-    
+
     # Verify the request passed to log_get_tour_event
     log_call_args = mock_user_event_client.log_get_tour_event.call_args[0][0]
     assert isinstance(log_call_args, GetPregeneratedTourRequest)
@@ -190,9 +187,7 @@ def test_handler_success(
 
 @patch("tensortours.lambda_handlers.get_tour.get_tour_table_client")
 @patch("tensortours.lambda_handlers.get_tour.get_user_event_table_client")
-def test_handler_tour_not_found(
-    mock_get_user_event_table_client, mock_get_tour_table_client
-):
+def test_handler_tour_not_found(mock_get_user_event_table_client, mock_get_tour_table_client):
     """Test the handler when a tour is not found."""
     # Set up the mock tour table client
     mock_tour_client = MagicMock(spec=TourTableClient)
@@ -210,9 +205,7 @@ def test_handler_tour_not_found(
             "tour_type": TourType.HISTORY.value,
         },
         # No requestContext.authorizer means no user information
-        "requestContext": {
-            "requestId": "test-request-id-2"
-        }
+        "requestContext": {"requestId": "test-request-id-2"},
     }
 
     # Call the handler
@@ -229,13 +222,15 @@ def test_handler_tour_not_found(
 
     # Verify that the user event was still logged even though the tour was not found
     mock_user_event_client.log_get_tour_event.assert_called_once()
-    
+
     # Verify the request passed to log_get_tour_event and check it's using "anonymous" for user_id
     log_call_args = mock_user_event_client.log_get_tour_event.call_args[0][0]
     assert isinstance(log_call_args, GetPregeneratedTourRequest)
     assert log_call_args.place_id == "nonexistent_place_id"
     assert log_call_args.tour_type == TourType.HISTORY
-    assert log_call_args.user is None  # This should result in "anonymous" user_id in the logged event
+    assert (
+        log_call_args.user is None
+    )  # This should result in "anonymous" user_id in the logged event
 
 
 @patch("tensortours.lambda_handlers.get_tour.get_tour_table_client")
@@ -251,17 +246,18 @@ def test_handler_with_anonymous_user(
 
     # Set up the mock user event table client with a spy to capture the actual event being logged
     mock_user_event_client = MagicMock(spec=UserEventTableClient)
-    
+
     # Use a side effect to capture the event data
     event_data = {}
+
     def capture_event(request):
-        nonlocal event_data
         # Simulate what happens in log_get_tour_event
         user_id = request.user.user_id if request.user else "anonymous"
         event_data["user_id"] = user_id
         event_data["event_type"] = "get_tour"
         event_data["request_data"] = request.model_dump_json()
-    
+        return None  # Return None to avoid the nonlocal issue
+
     mock_user_event_client.log_get_tour_event.side_effect = capture_event
     mock_get_user_event_table_client.return_value = mock_user_event_client
 
@@ -271,10 +267,7 @@ def test_handler_with_anonymous_user(
             "place_id": "test_place_id",
             "tour_type": TourType.HISTORY.value,
         },
-        "requestContext": {
-            "authorizer": {},  # Empty authorizer
-            "requestId": "test-request-id-3"
-        }
+        "requestContext": {"authorizer": {}, "requestId": "test-request-id-3"},  # Empty authorizer
     }
 
     # Call the handler
@@ -282,7 +275,7 @@ def test_handler_with_anonymous_user(
 
     # Check that the response is correct
     assert response["statusCode"] == 200
-    
+
     # Verify that the user event was logged with "anonymous" user_id
     mock_user_event_client.log_get_tour_event.assert_called_once()
     assert event_data["user_id"] == "anonymous"

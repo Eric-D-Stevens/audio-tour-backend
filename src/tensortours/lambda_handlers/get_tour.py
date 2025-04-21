@@ -18,16 +18,16 @@ def handler(event, context):
     if isinstance(body, str):
         # API Gateway might send the body as a JSON string
         body = json.loads(body)
-    
+
     # Create a merged dict with both body fields and the original event
     # This allows the validator to see both the request fields and the context
     merged_event = {**body, "requestContext": event.get("requestContext", {})}
-    
+
     # Validate the merged event
     request = GetPregeneratedTourRequest.model_validate(merged_event)
     tour_table_client: TourTableClient = get_tour_table_client()
     user_event_table_client: UserEventTableClient = get_user_event_table_client()
-    
+
     # Log the user's request to get a tour
     user_event_table_client.log_get_tour_event(request)
 

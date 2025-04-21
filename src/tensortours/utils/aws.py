@@ -2,7 +2,7 @@
 
 import json
 import logging
-from typing import Union
+from typing import Union, Optional
 
 import boto3
 from botocore.exceptions import ClientError
@@ -51,7 +51,7 @@ def parse_json_secret(secret: str):
         return {}
 
 
-def get_api_key_from_secret(secret_name: str, key_name: str):
+def get_api_key_from_secret(secret_name: str, key_name: str) -> Optional[str]:
     """Get an API key from a secret, supporting both direct and JSON formats.
 
     Args:
@@ -67,9 +67,13 @@ def get_api_key_from_secret(secret_name: str, key_name: str):
 
     try:
         secret_dict = json.loads(secret)
-        return secret_dict.get(key_name, secret)
+        # Get the value from the dict or use the original secret as fallback
+        value = secret_dict.get(key_name, secret)
+        # Ensure we're returning a string or None
+        return str(value) if value is not None else None
     except json.JSONDecodeError:
-        return secret
+        # Return the original secret as a string if it's not None
+        return str(secret) if secret is not None else None
 
 
 def check_if_file_exists(bucket_name: str, key: str, s3_client=None) -> bool:

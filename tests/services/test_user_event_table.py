@@ -2,7 +2,6 @@
 
 import os
 from datetime import datetime
-from typing import List
 
 import boto3
 import pytest
@@ -129,6 +128,7 @@ def sample_user_event_item():
 
 def test_put_and_get_items(user_event_table_client, sample_user_event_item, monkeypatch):
     """Test putting an item and retrieving user events."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -137,11 +137,11 @@ def test_put_and_get_items(user_event_table_client, sample_user_event_item, monk
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Put the item in the table
     user_event_table_client.put_item(sample_user_event_item)
 
@@ -157,6 +157,7 @@ def test_put_and_get_items(user_event_table_client, sample_user_event_item, monk
 
 def test_get_user_events_by_type(user_event_table_client, monkeypatch):
     """Test retrieving user events by type."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -165,14 +166,14 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Create and put multiple events with different types
     user_id = "test_user_id"
-    
+
     # Event 1: GET_PLACES
     event1 = UserEventItem(
         user_id=user_id,
@@ -181,7 +182,7 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
         request_data='{"event": "get_places"}',
     )
     user_event_table_client.put_item(event1)
-    
+
     # Event 2: GET_TOUR
     event2 = UserEventItem(
         user_id=user_id,
@@ -190,7 +191,7 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
         request_data='{"event": "get_tour"}',
     )
     user_event_table_client.put_item(event2)
-    
+
     # Event 3: GENERATE_TOUR
     event3 = UserEventItem(
         user_id=user_id,
@@ -203,7 +204,7 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
     # Get all events for the user
     all_events = user_event_table_client.get_user_events(user_id=user_id)
     assert len(all_events) == 3
-    
+
     # Verify events are sorted by timestamp (newest first)
     assert all_events[0].event_type == EventType.GENERATE_TOUR
     assert all_events[1].event_type == EventType.GET_TOUR
@@ -215,13 +216,13 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
     )
     assert len(get_places_events) == 1
     assert get_places_events[0].event_type == EventType.GET_PLACES
-    
+
     get_tour_events = user_event_table_client.get_user_events_by_type(
         user_id=user_id, event_type=EventType.GET_TOUR
     )
     assert len(get_tour_events) == 1
     assert get_tour_events[0].event_type == EventType.GET_TOUR
-    
+
     generate_tour_events = user_event_table_client.get_user_events_by_type(
         user_id=user_id, event_type=EventType.GENERATE_TOUR
     )
@@ -231,6 +232,7 @@ def test_get_user_events_by_type(user_event_table_client, monkeypatch):
 
 def test_delete_item(user_event_table_client, sample_user_event_item, monkeypatch):
     """Test deleting an item from the table."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -239,11 +241,11 @@ def test_delete_item(user_event_table_client, sample_user_event_item, monkeypatc
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Put the item in the table
     user_event_table_client.put_item(sample_user_event_item)
 
@@ -263,6 +265,7 @@ def test_delete_item(user_event_table_client, sample_user_event_item, monkeypatc
 
 def test_log_get_places_event(user_event_table_client, sample_get_places_request, monkeypatch):
     """Test logging a get places event."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -271,11 +274,11 @@ def test_log_get_places_event(user_event_table_client, sample_get_places_request
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Log the event
     user_event_table_client.log_get_places_event(sample_get_places_request)
 
@@ -294,6 +297,7 @@ def test_log_get_places_event(user_event_table_client, sample_get_places_request
 
 def test_log_get_tour_event(user_event_table_client, sample_get_tour_request, monkeypatch):
     """Test logging a get tour event."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -302,11 +306,11 @@ def test_log_get_tour_event(user_event_table_client, sample_get_tour_request, mo
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Log the event
     user_event_table_client.log_get_tour_event(sample_get_tour_request)
 
@@ -322,8 +326,11 @@ def test_log_get_tour_event(user_event_table_client, sample_get_tour_request, mo
     assert "tour_type" in events[0].request_data
 
 
-def test_log_generate_tour_event(user_event_table_client, sample_generate_tour_request, monkeypatch):
+def test_log_generate_tour_event(
+    user_event_table_client, sample_generate_tour_request, monkeypatch
+):
     """Test logging a generate tour event."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -332,16 +339,18 @@ def test_log_generate_tour_event(user_event_table_client, sample_generate_tour_r
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Log the event
     user_event_table_client.log_generate_tour_event(sample_generate_tour_request)
 
     # Get the events for the user
-    events = user_event_table_client.get_user_events(user_id=sample_generate_tour_request.user.user_id)
+    events = user_event_table_client.get_user_events(
+        user_id=sample_generate_tour_request.user.user_id
+    )
 
     # Verify the event was logged correctly
     assert len(events) == 1
@@ -355,6 +364,7 @@ def test_log_generate_tour_event(user_event_table_client, sample_generate_tour_r
 
 def test_log_anonymous_event(user_event_table_client, sample_get_places_request, monkeypatch):
     """Test logging an event for an anonymous user."""
+
     # Mock the load method to handle dictionary input
     def mock_load(cls, data):
         if "data" in data:
@@ -363,11 +373,11 @@ def test_log_anonymous_event(user_event_table_client, sample_get_places_request,
             user_id=data["user_id"],
             timestamp=int(data["timestamp"]),
             event_type=EventType(data["event_type"]),
-            request_data=data["request_data"]
+            request_data=data["request_data"],
         )
-    
+
     monkeypatch.setattr(UserEventItem, "load", classmethod(mock_load))
-    
+
     # Create a request without a user
     anonymous_request = GetPlacesRequest(
         user=None,

@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field, model_validator
 
 from ..models.tour import TourType, TTour, TTPlaceInfo
 
@@ -54,16 +54,17 @@ class BaseRequest(BaseModel):
     request_id: Optional[str] = Field(None, description="Unique request identifier")
     timestamp: Optional[datetime] = Field(None, description="Request timestamp")
 
-    @root_validator(pre=True)
-    def extract_context_data(cls, values: Dict) -> Dict:
+    @model_validator(mode="before")
+    @classmethod
+    def extract_context_data(cls, data: Dict) -> Dict:
         """Extract context data from the raw event if available"""
         # This is used when parsing the raw Lambda event
-        if "requestContext" in values:
-            request_context = values.get("requestContext", {})
-            values["user"] = CognitoUser.from_request_context(request_context)
-            values["request_id"] = request_context.get("requestId")
-            values["timestamp"] = datetime.now()
-        return values
+        if isinstance(data, dict) and "requestContext" in data:
+            request_context = data.get("requestContext", {})
+            data["user"] = CognitoUser.from_request_context(request_context)
+            data["request_id"] = request_context.get("requestId")
+            data["timestamp"] = datetime.now()
+        return data
 
 
 class GetPlacesRequest(BaseRequest):
