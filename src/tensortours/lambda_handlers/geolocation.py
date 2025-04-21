@@ -290,7 +290,7 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
 
     try:
         result = response.json()
-        logger.info(f"Successfully parsed JSON response")
+        logger.info("Successfully parsed JSON response")
         all_places = result.get("places", [])
         logger.info(f"Found {len(all_places)} places")
     except json.JSONDecodeError as e:
@@ -353,7 +353,7 @@ def get_nearby_places(lat, lng, radius, tour_type, max_results=5):
     # Return the response
     try:
         response_body = json.dumps(enriched_places, default=str)
-        logger.info(f"Successfully serialized response, returning 200 status code")
+        logger.info("Successfully serialized response, returning 200 status code")
         return {"statusCode": 200, "body": response_body}
     except Exception as e:
         logger.error(f"Error serializing final response: {str(e)}")
@@ -489,7 +489,7 @@ def process_places_data(places, tour_type):
                 # Only include places with display names and IDs
                 if "displayName" in place and "id" in place:
                     logger.debug(
-                        f"Processing place {i+1}/{len(places)}: {place.get('displayName', {}).get('text', 'Unknown')}"
+                        f"Processing place {i + 1}/{len(places)}: {place.get('displayName', {}).get('text', 'Unknown')}"
                     )
 
                     # Extract location data
@@ -560,7 +560,7 @@ def process_places_data(places, tour_type):
                 return (rating * 0.6) + (user_count * 0.3) + (has_description * 0.1)
 
             processed_places.sort(key=interestingness_score, reverse=True)
-            logger.info(f"Successfully sorted places")
+            logger.info("Successfully sorted places")
         except Exception as e:
             logger.error(f"Error sorting places: {str(e)}")
             logger.error(f"Traceback: {traceback.format_exc()}")

@@ -141,7 +141,7 @@ def handler(event, context):
                     place_data = json.loads(response["Item"].get("data", "{}"))
                     if place_data and "script_url" in place_data and "audio_url" in place_data:
                         ddb_cache_hit = True
-                        logger.info(f"Successfully retrieved pre-generated content from DynamoDB")
+                        logger.info("Successfully retrieved pre-generated content from DynamoDB")
                 except Exception as e:
                     logger.warning(f"Error parsing DynamoDB data: {str(e)}")
                     # Continue with S3 check if DynamoDB data parsing fails
@@ -151,7 +151,7 @@ def handler(event, context):
 
         # If we found pre-generated content in DynamoDB, return it directly
         if ddb_cache_hit and place_data:
-            logger.info(f"Returning pre-generated content from DynamoDB cache")
+            logger.info("Returning pre-generated content from DynamoDB cache")
             return {"statusCode": 200, "body": json.dumps(place_data)}
 
         # Check if content already exists in S3
@@ -338,7 +338,7 @@ def check_if_file_exists(key):
         if e.response["Error"]["Code"] == "404":
             return False
         else:
-            logger.exception(f"Error checking S3 object")
+            logger.exception("Error checking S3 object")
             raise
 
 
@@ -353,7 +353,7 @@ def upload_to_s3(key, data, content_type, binary=False):
             )
         return True
     except Exception:
-        logger.exception(f"Error uploading to S3")
+        logger.exception("Error uploading to S3")
         return False
 
 
@@ -534,7 +534,7 @@ def generate_script(place_details, tour_type):
         Address: {place_address}
         Category: {', '.join(place_types)}
         Additional information: {place_summary}
-        
+
         This is for a {tour_type} focused tour.
         """
 
@@ -575,7 +575,7 @@ def generate_script(place_details, tour_type):
                 try:
                     error_data = response.json()
                     logger.error(f"OpenAI error details: {json.dumps(error_data, indent=2)}")
-                except:
+                except Exception:
                     logger.error(f"Raw response text: {response.text}")
                 return None
 
@@ -630,7 +630,7 @@ def generate_audio(script):
                 try:
                     error_data = response.json()
                     logger.error(f"ElevenLabs error details: {json.dumps(error_data, indent=2)}")
-                except:
+                except Exception:
                     logger.error(f"Raw response text: {response.text}")
                 return None
 

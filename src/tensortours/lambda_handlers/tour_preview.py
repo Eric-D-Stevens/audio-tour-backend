@@ -262,7 +262,7 @@ def test_city_preview(city_name, tour_type="history"):
     }
 
     # Call the Lambda handler
-    response = lambda_handler(event, {})
+    response = handler(event, {})
 
     # Return the parsed response body
     if response.get("statusCode") == 200:
@@ -291,7 +291,7 @@ def test_place_audio(place_id, tour_type="history"):
     }
 
     # Call the Lambda handler
-    response = lambda_handler(event, {})
+    response = handler(event, {})
 
     # Return the parsed response body
     if response.get("statusCode") == 200:
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 
             # Print place details
             for i, place in enumerate(result.get("places", [])):
-                print(f"Place {i+1}: {place.get('name')}")
+                print(f"Place {i + 1}: {place.get('name')}")
                 print(f"  ID: {place.get('place_id')}")
                 print(f"  Location: {place.get('location', {})}")
                 print(f"  Rating: {place.get('rating', 'N/A')}")

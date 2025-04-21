@@ -348,7 +348,7 @@ def check_if_file_exists(key):
         if e.response["Error"]["Code"] == "404":
             return False
         else:
-            logger.exception(f"Error checking S3 object")
+            logger.exception("Error checking S3 object")
             raise
 
 
@@ -363,7 +363,7 @@ def upload_to_s3(key, data, content_type, binary=False):
             )
         return True
     except Exception:
-        logger.exception(f"Error uploading to S3")
+        logger.exception("Error uploading to S3")
         return False
 
 
@@ -530,7 +530,7 @@ def generate_script(place_details, tour_type):
         Address: {place_address}
         Category: {', '.join(place_types)}
         Additional information: {place_summary}
-        
+
         This is for a {tour_type} focused tour.
         """
 
@@ -571,7 +571,7 @@ def generate_script(place_details, tour_type):
                 try:
                     error_data = response.json()
                     logger.error(f"OpenAI error details: {json.dumps(error_data, indent=2)}")
-                except:
+                except Exception:
                     logger.error(f"Raw response text: {response.text}")
                 return None
 
@@ -626,7 +626,7 @@ def generate_audio(script):
                 try:
                     error_data = response.json()
                     logger.error(f"ElevenLabs error details: {json.dumps(error_data, indent=2)}")
-                except:
+                except Exception:
                     logger.error(f"Raw response text: {response.text}")
                 return None
 

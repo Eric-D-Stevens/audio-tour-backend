@@ -8,10 +8,11 @@ import logging
 import sys
 from pathlib import Path
 
+from tensortours.services.aws_poly import AWSPollyClient
+
 # Add the project root to the Python path so we can import the tensortours package
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tensortours.services.aws_poly import AWSPollyClient
 
 # Configure logging
 logging.basicConfig(
