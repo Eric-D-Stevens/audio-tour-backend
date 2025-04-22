@@ -4,7 +4,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 
 
 class TourType(str, Enum):
@@ -94,8 +94,8 @@ class TTPlacePhotos(BaseModel):
 
     photo_id: str
     place_id: str
-    cloudfront_url: HttpUrl
-    s3_url: HttpUrl
+    cloudfront_url: str
+    s3_url: str
     attribution: Dict[str, str]
     size_width: int
     size_height: int
@@ -110,8 +110,8 @@ class TTScript(BaseModel):
     place_name: str
     tour_type: TourType
     model_info: Dict
-    s3_url: HttpUrl
-    cloudfront_url: HttpUrl
+    s3_url: str
+    cloudfront_url: str
     generated_at: datetime = Field(default_factory=datetime.now)
 
 
@@ -120,8 +120,8 @@ class TTAudio(BaseModel):
 
     place_id: str
     script_id: str
-    cloudfront_url: HttpUrl
-    s3_url: HttpUrl
+    cloudfront_url: str
+    s3_url: str
     model_info: Dict
     generated_at: datetime = Field(default_factory=datetime.now)
 
