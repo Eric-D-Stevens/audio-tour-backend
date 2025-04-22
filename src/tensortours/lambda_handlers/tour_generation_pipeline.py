@@ -136,10 +136,11 @@ def photo_retriever_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
                         raise ValueError("CONTENT_BUCKET environment variable not set")
 
                     upload_to_s3(
-                        photo_binary,
-                        CONTENT_BUCKET,
-                        photo_key,
+                        bucket_name=CONTENT_BUCKET,
+                        key=photo_key,
+                        data=photo_binary,
                         content_type="image/jpeg",
+                        binary=True
                     )
 
                     # Create CloudFront URL
