@@ -116,7 +116,6 @@ def sample_script():
 def sample_audio():
     """Create a sample audio for testing."""
     return TTAudio(
-        audio_id="test_audio_id",
         place_id="test_place_id",
         script_id="test_script_id",
         cloudfront_url="https://example.com/audio/test.mp3",
@@ -205,7 +204,7 @@ def test_get_tour_success(dynamodb_table, sample_tour_table_item, api_gateway_ev
     assert len(tour["photos"]) == len(sample_tour_table_item.photos)
     assert tour["photos"][0]["photo_id"] == sample_tour_table_item.photos[0].photo_id
     assert tour["script"]["script_id"] == sample_tour_table_item.script.script_id
-    assert tour["audio"]["audio_id"] == sample_tour_table_item.audio.audio_id
+    assert tour["audio"]["script_id"] == sample_tour_table_item.audio.script_id
 
 
 def test_get_tour_not_found(dynamodb_table, api_gateway_event):

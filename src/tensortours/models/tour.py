@@ -116,7 +116,8 @@ class TTScript(BaseModel):
 
 
 class TTAudio(BaseModel):
-    audio_id: str
+    """Tour audio model"""
+
     place_id: str
     script_id: str
     cloudfront_url: HttpUrl

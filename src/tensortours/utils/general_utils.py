@@ -3,7 +3,9 @@ from functools import lru_cache
 
 import boto3
 
+from ..services.aws_poly import AWSPollyClient
 from ..services.google_places import GooglePlacesClient
+from ..services.openai_client import OpenAIClient
 from ..services.tour_table import TourTableClient
 from ..services.user_event_table import UserEventTableClient
 from ..utils.aws import get_api_key_from_secret
@@ -69,4 +71,28 @@ def get_google_places_client() -> GooglePlacesClient:
     api_key = get_google_maps_api_key()
     # Create and return the client with the API key
     client = GooglePlacesClient(api_key)
+    return client
+
+
+@lru_cache
+def get_openai_client() -> OpenAIClient:
+    """Get an OpenAI client instance.
+
+    Returns a cached instance of the OpenAIClient to avoid creating
+    multiple instances during the lifetime of the Lambda function.
+    """
+    # Create and return the client (it will fetch the API key from secrets)
+    client = OpenAIClient()
+    return client
+
+
+@lru_cache
+def get_polly_client() -> AWSPollyClient:
+    """Get an AWS Polly client instance.
+
+    Returns a cached instance of the AWSPollyClient to avoid creating
+    multiple instances during the lifetime of the Lambda function.
+    """
+    # Create and return the client
+    client = AWSPollyClient()
     return client

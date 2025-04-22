@@ -16,6 +16,7 @@ class GenerationStatus(Enum):
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
+    FAILED = "failed"
 
 
 class TourTableItem(BaseModel):
@@ -67,6 +68,26 @@ class TourTableClient:
     def put_item(self, item: TourTableItem):
         """Put a tour item into the table."""
         self._table.put_item(Item=item.dump())
+
+    def update_status(self, place_id: str, tour_type: TourType, status: GenerationStatus):
+        """Update just the status field of a tour item.
+
+        This method only updates the status without modifying any other fields,
+        which is safer than overwriting the entire item.
+
+        Args:
+            place_id: Place ID of the tour item
+            tour_type: Tour type of the tour item
+            status: New status to set
+        """
+        self._table.update_item(
+            Key={"place_id": place_id, "tour_type": tour_type.value},
+            UpdateExpression="SET #status = :status",
+            ExpressionAttributeNames={"#status": "status"},
+            ExpressionAttributeValues={
+                ":status": status.value,
+            },
+        )
 
     def delete_item(self, place_id: str, tour_type: TourType):
         """Delete a tour item from the table."""

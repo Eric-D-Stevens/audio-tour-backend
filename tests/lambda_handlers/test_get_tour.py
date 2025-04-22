@@ -115,7 +115,6 @@ def sample_tour_item():
             cloudfront_url="https://example-cloudfront.com/script.txt",
         ),
         audio=TTAudio(
-            audio_id="test_audio_id",
             place_id="test_place_id",
             script_id="test_script_id",
             cloudfront_url="https://example-cloudfront.com/audio.mp3",

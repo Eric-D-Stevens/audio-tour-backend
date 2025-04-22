@@ -53,7 +53,6 @@ def sample_script():
 def sample_audio():
     """Create a sample audio for testing."""
     return TTAudio(
-        audio_id="test_audio_id",
         place_id="test_place_id",
         script_id="test_script_id",
         cloudfront_url="https://example.com/audio.mp3",
@@ -139,7 +138,7 @@ def test_script_model(sample_script):
 def test_audio_model(sample_audio):
     """Test TTAudio model."""
     # Test the fixture
-    assert sample_audio.audio_id == "test_audio_id"
+    assert sample_audio.script_id == "test_script_id"
     assert sample_audio.place_id == "test_place_id"
     assert sample_audio.script_id == "test_script_id"
     assert str(sample_audio.cloudfront_url) == "https://example.com/audio.mp3"
@@ -157,4 +156,4 @@ def test_tour_model(sample_tour, sample_place_info, sample_photo, sample_script,
     assert len(sample_tour.photos) == 1
     assert sample_tour.photos[0].photo_id == "test_photo_id"
     assert sample_tour.script.script_id == "test_script_id"
-    assert sample_tour.audio.audio_id == "test_audio_id"
+    assert sample_tour.audio.script_id == "test_script_id"
