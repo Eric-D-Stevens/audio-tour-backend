@@ -85,6 +85,9 @@ jobs:
               "tour_pre_generation": "tensortours.lambda_handlers.tour_pre_generation.handler",
               "tour_preview": "tensortours.lambda_handlers.tour_preview.handler",
               "tour_generation": "tensortours.lambda_handlers.tour_generation.handler",
-              "get_places": "tensortours.lambda_handlers.get_places.handler"
+              "get_places": "tensortours.lambda_handlers.get_places.handler",
+              "photo_retriever": "tensortours.lambda_handlers.tour_generation_pipeline.photo_retriever_handler",
+              "script_generator": "tensortours.lambda_handlers.tour_generation_pipeline.script_generator_handler",
+              "audio_generator": "tensortours.lambda_handlers.tour_generation_pipeline.audio_generator_handler"
             }
           }

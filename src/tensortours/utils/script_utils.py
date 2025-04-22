@@ -84,7 +84,7 @@ def generate_tour_script(place_info: TTPlaceInfo, tour_type: TourType) -> str:
     try:
         script_text = client.generate_completion(
             messages=messages,
-            model="gpt-4",
+            model="gpt-4o",
             temperature=0.7,
             max_tokens=10000,
         )
