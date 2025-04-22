@@ -40,6 +40,13 @@ jobs:
         # Install the package and all dependencies directly to the Lambda package directory
         pip install . -t "build/lambda-package/"
         
+        # Ensure proper handling of src-layout Python project
+        if [ -d "src/tensortours" ]; then
+          echo "Project uses src layout, copying files to ensure correct imports..."
+          # This ensures the top-level module exists as Lambda expects
+          cp -r src/tensortours/* build/lambda-package/tensortours/
+        fi
+        
         # Package everything together
         cd "build/lambda-package" && zip -r "../../dist/tensortours-${VERSION}.zip" . && cd ../..
     
@@ -77,6 +84,7 @@ jobs:
               "audio_generation": "tensortours.lambda_handlers.audio_generation.handler",
               "tour_pre_generation": "tensortours.lambda_handlers.tour_pre_generation.handler",
               "tour_preview": "tensortours.lambda_handlers.tour_preview.handler",
-              "tour_generation": "tensortours.lambda_handlers.tour_generation.handler"
+              "tour_generation": "tensortours.lambda_handlers.tour_generation.handler",
+              "get_places": "tensortours.lambda_handlers.get_places.handler"
             }
           }
