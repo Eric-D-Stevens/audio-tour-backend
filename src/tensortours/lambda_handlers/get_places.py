@@ -154,8 +154,13 @@ def handler(event, context):
             # Check if the place exists in the tour table for this tour type
             tour_item = tour_table_client.get_item(place.place_id, request.tour_type)
 
+            # Log detailed status for debugging
+            if tour_item is not None:
+                logger.info(f"Tour item status for {place.place_id}: {tour_item.status}")
+
             # If the place doesn't exist or is not completed, forward to generation queue
             if tour_item is None or tour_item.status != GenerationStatus.COMPLETED:
+                logger.info(f"Forwarding place {place.place_id} with status: {tour_item.status if tour_item else 'None'}")
                 forward_to_generation_queue(place, request.tour_type, user_id)
 
         # Create response
