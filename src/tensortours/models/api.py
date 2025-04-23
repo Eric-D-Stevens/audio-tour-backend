@@ -112,3 +112,27 @@ class GenerateTourResponse(BaseModel):
 
     tour: TTour
     is_authenticated: bool = Field(False, description="Whether the request was authenticated")
+
+
+class GetOnDemandTourRequest(BaseRequest):
+    """Request model for getting an on-demand tour
+    
+    This model is similar to GetPregeneratedTourRequest but can also include place_info
+    for places that don't have existing data in the database.
+    """
+    
+    place_id: str = Field(..., description="ID of the place to get a tour for")
+    tour_type: TourType = Field(..., description="Type of tour to get")
+    place_info_json: Optional[str] = Field(None, description="JSON string with place information if not already in database")
+
+
+class GetOnDemandTourResponse(BaseModel):
+    """Response model for getting an on-demand tour
+    
+    This model is used for returning tours that are generated on-demand
+    without using the tour table or generation queue.
+    """
+    
+    tour: TTour
+    is_authenticated: bool = Field(False, description="Whether the request was authenticated")
+    generated_on_demand: bool = Field(True, description="Whether the tour was generated on-demand")
