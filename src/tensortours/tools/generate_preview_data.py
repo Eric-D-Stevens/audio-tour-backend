@@ -9,6 +9,7 @@ allowing for consistent preview data across environments. It offers options to:
 """
 
 import argparse
+import boto3
 import concurrent.futures
 import json
 import logging
@@ -136,8 +137,12 @@ def forward_to_generation_queue(place_info: TTPlaceInfo, tour_type: TourType, us
         user_id: Optional user ID to associate with the generation request
     """
     try:
-        # Get the cached SQS queue resource
-        queue = get_generation_queue()
+        # Hard-coded queue URL instead of using environment variable
+        photo_queue_url = "https://sqs.us-west-2.amazonaws.com/934308926622/TTGenerationPhotoQueue"
+        
+        # Use the resource API
+        sqs = boto3.resource("sqs")
+        queue = sqs.Queue(photo_queue_url)
 
         # Create a payload with place_id, tour_type, user_id, and place_info fields
         payload = {
@@ -151,10 +156,7 @@ def forward_to_generation_queue(place_info: TTPlaceInfo, tour_type: TourType, us
         # Convert the payload to a JSON string for the message body
         message_body = json.dumps(payload)
         queue.send_message(MessageBody=message_body)
-        logger.info(f"Forwarded place {place_info.place_id} for {tour_type.value} tour generation")
-    except ValueError as e:
-        # This happens when the environment variable is not set
-        logger.warning(f"Skipping generation queue: {str(e)}")
+        logger.info(f"Forwarded place {place_info.place_id} for {tour_type.value} tour generation to photo queue")
     except Exception as e:
         logger.error(f"Failed to forward place {place_info.place_id} to generation queue: {str(e)}")
 
