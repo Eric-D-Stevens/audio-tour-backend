@@ -375,7 +375,7 @@ def generate_audio(place_id: str, tour_type: TourType, script: TTScript) -> TTAu
         script_id=script.script_id,
         cloudfront_url=cloudfront_url,
         s3_url=s3_url,
-        model_info={"model": "aws_polly", "voice": "Joanna", "engine": "standard"},
+        model_info={"model": "aws_polly", "voice": "Amy", "engine": "standard"},
     )
 
     return audio
