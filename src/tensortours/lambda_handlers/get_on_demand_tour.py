@@ -352,7 +352,7 @@ def generate_audio(place_id: str, tour_type: TourType, script: TTScript) -> TTAu
         text=script_text,
         bucket=bucket_name,
         key=audio_key,
-        voice_id="Joanna",  # Use a different voice for on-demand tours
+        voice_id="Amy",  # Use a different voice for on-demand tours
         engine="standard",  # Use standard engine for faster processing
         metadata={
             "place_id": place_id,
