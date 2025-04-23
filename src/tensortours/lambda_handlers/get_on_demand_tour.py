@@ -272,7 +272,7 @@ def generate_script(place_id: str, tour_type: TourType, place_info: TTPlaceInfo)
     try:
         script_text = client.generate_completion(
             messages=messages,
-            model="gpt-3.5-turbo",  # Using a faster model with higher quota
+            model="gpt-4o",  # Using a faster model with higher quota
             temperature=0.7,
             max_tokens=10000,
         )
