@@ -40,6 +40,7 @@ def create_tour_script_prompt(place_info: TTPlaceInfo, tour_type: TourType) -> D
     IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the location's country or region.
     IMPORTANT: ALWAYS WRITE THE SCRIPT IN ENGLISH regardless of the language of the rest of this prompt.
     IMPORTANT: ALWAYS WRITE THE SCRIPT IN SPOKEN ENGLISH so that a text-to-speech engine can read it aloud.
+    IMPORTANT: THE SCRIPT MUST BE NO LONGER THAN 6000 CHARACTERS.
     """
 
     user_prompt = f"""
@@ -86,7 +87,7 @@ def generate_tour_script(place_info: TTPlaceInfo, tour_type: TourType) -> str:
             messages=messages,
             model="gpt-4o",
             temperature=0.7,
-            max_tokens=10000,
+            max_tokens=6000, # poly limit
         )
         return script_text
     except Exception as e:
