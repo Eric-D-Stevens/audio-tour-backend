@@ -23,6 +23,7 @@ import boto3
 
 from ..models.api import GetOnDemandTourRequest, GetOnDemandTourResponse
 from ..models.tour import TourType, TTAudio, TTPlaceInfo, TTPlacePhotos, TTScript, TTour
+from ..services.openai_client import ChatMessage
 from ..services.user_event_table import UserEventTableClient
 from ..utils.aws import upload_to_s3
 from ..utils.general_utils import (
@@ -261,10 +262,10 @@ def generate_script(place_id: str, tour_type: TourType, place_info: TTPlaceInfo)
     # Create prompts
     prompts = create_tour_script_prompt(place_info, tour_type)
 
-    # Create messages
+    # Create messages with proper ChatMessage model
     messages = [
-        {"role": "system", "content": prompts["system_prompt"]},
-        {"role": "user", "content": prompts["user_prompt"]},
+        ChatMessage(role="system", content=prompts["system_prompt"]),
+        ChatMessage(role="user", content=prompts["user_prompt"]),
     ]
 
     # Generate completion - using a faster model for on-demand generation
