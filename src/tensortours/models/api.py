@@ -136,3 +136,25 @@ class GetOnDemandTourResponse(BaseModel):
     tour: TTour
     is_authenticated: bool = Field(False, description="Whether the request was authenticated")
     generated_on_demand: bool = Field(True, description="Whether the tour was generated on-demand")
+
+
+class GetPreviewRequest(BaseRequest):
+    """Request model for getting a preview tour
+    
+    This model is used specifically for requesting preview tours that are
+    pre-generated and available in the preview dataset.
+    """
+    
+    place_id: str = Field(..., description="ID of the place to get a preview tour for")
+    tour_type: TourType = Field(..., description="Type of tour to get")
+
+
+class GetPreviewResponse(BaseModel):
+    """Response model for getting a preview tour
+    
+    This model is used for returning preview tours that are pre-generated
+    and available in the preview dataset.
+    """
+    
+    tour: TTour
+    is_authenticated: bool = Field(False, description="Whether the request was authenticated")

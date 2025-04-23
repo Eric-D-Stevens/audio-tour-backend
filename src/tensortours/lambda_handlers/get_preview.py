@@ -11,7 +11,7 @@ import os
 from functools import lru_cache
 from typing import Dict, List, Optional, Set, Tuple
 
-from ..models.api import GetPregeneratedTourRequest, GetPregeneratedTourResponse
+from ..models.api import GetPreviewRequest, GetPreviewResponse
 from ..models.tour import TourType, TTour
 from ..services.tour_table import TourTableClient, TourTableItem
 from ..services.user_event_table import UserEventTableClient
@@ -107,11 +107,11 @@ def handler(event, context):
     merged_event = {**body, "requestContext": event.get("requestContext", {})}
 
     # Validate the merged event
-    request = GetPregeneratedTourRequest.model_validate(merged_event)
+    request = GetPreviewRequest.model_validate(merged_event)
     tour_table_client: TourTableClient = get_tour_table_client()
     user_event_table_client: UserEventTableClient = get_user_event_table_client()
 
-    # Log the user's request to get a tour
+    # Log the user's request to get a preview tour
     user_event_table_client.log_get_tour_event(request)
     
     # Check if the place_id is part of our preview dataset
@@ -177,7 +177,7 @@ def handler(event, context):
         tour_data["audio"] = tour_item.audio
     
     tour = TTour(**tour_data)
-    tour_response = GetPregeneratedTourResponse(
+    tour_response = GetPreviewResponse(
         tour=tour,
         is_authenticated=request.user is not None
     )
