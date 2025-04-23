@@ -43,14 +43,41 @@ def handler(event, context):
                 "Access-Control-Allow-Origin": "*"  # For CORS support
             }
         }
+        
+    # Check if the tour item is incomplete (script or audio missing)
+    if tour_item.script is None or tour_item.audio is None:
+        missing_parts = []
+        if tour_item.script is None:
+            missing_parts.append("script")
+        if tour_item.audio is None:
+            missing_parts.append("audio")
+            
+        return {
+            "statusCode": 404,
+            "body": json.dumps({
+                "error": "Incomplete tour", 
+                "message": f"Tour found but missing: {', '.join(missing_parts)}. The tour may still be generating."
+            }),
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }
 
-    tour = TTour(
-        place_id=tour_item.place_id,
-        tour_type=tour_item.tour_type,
-        place_info=tour_item.place_info,
-        photos=tour_item.photos,
-        script=tour_item.script,
-        audio=tour_item.audio,
-    )
+    # Create TTour object with null checks to prevent validation errors
+    tour_data = {
+        "place_id": tour_item.place_id,
+        "tour_type": tour_item.tour_type,
+        "place_info": tour_item.place_info,
+        "photos": tour_item.photos
+    }
+    
+    # Only add script and audio if they exist to prevent validation errors
+    if tour_item.script is not None:
+        tour_data["script"] = tour_item.script
+    if tour_item.audio is not None:
+        tour_data["audio"] = tour_item.audio
+    
+    tour = TTour(**tour_data)
     tour_response = GetPregeneratedTourResponse(tour=tour)
     return {"statusCode": 200, "body": tour_response.model_dump_json()}
