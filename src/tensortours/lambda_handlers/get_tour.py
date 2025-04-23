@@ -35,7 +35,14 @@ def handler(event, context):
         request.place_id, request.tour_type
     )
     if tour_item is None:
-        return {"statusCode": 404, "body": json.dumps({"error": "Tour not found"})}
+        return {
+            "statusCode": 404, 
+            "body": json.dumps({"error": "Tour not found"}),
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"  # For CORS support
+            }
+        }
 
     tour = TTour(
         place_id=tour_item.place_id,
