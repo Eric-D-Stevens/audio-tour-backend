@@ -138,10 +138,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         }
 
     except Exception as e:
-        logger.error(f"Error in on-demand tour generation: {str(e)}")
+        logger.exception(f"Error in on-demand tour generation: {str(e)}")
         return {
             "statusCode": 500,
-            "body": json.dumps({"error": f"Error generating tour: {str(e)}"}),
+            "body": json.dumps({"error": f"internal server error"}),
             "headers": {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*"  # For CORS support
