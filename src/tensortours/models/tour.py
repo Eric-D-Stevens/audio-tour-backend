@@ -27,8 +27,8 @@ class TourTypeToGooglePlaceTypes(Enum):
 
     HISTORY = [
         "historical_place", "monument", "historical_landmark", "cultural_landmark",
-        "archaeological_site", "castle", "courthouse", "city_hall", "government_office",
-        "embassy", "cultural_center", "museum"
+        "courthouse", "city_hall", "government_office", "embassy", 
+        "cultural_center", "museum"
     ]
 
     CULTURE = [
@@ -56,7 +56,7 @@ class TourTypeToGooglePlaceTypes(Enum):
         "mosque", "synagogue", "stadium", "opera_house", "university",
         "city_hall", "courthouse", "government_office", "concert_hall",
         "convention_center", "housing_complex", "apartment_building",
-        "amphitheatre", "historical_landmark", "bridge"
+        "amphitheatre", "historical_landmark"
     ]
 
     @classmethod
