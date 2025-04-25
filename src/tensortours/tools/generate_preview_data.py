@@ -15,6 +15,7 @@ import json
 import logging
 import os
 import sys
+import time
 from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -296,7 +297,8 @@ def save_to_content_bucket(city_name: str, tour_type: TourType, places: List[TTP
 
 
 def process_city_tour_type(city_name: str, coordinates: Dict[str, float], tour_type: TourType, 
-                         publish_to_queue: bool = False, save_to_bucket: bool = True, dry_run: bool = False) -> Dict:
+                         publish_to_queue: bool = False, save_to_bucket: bool = True, dry_run: bool = False,
+                         items_per_second: float = 1.0) -> Dict:
     """
     Process a city and tour type combination.
     
@@ -327,8 +329,28 @@ def process_city_tour_type(city_name: str, coordinates: Dict[str, float], tour_t
         
     # Publish to queue if requested
     if publish_to_queue:
-        for place in places:
+        # Calculate delay between items to achieve desired rate
+        delay = 1.0 / items_per_second if items_per_second > 0 else 0
+        logger.info(f"Publishing to queue at rate of {items_per_second} items per second (delay: {delay:.4f}s)")
+        
+        for i, place in enumerate(places):
+            # Log before sending to queue
+            logger.info(f"Publishing place {i+1}/{len(places)}: {place.place_name} to queue")
+            
+            # Add to queue
+            start_time = time.time()
             forward_to_generation_queue(place, tour_type)
+            
+            # Sleep to maintain the specified rate (except for the last item)
+            if i < len(places) - 1 and delay > 0:
+                # Calculate remaining time to wait to maintain the specified rate
+                processing_time = time.time() - start_time
+                actual_delay = max(0, delay - processing_time)
+                
+                if actual_delay > 0:
+                    logger.info(f"Waiting {actual_delay:.4f}s before next item...")
+                    time.sleep(actual_delay)
+                
         result["published_to_queue"] = True
         
     # Save to content bucket if requested (or local file in dry run mode)
@@ -351,6 +373,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Save to local files instead of S3 bucket")
     parser.add_argument("--max-results", type=int, default=DEFAULT_MAX_RESULTS, help="Max results per city/tour type")
     parser.add_argument("--radius", type=int, default=DEFAULT_RADIUS, help="Search radius in meters")
+    parser.add_argument("--items-per-second", type=float, default=0.1, help="Rate at which to publish items to the queue (items/second)")
     
     args = parser.parse_args()
     
@@ -387,7 +410,8 @@ def main():
                     tour_type,
                     args.publish_queue,
                     not args.no_save,
-                    args.dry_run
+                    args.dry_run,
+                    args.items_per_second
                 )
                 future_to_task[(city_name, tour_type.value)] = future
         
