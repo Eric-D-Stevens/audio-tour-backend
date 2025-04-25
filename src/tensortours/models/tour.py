@@ -25,38 +25,38 @@ class TourTypeToGooglePlaceTypes(Enum):
     for places of a specific tour type.
     """
 
-    HISTORY = ["historical_place", "monument", "historical_landmark", "cultural_landmark"]
-
-    CULTURE = [
-        "art_gallery",
-        "museum",
-        "performing_arts_theater",
-        "cultural_center",
-        "tourist_attraction",
+    HISTORY = [
+        "historical_place", "monument", "historical_landmark", "cultural_landmark",
+        "archaeological_site", "castle", "courthouse", "city_hall", "government_office",
+        "embassy", "cultural_center", "museum"
     ]
 
-    ART = ["art_gallery", "art_studio", "sculpture"]
+    CULTURE = [
+        "art_gallery", "museum", "performing_arts_theater", "cultural_center",
+        "tourist_attraction", "cultural_landmark", "historical_landmark", 
+        "market", "restaurant", "community_center", "event_venue",
+        "historical_place", "plaza"
+    ]
+
+    ART = [
+        "art_gallery", "art_studio", "sculpture", "museum", "cultural_center",
+        "performing_arts_theater", "opera_house", "concert_hall", "philharmonic_hall",
+        "cultural_landmark"
+    ]
 
     NATURE = [
-        "park",
-        "national_park",
-        "state_park",
-        "botanical_garden",
-        "garden",
-        "wildlife_park",
-        "zoo",
-        "aquarium",
+        "park", "national_park", "state_park", "botanical_garden",
+        "garden", "wildlife_park", "zoo", "aquarium", "beach", "hiking_area",
+        "wildlife_refuge", "observation_deck", "marina", "fishing_pond",
+        "cycling_park", "off_roading_area", "picnic_ground"
     ]
 
     ARCHITECTURE = [
-        "cultural_landmark",
-        "monument",
-        "church",
-        "hindu_temple",
-        "mosque",
-        "synagogue",
-        "stadium",
-        "opera_house",
+        "cultural_landmark", "monument", "church", "hindu_temple",
+        "mosque", "synagogue", "stadium", "opera_house", "university",
+        "city_hall", "courthouse", "government_office", "concert_hall",
+        "convention_center", "housing_complex", "apartment_building",
+        "amphitheatre", "historical_landmark", "bridge"
     ]
 
     @classmethod
