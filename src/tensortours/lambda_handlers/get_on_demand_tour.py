@@ -284,7 +284,7 @@ def generate_script(place_id: str, tour_type: TourType, place_info: TTPlaceInfo)
     script_id = str(uuid.uuid4())
 
     # Define S3 key for the script with temp prefix
-    script_key = f"{TEMP_PREFIX}{place_id}/script/script.txt"
+    script_key = f"{TEMP_PREFIX}{place_id}/script/{tour_type.value}_script.txt"
 
     # Check environment variables
     if not CONTENT_BUCKET:
@@ -345,7 +345,7 @@ def generate_audio(place_id: str, tour_type: TourType, script: TTScript) -> TTAu
     polly_client = get_polly_client()
 
     # Define S3 key for the audio with temp prefix
-    audio_key = f"{TEMP_PREFIX}{place_id}/audio/audio.mp3"
+    audio_key = f"{TEMP_PREFIX}{place_id}/audio/{tour_type.value}_audio.mp3"
 
     # Generate the audio using AWS Polly and store it in S3
     polly_client.synthesize_speech_to_s3(

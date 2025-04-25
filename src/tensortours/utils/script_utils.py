@@ -209,8 +209,8 @@ def save_script_to_s3(
     # Generate a unique script ID
     script_id = str(uuid.uuid4())
 
-    # Define S3 key for the script using the tours prefix structure
-    script_key = f"tours/{place_id}/script/script.txt"
+    # Define S3 key for the script using the tours prefix structure with tour type in filename
+    script_key = f"tours/{place_id}/script/{tour_type.value}_script.txt"
 
     # Check environment variables
     if not CONTENT_BUCKET:

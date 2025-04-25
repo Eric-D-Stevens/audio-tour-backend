@@ -376,8 +376,8 @@ def audio_generator_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
         # Get the cached AWS Polly client
         polly_client = get_polly_client()
 
-        # Define S3 key for the audio using the tours prefix structure
-        audio_key = f"tours/{place_id}/audio/audio.mp3"
+        # Define S3 key for the audio using the tours prefix structure with tour type in filename
+        audio_key = f"tours/{place_id}/audio/{tour_type.value}_audio.mp3"
 
         # Generate the audio using AWS Polly and store it in S3
         polly_client.synthesize_speech_to_s3(
