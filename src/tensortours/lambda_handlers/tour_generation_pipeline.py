@@ -166,7 +166,7 @@ def photo_retriever_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
                     return None
 
             # Limit to 15 photos to avoid excessive processing
-            photo_data_list = place_details["photos"][:15]
+            photo_data_list = place_details["photos"][:5]  # Limit to maximum 5 photos per place
 
             # Use ThreadPoolExecutor to process photos in parallel
             # AWS Lambda has 2 vCPUs by default, so using 10 workers is reasonable
