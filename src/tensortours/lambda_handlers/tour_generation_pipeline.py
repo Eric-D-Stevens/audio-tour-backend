@@ -128,8 +128,8 @@ def photo_retriever_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
                     # Download the photo
                     photo_binary = google_places_client.get_place_photo(photo_reference)
 
-                    # Define S3 key for the photo using the new hierarchical structure
-                    photo_key = f"{place_id}/photos/photo_{index}.jpg"
+                    # Define S3 key for the photo using the tours prefix structure
+                    photo_key = f"tours/{place_id}/photos/photo_{index}.jpg"
 
                     # Upload the photo to S3
                     if not CONTENT_BUCKET:
@@ -376,8 +376,8 @@ def audio_generator_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
         # Get the cached AWS Polly client
         polly_client = get_polly_client()
 
-        # Define S3 key for the audio using the new hierarchical structure
-        audio_key = f"{place_id}/audio/audio.mp3"
+        # Define S3 key for the audio using the tours prefix structure
+        audio_key = f"tours/{place_id}/audio/audio.mp3"
 
         # Generate the audio using AWS Polly and store it in S3
         polly_client.synthesize_speech_to_s3(
