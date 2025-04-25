@@ -251,12 +251,11 @@ def handler(event, context):
     # Only add script and audio if they exist to prevent validation errors
     if tour_item.script is not None:
         tour_data["script"] = tour_item.script
-        script_length = len(tour_item.script) if tour_item.script else 0
-        logger.info(f"Tour script length: {script_length} characters")
+        logger.info(f"Tour has script for place_id: {tour_item.script.place_id}, tour_type: {tour_item.script.tour_type.value}")
         
     if tour_item.audio is not None:
         tour_data["audio"] = tour_item.audio
-        logger.info(f"Tour has audio URL: {tour_item.audio}")
+        logger.info(f"Tour has audio URL: {tour_item.audio.cloudfront_url}")
     
     try:
         tour = TTour(**tour_data)
