@@ -27,14 +27,13 @@ class TourTypeToGooglePlaceTypes(Enum):
 
     HISTORY = [
         "historical_place", "monument", "historical_landmark", "cultural_landmark",
-        "courthouse", "city_hall", "government_office", "embassy", 
-        "cultural_center", "museum"
+        "sculpture"
     ]
 
     CULTURE = [
         "art_gallery", "museum", "performing_arts_theater", "cultural_center",
         "tourist_attraction", "cultural_landmark", "historical_landmark", 
-        "market", "restaurant", "community_center", "event_venue",
+        "market", "community_center", "event_venue",
         "historical_place", "plaza"
     ]
 
@@ -47,16 +46,14 @@ class TourTypeToGooglePlaceTypes(Enum):
     NATURE = [
         "park", "national_park", "state_park", "botanical_garden",
         "garden", "wildlife_park", "zoo", "aquarium", "beach", "hiking_area",
-        "wildlife_refuge", "observation_deck", "marina", "fishing_pond",
-        "cycling_park", "off_roading_area", "picnic_ground"
+        "wildlife_refuge", "observation_deck", "fishing_pond",
+        "picnic_ground"
     ]
 
     ARCHITECTURE = [
         "cultural_landmark", "monument", "church", "hindu_temple",
         "mosque", "synagogue", "stadium", "opera_house", "university",
-        "city_hall", "courthouse", "government_office", "concert_hall",
-        "convention_center", "housing_complex", "apartment_building",
-        "amphitheatre", "historical_landmark"
+        "city_hall", "courthouse", "historical_landmark", "amphitheatre"
     ]
 
     @classmethod
