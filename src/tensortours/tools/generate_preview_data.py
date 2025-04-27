@@ -55,7 +55,7 @@ logger = logging.getLogger(__name__)
 
 # Constants
 PREVIEW_PATH_PREFIX = "preview"
-DEFAULT_RADIUS = 16093  # 10 miles in meters
+DEFAULT_RADIUS = 8046  # 5 miles in meters
 DEFAULT_MAX_RESULTS = 20  # Google Places API limit is 20
 CONTENT_BUCKET = "tensortours-content-us-west-2"
 CLOUDFRONT_DOMAIN = os.environ.get("CLOUDFRONT_DOMAIN")
