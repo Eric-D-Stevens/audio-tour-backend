@@ -213,7 +213,7 @@ def retrieve_photos(
                     place_id=place_id,
                     cloudfront_url=cloudfront_url,
                     s3_url=s3_url,
-                    attribution=photo_data.get("authorAttributions", {}),
+                    attribution=photo_data.get("authorAttributions", [{}])[0] if photo_data.get("authorAttributions") else {},
                     size_width=photo_data.get("widthPx", 0),
                     size_height=photo_data.get("heightPx", 0),
                 )
@@ -222,11 +222,11 @@ def retrieve_photos(
                 logger.error(f"Error processing photo {photo_reference}: {str(e)}")
                 return None
 
-        # Limit to 10 photos to avoid excessive processing for on-demand generation
-        photo_data_list = place_details["photos"][:10]
+        # Limit to 5 photos to avoid excessive processing for on-demand generation
+        photo_data_list = place_details["photos"][:5]
 
         # Use ThreadPoolExecutor to process photos in parallel
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             # Submit all photo processing tasks to the executor with index
             future_to_photo = {
                 executor.submit(process_photo, photo_data, i): photo_data

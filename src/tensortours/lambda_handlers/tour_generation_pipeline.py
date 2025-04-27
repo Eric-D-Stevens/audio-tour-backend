@@ -156,7 +156,7 @@ def photo_retriever_handler(event: Dict[str, Any], context: Any) -> Dict[str, An
                         place_id=place_id,
                         cloudfront_url=cloudfront_url,
                         s3_url=s3_url,
-                        attribution=photo_data.get("authorAttributions", {}),
+                        attribution=photo_data.get("authorAttributions", [{}])[0] if photo_data.get("authorAttributions") else {},
                         size_width=photo_data.get("widthPx", 0),
                         size_height=photo_data.get("heightPx", 0),
                     )
