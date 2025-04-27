@@ -213,7 +213,7 @@ def retrieve_photos(
                     place_id=place_id,
                     cloudfront_url=cloudfront_url,
                     s3_url=s3_url,
-                    attribution=photo_data.get("attribution", {}),
+                    attribution=photo_data.get("authorAttributions", {}),
                     size_width=photo_data.get("widthPx", 0),
                     size_height=photo_data.get("heightPx", 0),
                 )
