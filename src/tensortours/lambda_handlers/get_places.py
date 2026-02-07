@@ -3,7 +3,7 @@ import logging
 from typing import Dict, List
 
 from ..models.api import GetPlacesRequest, GetPlacesResponse
-from ..models.tour import TourType, TourTypeToGooglePlaceTypes, TTPlaceInfo
+from ..models.tour import TourType, TourTypeToGooglePlaceTypes, TTPlaceInfo, TourTableItem
 from ..services.tour_table import GenerationStatus
 from ..services.user_event_table import UserEventTableClient
 from ..utils.general_utils import (
@@ -97,8 +97,36 @@ def forward_to_generation_queue(place_info: TTPlaceInfo, tour_type: TourType, us
     except ValueError as e:
         # This happens when the environment variable is not set
         logger.warning(f"Skipping generation queue: {str(e)}")
+def get_winter_lights_places() -> List[TTPlaceInfo]:
+    """Get all Portland Winter Lights places from S3.
+    
+    Loads pre-serialized TTPlaceInfo objects directly from S3.
+    
+    Returns:
+        List of TTPlaceInfo objects for Winter Lights installations
+    """
+    import boto3
+    from botocore.exceptions import ClientError
+    
+    bucket = "tensortours-content-us-west-2"
+    key = "winter-lights/places.json"
+    
+    try:
+        s3 = boto3.client('s3')
+        response = s3.get_object(Bucket=bucket, Key=key)
+        data = json.loads(response['Body'].read().decode('utf-8'))
+        
+        # Deserialize each place
+        places = [TTPlaceInfo.model_validate(p) for p in data.get('places', [])]
+        logger.info(f"Loaded {len(places)} Winter Lights places from S3")
+        return places
+        
+    except ClientError as e:
+        logger.error(f"Error loading from S3: {e}")
+        return []
     except Exception as e:
-        logger.error(f"Failed to forward place {place_info.place_id} to generation queue: {str(e)}")
+        logger.error(f"Error deserializing places: {e}")
+        return []
 
 
 def handler(event, context):
@@ -119,6 +147,29 @@ def handler(event, context):
 
     # Log the user's request to get places
     user_event_table_client.log_get_places_event(request)
+
+    # Get the tour table client
+    tour_table_client = get_tour_table_client()
+
+    # Special handling for Portland Winter Lights
+    if request.tour_type == TourType.EVENT_PORTLAND_WINTER_LIGHTS:
+        try:
+            places = get_winter_lights_places()
+            
+            response = GetPlacesResponse(
+                places=places,
+                total_count=len(places),
+                is_authenticated=request.user is not None,
+            )
+            
+            return {"statusCode": 200, "body": response.model_dump_json()}
+            
+        except Exception as e:
+            logger.exception(f"Error getting Winter Lights places: {str(e)}")
+            return {
+                "statusCode": 500,
+                "body": json.dumps({"error": f"Failed to get Winter Lights places: {str(e)}"}),
+            }
 
     # Get Google Places client
     google_places_client = get_google_places_client()

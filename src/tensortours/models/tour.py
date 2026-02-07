@@ -15,6 +15,7 @@ class TourType(str, Enum):
     ARCHITECTURE = "architecture"
     ART = "art"
     NATURE = "nature"
+    EVENT_PORTLAND_WINTER_LIGHTS = "event:portland-winter-lights"
 
 
 class TourTypeToGooglePlaceTypes(Enum):
