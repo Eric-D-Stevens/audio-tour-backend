@@ -3,8 +3,8 @@ import logging
 from typing import Dict, List
 
 from ..models.api import GetPlacesRequest, GetPlacesResponse
-from ..models.tour import TourType, TourTypeToGooglePlaceTypes, TTPlaceInfo, TourTableItem
-from ..services.tour_table import GenerationStatus
+from ..models.tour import TourType, TourTypeToGooglePlaceTypes, TTPlaceInfo
+from ..services.tour_table import GenerationStatus, TourTableItem
 from ..services.user_event_table import UserEventTableClient
 from ..utils.general_utils import (
     get_generation_queue,
