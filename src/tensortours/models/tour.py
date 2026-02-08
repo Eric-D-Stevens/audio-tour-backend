@@ -128,6 +128,6 @@ class TTour(BaseModel):
     place_id: str
     tour_type: TourType
     place_info: TTPlaceInfo
-    photos: Optional[List[TTPlacePhotos]] = None
-    script: Optional[TTScript] = None
-    audio: Optional[TTAudio] = None
+    photos: List[TTPlacePhotos]
+    script: TTScript
+    audio: TTAudio
