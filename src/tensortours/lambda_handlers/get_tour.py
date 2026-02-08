@@ -77,6 +77,8 @@ def handler(event, context):
         tour_data["script"] = tour_item.script
     if tour_item.audio is not None:
         tour_data["audio"] = tour_item.audio
+    if tour_item.metadata is not None:
+        tour_data["metadata"] = tour_item.metadata
     
     tour = TTour(**tour_data)
     tour_response = GetPregeneratedTourResponse(tour=tour)

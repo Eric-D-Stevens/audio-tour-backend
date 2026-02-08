@@ -131,3 +131,4 @@ class TTour(BaseModel):
     photos: List[TTPlacePhotos]
     script: TTScript
     audio: TTAudio
+    metadata: Optional[str] = None  # JSON-encoded string with original scraped data
