@@ -1,0 +1,92 @@
+{
+  "version": "1.0",
+  "count": 5,
+  "event": "Portland Winter Lights Festival",
+  "places": [
+    {
+      "place_id": "pwl_glow_with_the_flow_19970",
+      "place_name": "GLOW WITH THE FLOW",
+      "place_editorial_summary": "GLOW WITH THE FLOW invites you to find beauty amid chaos. This interactive fluid simulation turns your movement into a masterpiece, so start swirling!",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926974"
+    },
+    {
+      "place_id": "pwl_spurrkland_20993",
+      "place_name": "Spurrkland",
+      "place_editorial_summary": "Where sparkles meet purrs to create a meowgical land of cats and kittens, shimmering with love and lighting up your heart with glittering joy.",
+      "place_address": "3719 N Mississippi Avenue Portland Oregon 97227",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5498523,
+        "longitude": -122.6757863
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933997"
+    },
+    {
+      "place_id": "pwl_tiny_shimmers_21994",
+      "place_name": "Tiny Shimmers",
+      "place_editorial_summary": "In a dark world, it only takes a little bit of light to make a big difference. Take turns adding your own light to this interactive display.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927471"
+    },
+    {
+      "place_id": "pwl_eye_conduit_gobo_20143",
+      "place_name": "Eye Conduit Gobo",
+      "place_editorial_summary": "I think art is the conduit between living things.",
+      "place_address": "431 SW Harvey Milk St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5207999,
+        "longitude": -122.6760309
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930154"
+    },
+    {
+      "place_id": "pwl_perspective_perception_19205",
+      "place_name": "Perspective Perception",
+      "place_editorial_summary": "Come in and stare awhile! Sit, relax, and interact with yourself inside of a triangle!",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934550"
+    }
+  ]
+}

@@ -75,7 +75,7 @@ def create_tour_table_item(entry: Dict) -> Optional[TourTableItem]:
                 script_id=script_data.get('script_id', f"script_{place_info.place_id}"),
                 place_id=place_info.place_id,
                 place_name=place_info.place_name,
-                tour_type=TourType.ART,
+                tour_type=TourType.EVENT_PORTLAND_WINTER_LIGHTS,
                 model_info=script_data.get('model_info', {}),
                 s3_url=script_data.get('s3_url', ''),
                 cloudfront_url=script_data.get('cloudfront_url', '')
@@ -98,7 +98,7 @@ def create_tour_table_item(entry: Dict) -> Optional[TourTableItem]:
         # Create TourTableItem
         tour_item = TourTableItem(
             place_id=place_info.place_id,
-            tour_type=TourType.ART,
+            tour_type=TourType.EVENT_PORTLAND_WINTER_LIGHTS,
             place_info=place_info,
             status=status,
             photos=photos if photos else None,

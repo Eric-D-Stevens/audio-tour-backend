@@ -1,0 +1,422 @@
+{
+  "generated_at": "2026-02-07T12:05:07.796043",
+  "total_entries": 5,
+  "audio_generated": 5,
+  "skipped": 0,
+  "errors": 0,
+  "s3_bucket": "tensortours-content-us-west-2",
+  "cloudfront_domain": "d2g5o5njd6p5e.cloudfront.net",
+  "dry_run": false,
+  "entries": [
+    {
+      "place_info": {
+        "place_id": "pwl_glow_with_the_flow_19970",
+        "place_name": "GLOW WITH THE FLOW",
+        "place_editorial_summary": "GLOW WITH THE FLOW invites you to find beauty amid chaos. This interactive fluid simulation turns your movement into a masterpiece, so start swirling!",
+        "place_address": "25 SW Salmon St Portland Oregon 97204",
+        "place_primary_type": "event",
+        "place_types": [
+          "event",
+          "light_display",
+          "interactive_art"
+        ],
+        "place_location": {
+          "latitude": 45.515948,
+          "longitude": -122.674034
+        },
+        "retrieved_at": "2026-02-07T10:53:01.926974"
+      },
+      "metadata": {
+        "post_id": 19970,
+        "title_url": "https://pdxwlf.com/experience/glow-with-the-flow/",
+        "dates": null,
+        "type": "Interactive Art",
+        "map_number": "D05",
+        "zones": [
+          "Downtown",
+          "Downtown (Westside)",
+          "Downtown (World Trade Center)"
+        ],
+        "artists": [
+          "Ian Absher"
+        ],
+        "artist_socials": [
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/radian.pdx",
+            "handle": "radian.pdx"
+          }
+        ],
+        "thumbnail": "https://pdxwlf.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/12/05143342/Screenshot-2025-12-05-at-9.32.55-AM-150x150.png",
+        "images": [
+          "Screenshot-2025-12-05-at-9.32.55-AM.png",
+          "Screenshot-2025-12-05-at-9.32.55-AM_1.png",
+          "Screenshot-2025-12-05-at-9.32.55-AM_2.png",
+          "Screenshot-2025-12-05-at-9.32.55-AM_3.png"
+        ],
+        "description": "This debut installation by Portland artist Radian is designed to get you out of your head and into your body, out of a moment and into a movement. GLOW WITH THE FLOW encourages people of all ages to let go of what they needn’t carry (all the little things) and simply appreciate the magic they create.This dynamic exhibit can be enjoyed solo or with multiple people at once. Dancing, spinning, jumping, and laughing are encouraged – just remember to be mindful of others around you!",
+        "image_count": 1
+      },
+      "image_count": 4,
+      "photos": [
+        {
+          "photo_id": "pwl_glow_with_the_flow_19970_0",
+          "place_id": "pwl_glow_with_the_flow_19970",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_glow_with_the_flow_19970/0.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_glow_with_the_flow_19970/0.jpg",
+          "attribution": {
+            "displayName": "Portland Winter Lights Festival"
+          },
+          "size_width": 1200,
+          "size_height": 800,
+          "index": 0
+        }
+      ],
+      "audio": {
+        "place_id": "pwl_glow_with_the_flow_19970",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/audio/pwl_glow_with_the_flow_19970_art.mp3",
+        "s3_url": "s3://tensortours-content-us-west-2/audio/pwl_glow_with_the_flow_19970_art.mp3",
+        "script_text": "Welcome to GLOW WITH THE FLOW. This debut installation by Portland artist Radian is designed to get you out of your head and into your body, out of a moment and into a movement. GLOW WITH THE FLOW encourages people of all ages to let go of what they needn’t carry (all the little things) and simply appreciate the magic they create.This dynamic exhibit can be enjoyed solo or with multiple people at once. Dancing, spinning, jumping, and laughing are encouraged – just remember to be mindful of others around you! Enjoy the magical display!",
+        "word_count": 95,
+        "model_info": {
+          "provider": "aws_polly",
+          "voice": "Amy",
+          "engine": "generative"
+        }
+      },
+      "script": {
+        "script_id": "script_pwl_glow_with_the_flow_19970",
+        "place_id": "pwl_glow_with_the_flow_19970",
+        "place_name": "GLOW WITH THE FLOW",
+        "tour_type": "art",
+        "s3_url": "s3://tensortours-content-us-west-2/scripts/pwl_glow_with_the_flow_19970_art.txt",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/scripts/pwl_glow_with_the_flow_19970_art.txt",
+        "text": "Welcome to GLOW WITH THE FLOW. This debut installation by Portland artist Radian is designed to get you out of your head and into your body, out of a moment and into a movement. GLOW WITH THE FLOW encourages people of all ages to let go of what they needn’t carry (all the little things) and simply appreciate the magic they create.This dynamic exhibit can be enjoyed solo or with multiple people at once. Dancing, spinning, jumping, and laughing are encouraged – just remember to be mindful of others around you! Enjoy the magical display!"
+      }
+    },
+    {
+      "place_info": {
+        "place_id": "pwl_spurrkland_20993",
+        "place_name": "Spurrkland",
+        "place_editorial_summary": "Where sparkles meet purrs to create a meowgical land of cats and kittens, shimmering with love and lighting up your heart with glittering joy.",
+        "place_address": "3719 N Mississippi Avenue Portland Oregon 97227",
+        "place_primary_type": "event",
+        "place_types": [
+          "event",
+          "light_display",
+          "art_installation"
+        ],
+        "place_location": {
+          "latitude": 45.5498523,
+          "longitude": -122.6757863
+        },
+        "retrieved_at": "2026-02-07T10:53:01.933997"
+      },
+      "metadata": {
+        "post_id": 20993,
+        "title_url": "https://pdxwlf.com/experience/spurrkland/",
+        "dates": "Feb 6-14, 6–10 PM",
+        "type": "Art installation",
+        "map_number": "N02",
+        "zones": [
+          "North Portland"
+        ],
+        "artists": [
+          "Clody Cates & the GifttyKitty Artists"
+        ],
+        "artist_socials": [
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/giftykitty_gifts",
+            "handle": "giftykitty_gifts"
+          },
+          {
+            "platform": "facebook",
+            "url": "https://www.facebook.com/GiftyKitty",
+            "handle": "GiftyKitty"
+          }
+        ],
+        "thumbnail": "https://pdxwlf.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/12/20031536/GiftyKitty-Spurrkland-2026-mockup-150x150.jpg",
+        "images": [
+          "GiftyKitty-Spurrkland-2026-mockup.jpg",
+          "GiftyKitty-instore-march-2025-7211.jpg",
+          "giftyKitty-pdxwlf2025-6865.jpg",
+          "giftyKitty-pdxwlf2025-6864.jpg",
+          "GiftyKitty-Spurrkland-2026-mockup_1.jpg",
+          "GiftyKitty-instore-march-2025-7211_1.jpg",
+          "giftyKitty-pdxwlf2025-6865_1.jpg",
+          "giftyKitty-pdxwlf2025-6864_1.jpg",
+          "GiftyKitty-Spurrkland-2026-mockup_2.jpg",
+          "GiftyKitty-instore-march-2025-7211_2.jpg",
+          "giftyKitty-pdxwlf2025-6865_2.jpg",
+          "giftyKitty-pdxwlf2025-6864_2.jpg",
+          "GiftyKitty-Spurrkland-2026-mockup_3.jpg",
+          "GiftyKitty-instore-march-2025-7211_3.jpg",
+          "giftyKitty-pdxwlf2025-6865_3.jpg",
+          "giftyKitty-pdxwlf2025-6864_3.jpg"
+        ],
+        "description": "This year, GiftyKitty transforms into a shimmering cat wonderland. Over 100 cat-head mirror balls cast dancing reflections through a blacklight-lit space, while soft purrs and smooth beats create a cozy feline ambiance. A dozen GiftyKitty artists contribute sparkling, reflective, and glow-in-the-dark works celebrating the tiny wonders that shine the brightest; light, memory, love, and the meowgic of “All the Little Things.” Spurrkland invites visitors to rediscover the small moments that make life glow.* Find all participating artists on GiftyKitty/Spurrkland web page",
+        "image_count": 3
+      },
+      "image_count": 16,
+      "photos": [
+        {
+          "photo_id": "pwl_spurrkland_20993_0",
+          "place_id": "pwl_spurrkland_20993",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/0.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/0.jpg",
+          "attribution": {
+            "displayName": "Portland Winter Lights Festival"
+          },
+          "size_width": 1200,
+          "size_height": 800,
+          "index": 0
+        },
+        {
+          "photo_id": "pwl_spurrkland_20993_1",
+          "place_id": "pwl_spurrkland_20993",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/1.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/1.jpg",
+          "attribution": {
+            "displayName": "Portland Winter Lights Festival"
+          },
+          "size_width": 1200,
+          "size_height": 800,
+          "index": 1
+        },
+        {
+          "photo_id": "pwl_spurrkland_20993_2",
+          "place_id": "pwl_spurrkland_20993",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/2.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/2.jpg",
+          "attribution": {
+            "displayName": "Portland Winter Lights Festival"
+          },
+          "size_width": 1200,
+          "size_height": 800,
+          "index": 2
+        }
+      ],
+      "audio": {
+        "place_id": "pwl_spurrkland_20993",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/audio/pwl_spurrkland_20993_art.mp3",
+        "s3_url": "s3://tensortours-content-us-west-2/audio/pwl_spurrkland_20993_art.mp3",
+        "script_text": "Welcome to Spurrkland. This year, GiftyKitty transforms into a shimmering cat wonderland. Over 100 cat-head mirror balls cast dancing reflections through a blacklight-lit space, while soft purrs and smooth beats create a cozy feline ambiance. A dozen GiftyKitty artists contribute sparkling, reflective, and glow-in-the-dark works celebrating the tiny wonders that shine the brightest; light, memory, love, and the meowgic of “All the Little Things.” Spurrkland invites visitors to rediscover the small moments that make life glow.* Find all participating artists on GiftyKitty/Spurrkland web page Enjoy the magical display!",
+        "word_count": 88,
+        "model_info": {
+          "provider": "aws_polly",
+          "voice": "Amy",
+          "engine": "generative"
+        }
+      },
+      "script": {
+        "script_id": "script_pwl_spurrkland_20993",
+        "place_id": "pwl_spurrkland_20993",
+        "place_name": "Spurrkland",
+        "tour_type": "art",
+        "s3_url": "s3://tensortours-content-us-west-2/scripts/pwl_spurrkland_20993_art.txt",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/scripts/pwl_spurrkland_20993_art.txt",
+        "text": "Welcome to Spurrkland. This year, GiftyKitty transforms into a shimmering cat wonderland. Over 100 cat-head mirror balls cast dancing reflections through a blacklight-lit space, while soft purrs and smooth beats create a cozy feline ambiance. A dozen GiftyKitty artists contribute sparkling, reflective, and glow-in-the-dark works celebrating the tiny wonders that shine the brightest; light, memory, love, and the meowgic of “All the Little Things.” Spurrkland invites visitors to rediscover the small moments that make life glow.* Find all participating artists on GiftyKitty/Spurrkland web page Enjoy the magical display!"
+      }
+    },
+    {
+      "place_info": {
+        "place_id": "pwl_tiny_shimmers_21994",
+        "place_name": "Tiny Shimmers",
+        "place_editorial_summary": "In a dark world, it only takes a little bit of light to make a big difference. Take turns adding your own light to this interactive display.",
+        "place_address": "25 SW Salmon St Portland Oregon 97204",
+        "place_primary_type": "event",
+        "place_types": [
+          "event",
+          "light_display",
+          "interactive_art"
+        ],
+        "place_location": {
+          "latitude": 45.515948,
+          "longitude": -122.674034
+        },
+        "retrieved_at": "2026-02-07T10:53:01.927471"
+      },
+      "metadata": {
+        "post_id": 21994,
+        "title_url": "https://pdxwlf.com/experience/tiny-shimmers/",
+        "dates": null,
+        "type": "Interactive Art",
+        "map_number": "D06",
+        "zones": [
+          "Downtown",
+          "Downtown (Westside)",
+          "Downtown (World Trade Center)"
+        ],
+        "artists": [
+          "Lauren Jost"
+        ],
+        "artist_socials": [
+          {
+            "platform": "instagram",
+            "url": "https://instagram.com/current_interest_creative",
+            "handle": "current_interest_creative"
+          }
+        ],
+        "thumbnail": "https://pdxwlf.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/12/20104107/PhotoComingSoon-PDXWLF-150x150.jpg",
+        "images": [],
+        "description": "What adds tiny shimmers of light to your world? In this interactive piece, viewers flip switches to add and remove light from the full design, shifting solitary outlines of isolation and darkness into colorful images of connection, collaboration, and joy. Bringing in elements of shadow puppetry and theatrical lighting design, “Tiny Shimmers” gives viewers the opportunity to create a dynamic collage of feelings and experiences using light, color, and shape. The darkness is transformed from a stagnant trap into a playful canvas, helping us to imagine new ways of bringing tiny shimmers of light into the world."
+      },
+      "image_count": 0,
+      "photos": [],
+      "audio": {
+        "place_id": "pwl_tiny_shimmers_21994",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/audio/pwl_tiny_shimmers_21994_art.mp3",
+        "s3_url": "s3://tensortours-content-us-west-2/audio/pwl_tiny_shimmers_21994_art.mp3",
+        "script_text": "Welcome to Tiny Shimmers. What adds tiny shimmers of light to your world? In this interactive piece, viewers flip switches to add and remove light from the full design, shifting solitary outlines of isolation and darkness into colorful images of connection, collaboration, and joy. Bringing in elements of shadow puppetry and theatrical lighting design, “Tiny Shimmers” gives viewers the opportunity to create a dynamic collage of feelings and experiences using light, color, and shape. The darkness is transformed from a stagnant trap into a playful canvas, helping us to imagine new ways of bringing tiny shimmers of light into the world. Enjoy the magical display!",
+        "word_count": 105,
+        "model_info": {
+          "provider": "aws_polly",
+          "voice": "Amy",
+          "engine": "generative"
+        }
+      },
+      "script": {
+        "script_id": "script_pwl_tiny_shimmers_21994",
+        "place_id": "pwl_tiny_shimmers_21994",
+        "place_name": "Tiny Shimmers",
+        "tour_type": "art",
+        "s3_url": "s3://tensortours-content-us-west-2/scripts/pwl_tiny_shimmers_21994_art.txt",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/scripts/pwl_tiny_shimmers_21994_art.txt",
+        "text": "Welcome to Tiny Shimmers. What adds tiny shimmers of light to your world? In this interactive piece, viewers flip switches to add and remove light from the full design, shifting solitary outlines of isolation and darkness into colorful images of connection, collaboration, and joy. Bringing in elements of shadow puppetry and theatrical lighting design, “Tiny Shimmers” gives viewers the opportunity to create a dynamic collage of feelings and experiences using light, color, and shape. The darkness is transformed from a stagnant trap into a playful canvas, helping us to imagine new ways of bringing tiny shimmers of light into the world. Enjoy the magical display!"
+      }
+    },
+    {
+      "place_info": {
+        "place_id": "pwl_eye_conduit_gobo_20143",
+        "place_name": "Eye Conduit Gobo",
+        "place_editorial_summary": "I think art is the conduit between living things.",
+        "place_address": "431 SW Harvey Milk St Portland Oregon 97204",
+        "place_primary_type": "event",
+        "place_types": [
+          "event",
+          "light_display",
+          "projection"
+        ],
+        "place_location": {
+          "latitude": 45.5207999,
+          "longitude": -122.6760309
+        },
+        "retrieved_at": "2026-02-07T10:53:01.930154"
+      },
+      "metadata": {
+        "post_id": 20143,
+        "title_url": "https://pdxwlf.com/experience/expensify-midtown-beer-garden/",
+        "dates": "Feb 6-14, 6–10 PM",
+        "type": "Projection",
+        "map_number": "D21",
+        "zones": [
+          "Downtown",
+          "Downtown (Westside)"
+        ],
+        "artists": [
+          "Chris Fish Herring"
+        ],
+        "artist_socials": [
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/heavyintolights/",
+            "handle": "heavyintolights"
+          }
+        ],
+        "thumbnail": "https://pdxwlf.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/12/08181944/Celestial45-150x150.png",
+        "images": [],
+        "description": "This project began with a simple idea:Get people to stop looking down — and start looking up.We spend so much time buried in our phones, trapped by tech that was meant to connect us but often isolates us instead. In doing so, we miss everything around us: the architecture, the flowers, the colors, the people, the possibility of connection.I wanted to interrupt that downward gaze — to give people a reason to pause, look up, and see the beauty that’s already here.Take a breath. Look around. Things aren’t as bad as they seem.It’s all perspective.Thank you to Downtown Clean & Safe for supporting this project."
+      },
+      "image_count": 0,
+      "photos": [],
+      "audio": {
+        "place_id": "pwl_eye_conduit_gobo_20143",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/audio/pwl_eye_conduit_gobo_20143_art.mp3",
+        "s3_url": "s3://tensortours-content-us-west-2/audio/pwl_eye_conduit_gobo_20143_art.mp3",
+        "script_text": "Welcome to Eye Conduit Gobo. This project began with a simple idea:Get people to stop looking down — and start looking up.We spend so much time buried in our phones, trapped by tech that was meant to connect us but often isolates us instead. In doing so, we miss everything around us: the architecture, the flowers, the colors, the people, the possibility of connection.I wanted to interrupt that downward gaze — to give people a reason to pause, look up, and see the beauty that’s already here.Take a breath. Look around. Things aren’t as bad as they seem.It’s all perspective.Thank you to Downtown Clean & Safe for supporting this project. Enjoy the magical display!",
+        "word_count": 114,
+        "model_info": {
+          "provider": "aws_polly",
+          "voice": "Amy",
+          "engine": "generative"
+        }
+      },
+      "script": {
+        "script_id": "script_pwl_eye_conduit_gobo_20143",
+        "place_id": "pwl_eye_conduit_gobo_20143",
+        "place_name": "Eye Conduit Gobo",
+        "tour_type": "art",
+        "s3_url": "s3://tensortours-content-us-west-2/scripts/pwl_eye_conduit_gobo_20143_art.txt",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/scripts/pwl_eye_conduit_gobo_20143_art.txt",
+        "text": "Welcome to Eye Conduit Gobo. This project began with a simple idea:Get people to stop looking down — and start looking up.We spend so much time buried in our phones, trapped by tech that was meant to connect us but often isolates us instead. In doing so, we miss everything around us: the architecture, the flowers, the colors, the people, the possibility of connection.I wanted to interrupt that downward gaze — to give people a reason to pause, look up, and see the beauty that’s already here.Take a breath. Look around. Things aren’t as bad as they seem.It’s all perspective.Thank you to Downtown Clean & Safe for supporting this project. Enjoy the magical display!"
+      }
+    },
+    {
+      "place_info": {
+        "place_id": "pwl_perspective_perception_19205",
+        "place_name": "Perspective Perception",
+        "place_editorial_summary": "Come in and stare awhile! Sit, relax, and interact with yourself inside of a triangle!",
+        "place_address": "236 SE Clay St Portland Oregon 97214",
+        "place_primary_type": "event",
+        "place_types": [
+          "event",
+          "light_display",
+          "interactive_art"
+        ],
+        "place_location": {
+          "latitude": 45.5115397,
+          "longitude": -122.6634692
+        },
+        "retrieved_at": "2026-02-07T10:53:01.934550"
+      },
+      "metadata": {
+        "post_id": 19205,
+        "title_url": "https://pdxwlf.com/experience/perspective-perception/",
+        "dates": null,
+        "type": "Interactive Art",
+        "map_number": null,
+        "zones": [
+          "SE Portland (Electric Blocks)",
+          "Southeast Portland"
+        ],
+        "artists": [
+          "Camden Boyd"
+        ],
+        "artist_socials": [
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/camp_craefts/",
+            "handle": "camp_craefts"
+          }
+        ],
+        "thumbnail": "https://pdxwlf.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/11/21102506/IMG_2347-150x150.jpg",
+        "images": [],
+        "description": "You will always be watched, and through this project, I learned a few things about what that really means. It forces you to sit down and look at yourself—who you are, how you act, and what you choose to share with the world."
+      },
+      "image_count": 0,
+      "photos": [],
+      "audio": {
+        "place_id": "pwl_perspective_perception_19205",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/audio/pwl_perspective_perception_19205_art.mp3",
+        "s3_url": "s3://tensortours-content-us-west-2/audio/pwl_perspective_perception_19205_art.mp3",
+        "script_text": "Welcome to Perspective Perception. You will always be watched, and through this project, I learned a few things about what that really means. It forces you to sit down and look at yourself—who you are, how you act, and what you choose to share with the world. Enjoy the magical display!",
+        "word_count": 51,
+        "model_info": {
+          "provider": "aws_polly",
+          "voice": "Amy",
+          "engine": "generative"
+        }
+      },
+      "script": {
+        "script_id": "script_pwl_perspective_perception_19205",
+        "place_id": "pwl_perspective_perception_19205",
+        "place_name": "Perspective Perception",
+        "tour_type": "art",
+        "s3_url": "s3://tensortours-content-us-west-2/scripts/pwl_perspective_perception_19205_art.txt",
+        "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/scripts/pwl_perspective_perception_19205_art.txt",
+        "text": "Welcome to Perspective Perception. You will always be watched, and through this project, I learned a few things about what that really means. It forces you to sit down and look at yourself—who you are, how you act, and what you choose to share with the world. Enjoy the magical display!"
+      }
+    }
+  ]
+}
