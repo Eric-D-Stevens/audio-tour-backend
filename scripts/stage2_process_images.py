@@ -165,7 +165,7 @@ def process_entry(entry: Dict, image_dir: Path, bucket: str, temp_dir: Path) -> 
         print(f"   📤 Uploading image {idx + 1}/{min(len(unique_images), 3)}: {filename}")
         
         local_path = image_dir / filename
-        s3_key = f"photos/{place_id}/{idx}.jpg"
+        s3_key = f"winter-lights/photos/{place_id}/{idx}.jpg"
         
         # Resize to temp file
         temp_path = temp_dir / f"{place_id}_{idx}.jpg"

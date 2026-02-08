@@ -101,9 +101,10 @@ def create_tour_table_item(entry: Dict) -> Optional[TourTableItem]:
             tour_type=TourType.EVENT_PORTLAND_WINTER_LIGHTS,
             place_info=place_info,
             status=status,
-            photos=photos if photos else None,
+            photos=photos if photos else [],
             script=script,
-            audio=audio
+            audio=audio,
+            metadata=json.dumps(metadata) if metadata else None
         )
         
         return tour_item

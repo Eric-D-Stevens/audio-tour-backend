@@ -1,0 +1,3271 @@
+{
+  "version": "1.0",
+  "count": 192,
+  "event": "Portland Winter Lights Festival",
+  "places": [
+    {
+      "place_id": "pwl_morrison_bridge_lights_6814",
+      "place_name": "Morrison Bridge Lights",
+      "place_editorial_summary": "Fun lights on the Morrison Bridge!",
+      "place_address": "45.517656,-122.669253",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.517656,
+        "longitude": -122.669253
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926237"
+    },
+    {
+      "place_id": "pwl_electric_dandelions_20744",
+      "place_name": "Electric Dandelions",
+      "place_editorial_summary": "Towering 28ft light sculptures features an elegant steel Dandelion by day, and a mesmerizing LED firework by night. An immersive, glowing spectacle.",
+      "place_address": "1000 SW Naito Pkwy Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5154641,
+        "longitude": -122.6730793
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926419"
+    },
+    {
+      "place_id": "pwl_the_tunnel_21022",
+      "place_name": "The TUNNEL",
+      "place_editorial_summary": "Part immersive sculpture, part sensory instrument, The TUNNEL is more than an installation—it’s a cosmic passage through the imagination.",
+      "place_address": "1000 SW Naito Pkwy Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5154641,
+        "longitude": -122.6730793
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926496"
+    },
+    {
+      "place_id": "pwl_cosmic_cuddle_22058",
+      "place_name": "Cosmic Cuddle",
+      "place_editorial_summary": "Meet &quot;Billy&quot; the loving name given to this giant sparkling illuminated cuttlefish brought to life! Standing 8 feet tall and stretching 15 feet long",
+      "place_address": "1000 SW Naito Pkwy Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5154641,
+        "longitude": -122.6730793
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926593"
+    },
+    {
+      "place_id": "pwl_midnight_blooms_23125",
+      "place_name": "Midnight Blooms",
+      "place_editorial_summary": "Glowing flowers bloom where you least expect, transforming ordinary planters into moments of wonder.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926640"
+    },
+    {
+      "place_id": "pwl_community_circles_combined_20001",
+      "place_name": "Community Circles Combined",
+      "place_editorial_summary": "Many different sizes of circles working together can create something more. Control a circle and create something bigger.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926674"
+    },
+    {
+      "place_id": "pwl_black_light_queen_of_the_night_19967",
+      "place_name": "Black Light Queen of the Night",
+      "place_editorial_summary": "A walk thru black light experience featuring a magical bloom that lasts for just one night",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926706"
+    },
+    {
+      "place_id": "pwl_quantum_jungle_20781",
+      "place_name": "Quantum Jungle",
+      "place_editorial_summary": "Quantum Jungle playfully visualizes Quantum Physics phenomena on a wall filled with thousands of touch-sensitive springs and lights.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926783"
+    },
+    {
+      "place_id": "pwl_gathering_in_a_shadow_forest_22055",
+      "place_name": "Gathering in a Shadow Forest",
+      "place_editorial_summary": "Join the spirit of the Shadow Forest. Who knows what you will find.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926818"
+    },
+    {
+      "place_id": "pwl_the_mind_melter_6000_20558",
+      "place_name": "The Mind Melter 6000",
+      "place_editorial_summary": "Brains are overrated! Come melt your mind as you peer into the Mind Melter 6000! Note: Please clean up your own melted mind. Mop and bucket provided.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926853"
+    },
+    {
+      "place_id": "pwl_glow_with_the_flow_19970",
+      "place_name": "GLOW WITH THE FLOW",
+      "place_editorial_summary": "GLOW WITH THE FLOW invites you to find beauty amid chaos. This interactive fluid simulation turns your movement into a masterpiece, so start swirling!",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.926974"
+    },
+    {
+      "place_id": "pwl_facets_and_small_matters_19932",
+      "place_name": "Facets and Small Matters",
+      "place_editorial_summary": "This piece explores the feel of resilience; to burn, not be destroyed, and to return; Facets and Small Matters is about what survives to be reborn.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927064"
+    },
+    {
+      "place_id": "pwl_light_begins_small_20766",
+      "place_name": "Light Begins Small",
+      "place_editorial_summary": "This artwork uses light to explore how small changes grow into something larger. Move your hands over the control area to change scale.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927241"
+    },
+    {
+      "place_id": "pwl_dew_drops_21181",
+      "place_name": "Dew Drops",
+      "place_editorial_summary": "A playful light and sound installation where glowing droplets echo mitosis—responding to button touch and merging into a shared musical conversation.",
+      "place_address": "25 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927269"
+    },
+    {
+      "place_id": "pwl_ascension_ar_20861",
+      "place_name": "Ascension AR",
+      "place_editorial_summary": "Ascension is an 8-foot mirrored pyramid experienced with an AR headset, revealing intricate geometric patterns and infinite vertical light.",
+      "place_address": "25 SW Salmon St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927308"
+    },
+    {
+      "place_id": "pwl_lumenaerie_21132",
+      "place_name": "LUMEN+aerie",
+      "place_editorial_summary": "Walk through a tiny house transformed into a disco cloud forest where enchanted birds, flowers, and mysterious beings keep watch over nightly revels",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927356"
+    },
+    {
+      "place_id": "pwl_radiolarian_20427",
+      "place_name": "Radiolarian",
+      "place_editorial_summary": "Radiolarian is a mobile, interactive, scale model of a microscopic plankton called a radiolarian.",
+      "place_address": "25 SW Salmon St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927382"
+    },
+    {
+      "place_id": "pwl_sir_penti_of_soft_world_21101",
+      "place_name": "Sir Penti of Soft World",
+      "place_editorial_summary": "A friendly inflatable garden serpent who glows from within. Stroll under his arches and discover the images hidden in his scales.",
+      "place_address": "25 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927465"
+    },
+    {
+      "place_id": "pwl_tiny_shimmers_21994",
+      "place_name": "Tiny Shimmers",
+      "place_editorial_summary": "In a dark world, it only takes a little bit of light to make a big difference. Take turns adding your own light to this interactive display.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927471"
+    },
+    {
+      "place_id": "pwl_within_a_grain_22371",
+      "place_name": "Within a Grain",
+      "place_editorial_summary": "&#039;within a grain&#039; explores how tiny elements shape vast systems, weaving light, memory, energy, and our role as both consumer and steward.",
+      "place_address": "25 SW Salmon Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927477"
+    },
+    {
+      "place_id": "pwl_illuminated_alphabet_20033",
+      "place_name": "Illuminated Alphabet",
+      "place_editorial_summary": "Saily rotating selection of music-related anagrams originating from the name of a music club &quot;Paradise Blue&quot; in the windows of World Trade Center.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927497"
+    },
+    {
+      "place_id": "pwl_i_sing_the_rainbow_electric_20039",
+      "place_name": "I Sing the Rainbow Electric",
+      "place_editorial_summary": "A celebration of music and color.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927534"
+    },
+    {
+      "place_id": "pwl_umbra_illuminated_20891",
+      "place_name": "Umbra Illuminated",
+      "place_editorial_summary": "A larger than life lampshade inviting reflection, wonder, and quiet togetherness.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927566"
+    },
+    {
+      "place_id": "pwl_in_between_19028",
+      "place_name": "IN-Between",
+      "place_editorial_summary": "A glass threshold can create moments of clarity and opposing moments of unease. Take a moment, sit or stand and experience being in the threshold.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927624"
+    },
+    {
+      "place_id": "pwl_the_chromosphere_20153",
+      "place_name": "The Chromosphere",
+      "place_editorial_summary": "The Chromosphere is interactive, animated, LED-covered sphere that you can stand inside and affect the patterns with sound.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927679"
+    },
+    {
+      "place_id": "pwl_whispering_wishes_22447",
+      "place_name": "Whispering Wishes",
+      "place_editorial_summary": "Whisper your wish into a microphone and watch it move along a thread of light to illuminate the Wish Amplifier in a dazzling display.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927685"
+    },
+    {
+      "place_id": "pwl_dancing_the_light_fantastic_1_18843",
+      "place_name": "Dancing the Light Fantastic 1",
+      "place_editorial_summary": "Moving bodies are transformed into vibrant, luminous films that dance across buildings, enchanting audiences of all ages.",
+      "place_address": "25 SW Salmon St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927691"
+    },
+    {
+      "place_id": "pwl_soft_world_21090",
+      "place_name": "Soft World",
+      "place_editorial_summary": "1-Sir Penti: Friendly, inflatable serpent 2-Infinite Worlds: Glowing tower of stories 3-Yum Yum&#039;s Feastival: Whimsical picnic for lizards and ants",
+      "place_address": "25 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927787"
+    },
+    {
+      "place_id": "pwl_partybot_loves_you_19981",
+      "place_name": "Partybot Loves You",
+      "place_editorial_summary": "Partybot loves you so much they need to express it with huge animated billboards! Bask in the warm glow of Partybot’s loving affirmations!",
+      "place_address": "25 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927818"
+    },
+    {
+      "place_id": "pwl_portal_19813",
+      "place_name": "Portal",
+      "place_editorial_summary": "Lie under the Portal and let it transport you to another space and time.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927956"
+    },
+    {
+      "place_id": "pwl_subsurface_light_21048",
+      "place_name": "SUBSURFACE LIGHT",
+      "place_editorial_summary": "SUBSURFACE LIGHT is a 3D projection-mapping animation that transforms a wall to reveal what lies just beneath the surface and what emerges at viewers.",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.927987"
+    },
+    {
+      "place_id": "pwl_onward_and_outward_20554",
+      "place_name": "Onward and Outward",
+      "place_editorial_summary": "Onward and Outward affirms a universe where growth, change, and expansion are constant, and where every ending feeds into another beginning.",
+      "place_address": "121 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928016"
+    },
+    {
+      "place_id": "pwl_pixel_drift_20763",
+      "place_name": "Pixel Drift",
+      "place_editorial_summary": "Pixel Drift explores the space between pixels and their connection to the analog world we live in, we invite you to come be part of that journey.",
+      "place_address": "121 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928044"
+    },
+    {
+      "place_id": "pwl_oscillara_18420",
+      "place_name": "Oscillara",
+      "place_editorial_summary": "Twisty Maurice returns to PDXWLF with a glowing lattice of light, mirrors, and motion where math and code ripple into hypnotic patterns.",
+      "place_address": "121 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928204"
+    },
+    {
+      "place_id": "pwl_workshop_pge_project_zero_makerspace_at_world_trade_center_22106",
+      "place_name": "Workshop: PGE Project Zero Makerspace at World Trade Center",
+      "place_editorial_summary": "Step into the PGE Makerspace forest and etch your own glowing animal art to take home! Suggested for attendees ages 8+.",
+      "place_address": "121 SW Salmon St Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "live_participatory_events"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928215"
+    },
+    {
+      "place_id": "pwl_synthesthesia_crystals_21118",
+      "place_name": "Synthesthesia Crystals",
+      "place_editorial_summary": "Synthesthesia Crystals is an light art sculpture of massive, music reactive infinity crystals!",
+      "place_address": "121 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928237"
+    },
+    {
+      "place_id": "pwl_portal_of_perception_19889",
+      "place_name": "Portal of Perception",
+      "place_editorial_summary": "Stepping through the Portal invites a shift of perspective. Wonder is not distant, but always here. Waiting only to be seen with fully present eyes!",
+      "place_address": "121 SW Salmon Street Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928400"
+    },
+    {
+      "place_id": "pwl_electric_avenue_20150",
+      "place_name": "Electric Avenue",
+      "place_editorial_summary": "Electric Avenue is a series of LED-neon-tube signs in the look and feel of cyberpunk, retro-futuristic neon-light-covered streets.",
+      "place_address": "121 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928417"
+    },
+    {
+      "place_id": "pwl_rain_19810",
+      "place_name": "RAIN",
+      "place_editorial_summary": "Immerse yourself in RAIN by artist Dave Meeker. Share in the joy of rain, the abundance of which is one of the things that makes Portland unique.",
+      "place_address": "121 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928446"
+    },
+    {
+      "place_id": "pwl_ghost_flora_20794",
+      "place_name": "Ghost Flora",
+      "place_editorial_summary": "Delicate &amp; nearly gone. Explore an AR scavenger hunt that brings threatened native plants &amp; their place in our ecosystems back into view.",
+      "place_address": "121 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928462"
+    },
+    {
+      "place_id": "pwl_illuminated_luggage_22124",
+      "place_name": "Illuminated Luggage",
+      "place_editorial_summary": "A glowing chest that moves and opens/closes its lid. Inside are large teeth and a floppy tongue. Beneath the chest are many small feet.",
+      "place_address": "121 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928491"
+    },
+    {
+      "place_id": "pwl_imagined_worlds_20036",
+      "place_name": "Imagined Worlds",
+      "place_editorial_summary": "Engage with a journey across imagined worlds as seen through costumes created by Portland Opera. Each costume tells a story!",
+      "place_address": "56 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5156691,
+        "longitude": -122.6744388
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928512"
+    },
+    {
+      "place_id": "pwl_live_music_portland_opera_presents_queen_of_the_night_aria_at_world_trade_center_20004",
+      "place_name": "Live Music: Portland Opera Presents: Queen of the Night Aria at World Trade Center",
+      "place_editorial_summary": "A timeless classic on the World Trade Center Plaza: Mozart&#039;s Queen of the Night Aria, presented in sparkling lights by Portland Opera!",
+      "place_address": "25 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928544"
+    },
+    {
+      "place_id": "pwl_dj_simy_garay_8211_music_experience_at_world_trade_center_21329",
+      "place_name": "DJ: Simy Garay &#8211; Music Experience at World Trade Center",
+      "place_editorial_summary": "Music from all around the world.",
+      "place_address": "25 SW Salmon St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.515948,
+        "longitude": -122.674034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928553"
+    },
+    {
+      "place_id": "pwl_juggling_and_more_spencer_sprocket_extravaganza_at_world_trade_center_13328",
+      "place_name": "Juggling and More: Spencer Sprocket Extravaganza at World Trade Center",
+      "place_editorial_summary": "Spencer Sprocket&#039;s back, brighter and bolder than ever! Juggling, magic, comedy, more lights, and all-ages fun for the whole family!",
+      "place_address": "121 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928561"
+    },
+    {
+      "place_id": "pwl_roaming_costumed_creatures_butteyes_at_world_trade_center_18872",
+      "place_name": "Roaming costumed creatures: Butteyes at World Trade Center",
+      "place_editorial_summary": "The Butteyes are alien-like creatures that dance, prance, and delight audiences of all ages with their large glowing green eyes and playful curiosity.",
+      "place_address": "121 SW Salmon St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.5162545,
+        "longitude": -122.6748618
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928591"
+    },
+    {
+      "place_id": "pwl_androids_21240",
+      "place_name": "Androids",
+      "place_editorial_summary": "Vision of the future world where humans and human shaped robots coexist together in peace and harmony.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.928977"
+    },
+    {
+      "place_id": "pwl_the_portal_21036",
+      "place_name": "The PORTAL",
+      "place_editorial_summary": "The Portal invites curiosity into action—an interactive gateway that asks: Do you step into the unknown, or turn back? Can you unlock its mysteries?",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929085"
+    },
+    {
+      "place_id": "pwl_facets_of_a_journey_22033",
+      "place_name": "Facets of a Journey",
+      "place_editorial_summary": "A simple geode can reveal the many wonders of light. You are the explorer of light, learning what it has traveled so far to share with you.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929096"
+    },
+    {
+      "place_id": "pwl_love_transceiver_22737",
+      "place_name": "Love Transceiver",
+      "place_editorial_summary": "Your own cellular geometry&#039;s structure. Step inside and be reminded that every cell in your body is setup to receive and transmit love.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929102"
+    },
+    {
+      "place_id": "pwl_some_like_it_hot_22040",
+      "place_name": "Some Like It Hot",
+      "place_editorial_summary": "How does one keep thousands of festival goers warm and happy?",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929107"
+    },
+    {
+      "place_id": "pwl_mechateuthis_18865",
+      "place_name": "Mechateuthis",
+      "place_editorial_summary": "Mechateuthis is a crowd controllable kinetic sculpture of a mechanical giant squid.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929112"
+    },
+    {
+      "place_id": "pwl_trippity_twitchit_20751",
+      "place_name": "Trippity Twitchit",
+      "place_editorial_summary": "A twisting predatory plant that shoots fire in 3 directions, come stick your hands in their mouth to find the interactive trigger for the flame effect",
+      "place_address": "701 SW 6th Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929214"
+    },
+    {
+      "place_id": "pwl_graffiti_of_gratitude_18868",
+      "place_name": "Graffiti of Gratitude",
+      "place_editorial_summary": "Tell the artist one thing that you love and they will scribe it onto the wall of ice. Over time, this wall will be filled will things people love.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929222"
+    },
+    {
+      "place_id": "pwl_a_little_web_of_love_diodes_20841",
+      "place_name": "A Little Web of Love (Diodes)",
+      "place_editorial_summary": "Tangle yourself underneath a vibrant canopy of LED rainbow crotchet webs. CAUTION: You may make new friends in your attempt to escape the Love Diodes.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929287"
+    },
+    {
+      "place_id": "pwl_bloom_21784",
+      "place_name": "Bloom",
+      "place_editorial_summary": "Bloom is a spinning cylinder of LEDs that spreads out under centrifugal force to make the shape of a lily.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929383"
+    },
+    {
+      "place_id": "pwl_eternal_flame_of_stupid_ideas_22354",
+      "place_name": "Eternal Flame of Stupid Ideas",
+      "place_editorial_summary": "The Ministry of Stupid Ideas, aka MSI, presents the interactive Eternal Flame of Stupid Ideas.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929391"
+    },
+    {
+      "place_id": "pwl_squatch_in_time_20011",
+      "place_name": "Squatch in Time",
+      "place_editorial_summary": "Peer into the flickering scenes ignited by your presence, as you follow this spiraling journey through time, maybe spying a PNW icon along the way.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929441"
+    },
+    {
+      "place_id": "pwl_wish_vol_1_21125",
+      "place_name": "Wish (vol 1)",
+      "place_editorial_summary": "Wish is an illuminated kinetic sculpture of a dandelion in various states of development!",
+      "place_address": "701 SW 6th Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929448"
+    },
+    {
+      "place_id": "pwl_frogzilla_23409",
+      "place_name": "Frogzilla",
+      "place_editorial_summary": "Frogzilla is a tribute to tactical frivolity and the protesting spirit of Portland. Frogzilla brings the warmth and light in dark times.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5185984,
+        "longitude": -122.6789788
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929476"
+    },
+    {
+      "place_id": "pwl_terrene_enfoldment_20015",
+      "place_name": "Terrene Enfoldment",
+      "place_editorial_summary": "A moonlit reservoir",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929492"
+    },
+    {
+      "place_id": "pwl_portland_streetcar_rolling_winter_lights_7060",
+      "place_name": "Portland Streetcar Rolling Winter Lights",
+      "place_editorial_summary": "LED illumination has been added around the top of some of Portland Streetcar vehicles, providing a rolling installation of winter light.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929500"
+    },
+    {
+      "place_id": "pwl_it_takes_a_community_23535",
+      "place_name": "It Takes a Community",
+      "place_editorial_summary": "A pulsing piece that brings you into the organic landscape of care and what it means to be part of a community",
+      "place_address": "520 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.51880645752,
+        "longitude": -122.67751312256
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929505"
+    },
+    {
+      "place_id": "pwl_lumio_led_tabletop_plant_display_23548",
+      "place_name": "LUMIO LED Tabletop Plant Display",
+      "place_editorial_summary": "LED Happiness on your table or desk.",
+      "place_address": "545 SW Taylor St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5179325,
+        "longitude": -122.6789907
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929533"
+    },
+    {
+      "place_id": "pwl_dj_djmom_total_sum_of_the_works_at_pioneer_courthouse_square_18653",
+      "place_name": "DJ: djMOM: Total Sum Of The Works at Pioneer Courthouse Square",
+      "place_editorial_summary": "The soundtrack, score, and soundscape of Pioneer Courthouse Square.",
+      "place_address": "701 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.5185947,
+        "longitude": -122.6792741
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929540"
+    },
+    {
+      "place_id": "pwl_the_tiny_interactive_media_museum_timm_21985",
+      "place_name": "The Tiny Interactive Media Museum (T.i.M.M.)",
+      "place_editorial_summary": "TiMM is a digital art collective made up of audio visual professionals and tech geeks exploring generative, interactive and immersive art.",
+      "place_address": "111 SW Columbia St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929627"
+    },
+    {
+      "place_id": "pwl_living_light_20391",
+      "place_name": "Living Light",
+      "place_editorial_summary": "A living projection generating visuals in real time, shaped by human movement and those interacting with it.",
+      "place_address": "111 SW Columbia St. Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929763"
+    },
+    {
+      "place_id": "pwl_spirit_machine_20244",
+      "place_name": "Spirit Machine",
+      "place_editorial_summary": "VHS loop time piece",
+      "place_address": "111 SW Columbia St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929768"
+    },
+    {
+      "place_id": "pwl_neurolith_20472",
+      "place_name": "Neurolith",
+      "place_editorial_summary": "Light emerges from a branching form. Neurolith unites technology and craft, shaped by decades of experience into a totemic presence.",
+      "place_address": "111 SW Columbia St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929816"
+    },
+    {
+      "place_id": "pwl_gather_13120",
+      "place_name": "Gather",
+      "place_editorial_summary": "LED Tree Sculpture",
+      "place_address": "111 SW Columbia St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929823"
+    },
+    {
+      "place_id": "pwl_led_furniture_20233",
+      "place_name": "LED Furniture",
+      "place_editorial_summary": "These LED floor panel surfaced benches and tables are designed to be unfamiliar in a familiar form, using some of the newest tech in a simple way.",
+      "place_address": "111 SW Columbia St PORTLAND Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929849"
+    },
+    {
+      "place_id": "pwl_dj_space_bass_at_glow_bar_20064",
+      "place_name": "DJ: Space Bass at Glow Bar",
+      "place_editorial_summary": "Come with us on a journey that will transcend time and space using the power of sound and motion.",
+      "place_address": "111 SW Columbia St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.5134899,
+        "longitude": -122.6765631
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929875"
+    },
+    {
+      "place_id": "pwl_fabled_passage_14972",
+      "place_name": "Fabled Passage",
+      "place_editorial_summary": "These Archways are symbolic of the passing of time. With Illustrative silhouettes carved into each arch, you can discover a progressive narrative.",
+      "place_address": "555 SW Oak St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5218342,
+        "longitude": -122.6765543
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929887"
+    },
+    {
+      "place_id": "pwl_parallel_dimension_no_58400_22070",
+      "place_name": "Parallel Dimension No. 58400",
+      "place_editorial_summary": "Get lost in a hidden parallel dimension inhabited by a forest of glowing, noodle-like creatures.",
+      "place_address": "111 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5227447,
+        "longitude": -122.6760248
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929957"
+    },
+    {
+      "place_id": "pwl_luxtriplicata_19785",
+      "place_name": "Luxtriplicata",
+      "place_editorial_summary": "Luxtriplicata is an interactive light installation where your touch transforms white light through prisms into shifting colors and playful motion.",
+      "place_address": "111 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5227447,
+        "longitude": -122.6760248
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929983"
+    },
+    {
+      "place_id": "pwl_partybot_loves_you_22441",
+      "place_name": "Partybot Loves You",
+      "place_editorial_summary": "Partybot loves you so much they need to express it with huge animated billboards! Bask in the warm glow of Partybot’s loving affirmations!",
+      "place_address": "111 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5227447,
+        "longitude": -122.6760248
+      },
+      "retrieved_at": "2026-02-07T10:53:01.929998"
+    },
+    {
+      "place_id": "pwl_herons_embrace_20788",
+      "place_name": "Herons Embrace",
+      "place_editorial_summary": "Heron&#039;s Embrace curates an alluring space that makes one feel small, and demands those under its wings consider their place in the natural world.",
+      "place_address": "111 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5227447,
+        "longitude": -122.6760248
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930024"
+    },
+    {
+      "place_id": "pwl_virror_20_20236",
+      "place_name": "Virror 2.0",
+      "place_editorial_summary": "Meet your digital avatar in our virtual mirror. What will they do? Wave back at you? Dance? Play?",
+      "place_address": "111 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5227447,
+        "longitude": -122.6760248
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930144"
+    },
+    {
+      "place_id": "pwl_eye_conduit_gobo_20143",
+      "place_name": "Eye Conduit Gobo",
+      "place_editorial_summary": "I think art is the conduit between living things.",
+      "place_address": "431 SW Harvey Milk St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5207999,
+        "longitude": -122.6760309
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930154"
+    },
+    {
+      "place_id": "pwl_pearl_gobo_20097",
+      "place_name": "Pearl Gobo",
+      "place_editorial_summary": "Someone said, The eye is the window to the soul. As a person who doesn&#039;t believe in souls, I think the eyes are a conduit between living things. A sup",
+      "place_address": "320 SW Harvey Milk St. Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5202827,
+        "longitude": -122.6750329
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930159"
+    },
+    {
+      "place_id": "pwl_tesseract_study_22999",
+      "place_name": "Tesseract (Study)",
+      "place_editorial_summary": "Tesseract (Study) is a compact mirrored sculpture representing a fourth-dimensional cube expressed within three-dimensional space. Through layered ref",
+      "place_address": "320 SW Harvey Milk St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5202827,
+        "longitude": -122.6750329
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930188"
+    },
+    {
+      "place_id": "pwl_life_imitates_art_the_secret_life_of_plants_21886",
+      "place_name": "Life Imitates Art: The Secret Life of Plants",
+      "place_editorial_summary": "This installation celebrates the resilience of plants through constant, sometimes imperceptible motions.",
+      "place_address": "426 SW Harvey Milk St, Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5205937,
+        "longitude": -122.6760901
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930196"
+    },
+    {
+      "place_id": "pwl_quirk_22815",
+      "place_name": "Quirk",
+      "place_editorial_summary": "A pair of curved steel pipes lined with a series of concentric rings internally illuminated. Purpose/Vision: put a Quirk in your smile 😉",
+      "place_address": "401 SW 4th Ave PORTLAND Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5201474,
+        "longitude": -122.6760494
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930272"
+    },
+    {
+      "place_id": "pwl_treasure_trove_19924",
+      "place_name": "Treasure Trove",
+      "place_editorial_summary": "Treasure chests with treasure for the taking&#8230;if you dare! (Really, we dare you. I mean you don&#039;t really need all of your limbs, do you?)",
+      "place_address": "520 SW 4th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.519363,
+        "longitude": -122.675895
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930298"
+    },
+    {
+      "place_id": "pwl_a_whale_of_a_good_time_19921",
+      "place_name": "A Whale of a Good Time",
+      "place_editorial_summary": "A sunken ship. A cosmic whale. Mysterious alien text. What does it all mean? View inside this strange world and see for yourself!",
+      "place_address": "520 SW 4th Ave Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.519363,
+        "longitude": -122.675895
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930315"
+    },
+    {
+      "place_id": "pwl_diatomorama_22043",
+      "place_name": "Diatomorama",
+      "place_editorial_summary": "Peer into the tiny world of out of this world diatoms!",
+      "place_address": "415 SW Alder St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5191119,
+        "longitude": -122.67675
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930336"
+    },
+    {
+      "place_id": "pwl_perspective_2_22734",
+      "place_name": "Perspective 2",
+      "place_editorial_summary": "A point of view- a way of seeing something. We each see things slightly differently because we interpret what we see from our own experience.",
+      "place_address": "498 SW Alder St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.519295,
+        "longitude": -122.677095
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930363"
+    },
+    {
+      "place_id": "pwl_urchins_n_outs_21506",
+      "place_name": "URCHINS-n-OUTS",
+      "place_editorial_summary": "These Sputnik Urchins have been envisioned as interstellar travellers that use patterns of light for communication.",
+      "place_address": "618 SW 5th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5193641,
+        "longitude": -122.6772284
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930389"
+    },
+    {
+      "place_id": "pwl_the_wanderette_22167",
+      "place_name": "The Wanderette",
+      "place_editorial_summary": "Vignettes of tiny worlds, glimpses of imagined lives, snapshots of micro spaces, preserved in time under protective cases",
+      "place_address": "525 SW Morrison St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5191319,
+        "longitude": -122.6778182
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930402"
+    },
+    {
+      "place_id": "pwl_point_a_to_point_z_20742",
+      "place_name": "Point A to Point Z",
+      "place_editorial_summary": "A light &quot;blender&quot; contorts, twists, minces, chops, and dices projected light, filling a room like a smoothie.",
+      "place_address": "411 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5209235,
+        "longitude": -122.6778058
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930472"
+    },
+    {
+      "place_id": "pwl_response_18971",
+      "place_name": "Response",
+      "place_editorial_summary": "Everything in this exhibition is made from newspaper and plastic collected from the streets of Portland!",
+      "place_address": "421 SW 6th Ave Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5207874,
+        "longitude": -122.6779836
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930477"
+    },
+    {
+      "place_id": "pwl_mini_drive_in_theater_21004",
+      "place_name": "Mini Drive-In Theater",
+      "place_editorial_summary": "The Mini Drive-In Theater is a piece that plays with shifts in scale to invite a viewer to explore a miniature scene and evoke subjective narratives.",
+      "place_address": "433 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5206531,
+        "longitude": -122.6779899
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930482"
+    },
+    {
+      "place_id": "pwl_luminous_effervescence_19940",
+      "place_name": "Luminous Effervescence",
+      "place_editorial_summary": "Suspended upcycle plastics (burbled, baked, embellished), an abstract field of effervescent repurposed sameness, 1 bedazzled siren",
+      "place_address": "433 SW 6th Ave PORTLAND Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5206531,
+        "longitude": -122.6779899
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930574"
+    },
+    {
+      "place_id": "pwl_the_webs_we_weave_21099",
+      "place_name": "The Webs We Weave",
+      "place_editorial_summary": "All origami blackligjht responsive arachnid/insect installation. A rather large paper spider on a large we with a variety of other origami insects",
+      "place_address": "621 SW Washington St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5206447,
+        "longitude": -122.6782955
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930604"
+    },
+    {
+      "place_id": "pwl_infunity_gate_20916",
+      "place_name": "Infunity Gate",
+      "place_editorial_summary": "Infinite + Unity = Infunity A mesmerizing moiré kinetic sculpture where your movements sculpt the patterns that emerge from light and shadow.",
+      "place_address": "400 SW Broadway Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5210144,
+        "longitude": -122.6783446
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930631"
+    },
+    {
+      "place_id": "pwl_vibe_pink_gobos_20102",
+      "place_name": "Vibe + Pink Gobos",
+      "place_editorial_summary": "Someone said, The eye is the window to the soul. As someone who doesn&#039;t believe in souls, I think eyes are a conduit between living things.",
+      "place_address": "400 SW Broadway Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5210144,
+        "longitude": -122.6783446
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930665"
+    },
+    {
+      "place_id": "pwl_rainbow_owl_gobo_20007",
+      "place_name": "Rainbow Owl Gobo",
+      "place_editorial_summary": "Someone said, The eye is the window to the soul. As someone who doesn&#039;t believe in souls, I say, eyes are a conduit between living things.",
+      "place_address": "422 SW Broadway Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5208971,
+        "longitude": -122.6785042
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930672"
+    },
+    {
+      "place_id": "pwl_tidal_breath_21263",
+      "place_name": "Tidal Breath",
+      "place_editorial_summary": "Reflected, shifting color turns light aquatic and celestial, inviting people to slow and watch fleeting moments drift and quietly converge.",
+      "place_address": "711 SW Alder Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5202785,
+        "longitude": -122.679422
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930677"
+    },
+    {
+      "place_id": "pwl_love_and_light_19752",
+      "place_name": "Love and Light",
+      "place_editorial_summary": "Love and Light features three panels (heart, sun, eye) made from fused glass murrini. Images are framed by color changing light creating a color dance",
+      "place_address": "585 SW 10th Avenue Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5208381,
+        "longitude": -122.6820022
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930813"
+    },
+    {
+      "place_id": "pwl_aura_flora_19883",
+      "place_name": "Aura Flora",
+      "place_editorial_summary": "A pair of glowing flowers that shift colors with your touch, translating tiny electrical changes into playful, reactive light.",
+      "place_address": "1132 SW Harvey Milk St #104 Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5223637,
+        "longitude": -122.6827302
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930866"
+    },
+    {
+      "place_id": "pwl_chasing_rainbows_20911",
+      "place_name": "Chasing Rainbows",
+      "place_editorial_summary": "Peer into the kaleidoscopic portal for a glimmer of what lies within Portland&#039;s smallest park!",
+      "place_address": "614 SW 11th Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.520543,
+        "longitude": -122.6827873
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930894"
+    },
+    {
+      "place_id": "pwl_the_portland_gayborhood_20337",
+      "place_name": "The Portland Gayborhood",
+      "place_editorial_summary": "Explore downtown Portland through a scavenger hunt that reveals the pivotal LGBTQ moments and places woven into the city’s history.",
+      "place_address": "1013 SW Morrison St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5202323,
+        "longitude": -122.6824378
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930919"
+    },
+    {
+      "place_id": "pwl_parable_of_the_mustard_seed_19823",
+      "place_name": "Parable of the Mustard Seed",
+      "place_editorial_summary": "Jesus used the mustard seed to illustrate how tiny things can grow into something great. If he told that story here, we think he’d use the Doug Fir.",
+      "place_address": "1200 SW Alder St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.521143,
+        "longitude": -122.6842674
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930945"
+    },
+    {
+      "place_id": "pwl_otter8217s_attention_20271",
+      "place_name": "Otter&#8217;s Attention",
+      "place_editorial_summary": "Welcome to a world of mycelial communication networks. Join your fellow travelers on a journey to communication, creation and wonder.",
+      "place_address": "Corner of SW 10th & SW Alder St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5204426,
+        "longitude": -122.6816507
+      },
+      "retrieved_at": "2026-02-07T10:53:01.930953"
+    },
+    {
+      "place_id": "pwl_nautilus_deep_sea_19201",
+      "place_name": "Nautilus Deep Sea",
+      "place_editorial_summary": "Nautilus Deep Sea casts prismatic patterns of shadow and light on a larger-than-life scale, evoking a sense of reverence for the mysterious deep sea.",
+      "place_address": "815 SW Park Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5187289,
+        "longitude": -122.6813705
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931065"
+    },
+    {
+      "place_id": "pwl_spider_temple_19877",
+      "place_name": "Spider Temple",
+      "place_editorial_summary": "An illuminated stainless steel sculpture inspired by spider mythology, honoring femme resilience and the unseen labor that supports community.",
+      "place_address": "815 SW Park Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5187289,
+        "longitude": -122.6813705
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931159"
+    },
+    {
+      "place_id": "pwl_southpark_commission_19017",
+      "place_name": "Southpark Commission",
+      "place_editorial_summary": "Metal and Light Sculpture by Hap Tivey",
+      "place_address": "901 Southwest Salmon Street Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "permanent_art"
+      ],
+      "place_location": {
+        "latitude": 45.518036,
+        "longitude": -122.68238
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931170"
+    },
+    {
+      "place_id": "pwl_skybound_20353",
+      "place_name": "Skybound",
+      "place_editorial_summary": "Projection mapped multi-layered lasercut wood art. In three different intricate gothic window panels, I tell the story of how a star in born.",
+      "place_address": "250 SW Taylor St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.516592,
+        "longitude": -122.675863
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931337"
+    },
+    {
+      "place_id": "pwl_illoominated_2_21509",
+      "place_name": "Illoominated 2",
+      "place_editorial_summary": "Illoominated 2 weaves threads of laser light in a tribute to the first programmer, Ada Lovelace, and the hidden connection between looms and computers",
+      "place_address": "250 SW Taylor Street Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.516592,
+        "longitude": -122.675863
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931427"
+    },
+    {
+      "place_id": "pwl_lunar_circuit_oil_eye_gobos_20106",
+      "place_name": "Lunar Circuit + Oil Eye Gobos",
+      "place_editorial_summary": "Someone said, The eye is the window to the soul. As someone who doesn&#039;t believe in souls, I think eyes are a conduit between living things.",
+      "place_address": "350 SW Taylor St Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5169765,
+        "longitude": -122.6770519
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931446"
+    },
+    {
+      "place_id": "pwl_pulse_19724",
+      "place_name": "Pulse",
+      "place_editorial_summary": "Pulse brings the hidden underground network connecting these trees to life with vivid visualizations of light.",
+      "place_address": "SW Park & SW Madison St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5164279,
+        "longitude": -122.6829644
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931614"
+    },
+    {
+      "place_id": "pwl_lisa_jarrett_8220harriet_tubman8221_2025_led_neon_20920",
+      "place_name": "Lisa Jarrett, &#8220;Harriet Tubman&#8221;, 2025, LED neon.",
+      "place_editorial_summary": "&quot;Harriet Tubman&quot; hums with the glow of neon pink, forming the word “Tenderhead”&#8211; the central concept and title for Lisa Jarrett’s PAM exhibition.",
+      "place_address": "1219 SW Park Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5165433,
+        "longitude": -122.6834078
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931647"
+    },
+    {
+      "place_id": "pwl_ugo_rondinone_8220the_sun8221_2018_20358",
+      "place_name": "Ugo Rondinone, &#8220;the sun&#8221;, 2018",
+      "place_editorial_summary": "Experience the radiant glow of Ugo Rondinone’s &quot;the sun&quot;, a new 18-foot sculpture illuminating the Portland Art Museum’s west courtyard at night.",
+      "place_address": "1219 SW Park Avenue Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5165433,
+        "longitude": -122.6834078
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931688"
+    },
+    {
+      "place_id": "pwl_porchlight_20976",
+      "place_name": "Porch/Light",
+      "place_editorial_summary": "A handmade steel tree sculpture with a glowing video projection canopy.",
+      "place_address": "1422 SW 11th Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5150672,
+        "longitude": -122.6857143
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931868"
+    },
+    {
+      "place_id": "pwl_free_hot_cocoa_at_forest_hospitality_tent_at_psu_park_blocks_21187",
+      "place_name": "Free Hot Cocoa at Forest Hospitality Tent at PSU Park Blocks",
+      "place_editorial_summary": "A glowing tent in the illuminated park blocks serving free cocoa by hosts in original light costumes.",
+      "place_address": "1803 SW Park Avenue Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "live_participatory_events"
+      ],
+      "place_location": {
+        "latitude": 45.5123017,
+        "longitude": -122.6854006
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931882"
+    },
+    {
+      "place_id": "pwl_peeking_through_the_window_20295",
+      "place_name": "Peeking Through the Window",
+      "place_editorial_summary": "The often dark windows of the Victorian Simon Benson House will be illuminated with behind-the-scenes images and video from LAIKA.",
+      "place_address": "1803 SW Park Avenue Park Ave. Portland OR",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5123017,
+        "longitude": -122.6854006
+      },
+      "retrieved_at": "2026-02-07T10:53:01.931887"
+    },
+    {
+      "place_id": "pwl_windows_into_stop_motion_magic_a_look_inside_laika_studios_20293",
+      "place_name": "Windows into stop motion magic… a look inside LAIKA studios",
+      "place_editorial_summary": "Multi-Image panorama of the hand of the artist at work, inside LAIKA Studios, as weaved into Smith Memorial Student Union at PSU",
+      "place_address": "1825 SW Park Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5118051,
+        "longitude": -122.6856532
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932155"
+    },
+    {
+      "place_id": "pwl_night_in_the_woods_20297",
+      "place_name": "Night in the Woods",
+      "place_editorial_summary": "The normally drab winter character of the park block trees are animated with splashes of changing color.",
+      "place_address": "1803 SW Park Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.5123017,
+        "longitude": -122.6854006
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932249"
+    },
+    {
+      "place_id": "pwl_output_22940",
+      "place_name": "Output",
+      "place_editorial_summary": "The projection-mapped visuals for this piece were created with code by students in DES 343: Creative Coding at Portland State University.",
+      "place_address": "603 SW Jackson St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5092279,
+        "longitude": -122.6841814
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932295"
+    },
+    {
+      "place_id": "pwl_below_the_fold_22230",
+      "place_name": "Below the Fold",
+      "place_editorial_summary": "Visible through full height windows a sculpture of paper, light, and projected images will reference the history of the building.",
+      "place_address": "621 SW Columbia Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5145664,
+        "longitude": -122.6813531
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932354"
+    },
+    {
+      "place_id": "pwl_peace_in_the_glow_22097",
+      "place_name": "Peace in the Glow",
+      "place_editorial_summary": "This piece reimagines the mural Peace N Love through warm light, exploring calm, connection, and shared presence within a living space.",
+      "place_address": "515 SW Clay St Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5136876,
+        "longitude": -122.6808486
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932384"
+    },
+    {
+      "place_id": "pwl_las_estrellas_20690",
+      "place_name": "Las Estrellas",
+      "place_editorial_summary": "Las Estrellas shine with flickering and sparkling light like stars in the night sky.",
+      "place_address": "1400 SW 5th Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5137108,
+        "longitude": -122.6800764
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932403"
+    },
+    {
+      "place_id": "pwl_micro_macro_22208",
+      "place_name": "Micro Macro",
+      "place_editorial_summary": "Millions of microscopic points coordinate and coalesce into macroscopic pattern and form.",
+      "place_address": "SW Columia at SW 2nd Avenue Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5133293,
+        "longitude": -122.6770878
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932432"
+    },
+    {
+      "place_id": "pwl_windows_of_the_mind_22067",
+      "place_name": "Windows of the Mind",
+      "place_editorial_summary": "A first-time collaboration between artists Saleam and Todd Moyer bends reality as it mixes physical with digital.",
+      "place_address": "SW 2nd & Columbia Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5133293,
+        "longitude": -122.6770878
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932466"
+    },
+    {
+      "place_id": "pwl_a_tangle_of_light_18944",
+      "place_name": "A Tangle of Light",
+      "place_editorial_summary": "The ancient art of Sacred Geometry meets modern Light.",
+      "place_address": "1340 SW 2nd Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.513405,
+        "longitude": -122.6767558
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932474"
+    },
+    {
+      "place_id": "pwl_diaphanous_lattice_20042",
+      "place_name": "Diaphanous Lattice",
+      "place_editorial_summary": "Kaleidoscopic imagery projects across layers of translucent fabric, creating a luminous holographic field of depth and motion.",
+      "place_address": "1320 SW 2nd Ave Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5137259,
+        "longitude": -122.6766681
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932479"
+    },
+    {
+      "place_id": "pwl_samyra_drift_21613",
+      "place_name": "Samyra: Drift",
+      "place_editorial_summary": "A four-foot paper octopus drifts among sea stars and urchins, its form alive with subtle movement, patterns, and the quiet magic of small things.",
+      "place_address": "1305 SW 1st Ave Portland Oregon 97199",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5136697,
+        "longitude": -122.6759788
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932489"
+    },
+    {
+      "place_id": "pwl_perspective_21039",
+      "place_name": "Perspective",
+      "place_editorial_summary": "A visual essay on relative perspective, or &#039;big things that appear small and small things that appear big, and other stuff&#039;.",
+      "place_address": "1305 SW 1st Portland Oregon 97201",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5136697,
+        "longitude": -122.6759788
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932494"
+    },
+    {
+      "place_id": "pwl_illuminated_works_an_exhibit_by_the_pacific_northwest_sculptors_22317",
+      "place_name": "Illuminated Works, An Exhibit By The Pacific Northwest Sculptors",
+      "place_editorial_summary": "An installation of illuminated sculptures from a diverse group of artists who utilize light as a sculptural medium in their artworks.",
+      "place_address": "SW Madison between SW 2nd and 3rd Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5000407,
+        "longitude": -122.6809222
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932534"
+    },
+    {
+      "place_id": "pwl_pieces_of_nippon_22976",
+      "place_name": "Pieces of Nippon",
+      "place_editorial_summary": "Traditional neon pieces that reflect glimpses of the illuminated street life of Japan.",
+      "place_address": "15 NW 4th Ave Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5234084,
+        "longitude": -122.6745509
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932548"
+    },
+    {
+      "place_id": "pwl_the_glam_clam_amp_mermaid_station_19160",
+      "place_name": "The Glam Clam &amp; Mermaid Station",
+      "place_editorial_summary": "23pdx will be a glow with wall projections to enhance our glowing clam and mermaid selfie station. A magical world under the sea.",
+      "place_address": "23 NW 4th Ave Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5235631,
+        "longitude": -122.6747034
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932554"
+    },
+    {
+      "place_id": "pwl_flowerworks_21237",
+      "place_name": "FlowerWorks",
+      "place_editorial_summary": "Using aomori nebuta techniques, wire and paper forms glow from within, honoring Old Town’s cultural roots and cultivating community through light.",
+      "place_address": "338 NW 6th Ave Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5257829,
+        "longitude": -122.6761632
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932559"
+    },
+    {
+      "place_id": "pwl_sculpted_light_21200",
+      "place_name": "Sculpted Light",
+      "place_editorial_summary": "A group exhibition of light-based artworks by Dan Flavin, Peter Gronquist, Fabiola Menchelli, Gregg Renfrow and Hap Tivey.",
+      "place_address": "417 NW 9th Avenue Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5261357,
+        "longitude": -122.6804467
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932594"
+    },
+    {
+      "place_id": "pwl_golden_jubilee_22818",
+      "place_name": "Golden Jubilee",
+      "place_editorial_summary": "Enormous dahlias intertwined in steel and light.",
+      "place_address": "551 NW 19th Ave Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5266564,
+        "longitude": -122.6904992
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932750"
+    },
+    {
+      "place_id": "pwl_winter8217s_guiding_grove_21014",
+      "place_name": "Winter&#8217;s Guiding Grove",
+      "place_editorial_summary": "Lost or not, The Grove beckons! Let your curiosity ponder mandalas and sacred geometry as the lamps draw you toward your hidden side within.",
+      "place_address": "2025 NW Northrup St, Portland, OR 97209 Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5314993,
+        "longitude": -122.693422
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932807"
+    },
+    {
+      "place_id": "pwl_music_box_20873",
+      "place_name": "Music Box",
+      "place_editorial_summary": "A music-driven light installation transforms our glass-front gallery into a glowing beacon, with shifting color and sound spilling onto the street.",
+      "place_address": "1905 NW 23rd Place Portland Oregon 97210",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.5363247,
+        "longitude": -122.7001179
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932847"
+    },
+    {
+      "place_id": "pwl_books_are_lit_22217",
+      "place_name": "Books Are Lit!",
+      "place_editorial_summary": "&quot;Books Are Lit!&quot; celebrates the illuminating power of reading as selected book covers are recreated and lit from within.",
+      "place_address": "1750 SW Salmon St Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5191852,
+        "longitude": -122.6917196
+      },
+      "retrieved_at": "2026-02-07T10:53:01.932999"
+    },
+    {
+      "place_id": "pwl_one_night_only_pnca_projection_22191",
+      "place_name": "One Night Only: PNCA Projection",
+      "place_editorial_summary": "PNCA&#039;s building will light up with spectacular projections of monumental artworks covering the building’s surfaces!",
+      "place_address": "511 NW Broadway Portland Oregon 97209",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5267606,
+        "longitude": -122.6779851
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933042"
+    },
+    {
+      "place_id": "pwl_portland_aglow_23430",
+      "place_name": "Portland Aglow",
+      "place_editorial_summary": "Animated visions of Portland transformed into a glowing dreamscape, where streets, bridges, and neighborhoods take shape in flowing light and color.",
+      "place_address": "400 SW 6th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5206322,
+        "longitude": -122.6773577
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933245"
+    },
+    {
+      "place_id": "pwl_portland_revels_celebrates_light_at_director_park_19801",
+      "place_name": "Portland Revels Celebrates LIGHT! at Director Park",
+      "place_editorial_summary": "Portland Revellers celebrate the &quot;return of the light&quot; in winter, through songs, dances, skits and comedy that drive the dark away.",
+      "place_address": "815 SW Park Ave Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "performance"
+      ],
+      "place_location": {
+        "latitude": 45.5187289,
+        "longitude": -122.6813705
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933464"
+    },
+    {
+      "place_id": "pwl_beauchene_decay_22781",
+      "place_name": "Beauchene Decay",
+      "place_editorial_summary": "Come explore insects, fungus, and even crystals that make way for decay in a black light display&#8211;a neon celebration of the cycle of death and life!",
+      "place_address": "609 SW 3rd Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5187386,
+        "longitude": -122.6754953
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933812"
+    },
+    {
+      "place_id": "pwl_portland_sleestak_loves_portland_winter_light_festival_23258",
+      "place_name": "Portland Sleestak Loves Portland Winter Light Festival",
+      "place_editorial_summary": "No longer in the parallel universe of Land of the Lost, our Portland Sleestak is lighting up The Sleestak Factory big for this special event!",
+      "place_address": "617 SW 4th Ave Portland Oregon 97204",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5189132,
+        "longitude": -122.6764868
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933836"
+    },
+    {
+      "place_id": "pwl_dodekaleidoscope_23008",
+      "place_name": "Dodekaleidoscope",
+      "place_editorial_summary": "Dodecahedron Kaleidoscope is an infinity mirror sculpture based on the geometry of the twelve-sided Platonic solid. Through mirrored facets and carefu",
+      "place_address": "1001 SW Broadway Portland Oregon 97205",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5172107,
+        "longitude": -122.6835564
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933867"
+    },
+    {
+      "place_id": "pwl_snippets_19886",
+      "place_name": "Snippets",
+      "place_editorial_summary": "Snippets of memory, made up places, thoughts, dreams or destinations. A chosen 4, not in any particular order and not to scale.",
+      "place_address": "3901 N Mississippi Ave Portland Oregon 97227",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5509776,
+        "longitude": -122.6757395
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933895"
+    },
+    {
+      "place_id": "pwl_spurrkland_20993",
+      "place_name": "Spurrkland",
+      "place_editorial_summary": "Where sparkles meet purrs to create a meowgical land of cats and kittens, shimmering with love and lighting up your heart with glittering joy.",
+      "place_address": "3719 N Mississippi Avenue Portland Oregon 97227",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5498523,
+        "longitude": -122.6757863
+      },
+      "retrieved_at": "2026-02-07T10:53:01.933997"
+    },
+    {
+      "place_id": "pwl_sweethearts_20661",
+      "place_name": "Sweethearts",
+      "place_editorial_summary": "A colorful array of the classic Valentine’s Day candies with their heartfelt expressions in traditional neon light!",
+      "place_address": "909 N. Beech St. Portland Oregon 97227",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5497878,
+        "longitude": -122.6759874
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934003"
+    },
+    {
+      "place_id": "pwl_glow_up_paintings_21081",
+      "place_name": "Glow Up Paintings",
+      "place_editorial_summary": "Vibrant sunrise and sunset paintings with hidden LED lights that light up the horizon",
+      "place_address": "4085 N Williams Ave Portland Oregon 97227",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5532182,
+        "longitude": -122.6669613
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934184"
+    },
+    {
+      "place_id": "pwl_the_love_sign_20757",
+      "place_name": "The Love Sign",
+      "place_editorial_summary": "The Love Sign is a reminder of what&#039;s really important and keeps us together.",
+      "place_address": "8940 N Bradford St Portland Oregon 97203",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "permanent_art"
+      ],
+      "place_location": {
+        "latitude": 45.588738,
+        "longitude": -122.7631808
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934190"
+    },
+    {
+      "place_id": "pwl_oregon_convention_center_spire_and_crescent_lights_3563",
+      "place_name": "Oregon Convention Center Spire and Crescent Lights",
+      "place_editorial_summary": "OCC&#039;s light show will provide an opportunity for its talented and creative team to showcase the center&#039;s programmable, energy efficient LED system.",
+      "place_address": "777 NE Martin Luther King Jr. Blvd Portland Oregon 97232",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.5283308,
+        "longitude": -122.6634712
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934197"
+    },
+    {
+      "place_id": "pwl_giant_celestial_45_gobo_20147",
+      "place_name": "Giant Celestial 45 Gobo",
+      "place_editorial_summary": "Art is the conduit between living things.",
+      "place_address": "1000 NE Multnomah St Portland Oregon 97232",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5303945,
+        "longitude": -122.6557763
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934202"
+    },
+    {
+      "place_id": "pwl_glow_up_at_the_roll_up_20843",
+      "place_name": "Glow Up at The Roll Up",
+      "place_editorial_summary": "Glow Up at The Roll Up pops off at Portland Winter Lights Feb 6 to 14 with UV art, tufting classes, glowing sculptures, and big community vibes come!!",
+      "place_address": "2145 NE MLK JR BLVD Unit B Portland Oregon 97217",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5387522,
+        "longitude": -122.6620101
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934208"
+    },
+    {
+      "place_id": "pwl_the_haven_portal_22282",
+      "place_name": "The Haven Portal",
+      "place_editorial_summary": "A glowing mystical mural invites you to discover a sprawling artistic city full of live painters, immersive galleries, and interactive installations.",
+      "place_address": "2505 NE Pacific St Portland Oregon 97232",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5294392,
+        "longitude": -122.6398026
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934287"
+    },
+    {
+      "place_id": "pwl_seed_4_19929",
+      "place_name": "Seed #4",
+      "place_editorial_summary": "This piece is the 4th in an experiment of form. Though each seed is quite geometric, their curves and progression speak in an organic manner.",
+      "place_address": "2950 NE Oregon St Portland Oregon 97232",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5285783,
+        "longitude": -122.6351841
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934315"
+    },
+    {
+      "place_id": "pwl_little_lights_playground_19533",
+      "place_name": "Little Lights Playground",
+      "place_editorial_summary": "An interactive play structure for young children includes 2 motion-activated swings, a glowing canopy swing, a 5ft slide, and hands-on toys.",
+      "place_address": "1164 NE 77th Ave Portland Oregon 97213",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5314706,
+        "longitude": -122.5836533
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934344"
+    },
+    {
+      "place_id": "pwl_waste_oration_fragments_of_life_brought_back_into_the_light_re_seen_with_the_third_eye_through_the_chakras_20335",
+      "place_name": "WASTE-ORATION  fragments of life, brought back into the light. Re-seen with the third eye through the chakras.",
+      "place_editorial_summary": "Using discarded materials. WASTE-ORATION reveals childlike wonder in what we&#039;ve overlooked urging us to slow down seeing beauty in what we cast away.",
+      "place_address": "3037 NE Shaver st Portland Oregon 97212",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5519952,
+        "longitude": -122.6344179
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934354"
+    },
+    {
+      "place_id": "pwl_mechan_42_space_explorer_22051",
+      "place_name": "Mechan 42: Space Explorer",
+      "place_editorial_summary": "3..2..1..Blast OFF!! Space was the final frontier, but this Mechan explored it and found a mysterious space crystal.",
+      "place_address": "10625 NE Sandy Blvd Portland Oregon 97220",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5594757,
+        "longitude": -122.5534915
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934387"
+    },
+    {
+      "place_id": "pwl_threshold_21746",
+      "place_name": "Threshold",
+      "place_editorial_summary": "Threshold frames light as a passage, inviting viewers to linger at the edge between arrival and immersion.",
+      "place_address": "7000 NE Airport Way Portland Oregon 97218",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5891588,
+        "longitude": -122.5934943
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934442"
+    },
+    {
+      "place_id": "pwl_electric_blocks_14480",
+      "place_name": "Electric Blocks",
+      "place_editorial_summary": "Explore the Electric Blocks, a dazzling display of light art, interactive installations, the Silent Disco and food carts. It is a hub of creative brilliance, featuring stunning light-based installatio",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.511124,
+        "longitude": -122.66357
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934450"
+    },
+    {
+      "place_id": "pwl_luminous_currents_22611",
+      "place_name": "Luminous Currents",
+      "place_editorial_summary": "Inspired by unicellular motion, this videomapping magnifies invisible cellular flows into a luminous landscape, revealing life’s continuity.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934515"
+    },
+    {
+      "place_id": "pwl_gate_creepers_19997",
+      "place_name": "Gate Creepers",
+      "place_editorial_summary": "Meet the Gate Creepers: playful guardians standing tall to guide you into the Electric Blocks anchor site.",
+      "place_address": "1661 SE 3rd Ave Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5111877,
+        "longitude": -122.6629061
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934543"
+    },
+    {
+      "place_id": "pwl_perspective_perception_19205",
+      "place_name": "Perspective Perception",
+      "place_editorial_summary": "Come in and stare awhile! Sit, relax, and interact with yourself inside of a triangle!",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934550"
+    },
+    {
+      "place_id": "pwl_join_community_at_the_t_horse_at_electric_blocks_21388",
+      "place_name": "Join community at The T-Horse at Electric Blocks",
+      "place_editorial_summary": "The T-Horse is a mobile tea house that extends its wings to create a temporary gathering space to slow down, sip free tea and create art in community.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "live_participatory_events"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934556"
+    },
+    {
+      "place_id": "pwl_the_art_piece_formally_known_as_a_portal_22885",
+      "place_name": "The Art Piece Formally Known As A Portal",
+      "place_editorial_summary": "Standing on the street you notice an old abandoned wardrobe. Typical for this part of town&#8230; but wait, what is that strange glow coming from within?",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934586"
+    },
+    {
+      "place_id": "pwl_fragments_of_now_20775",
+      "place_name": "Fragments of Now",
+      "place_editorial_summary": "Infinitesimally small blocks of time, when strung together, create the illusion of continuity and motion.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934686"
+    },
+    {
+      "place_id": "pwl_the_kaleidoscopizer_21051",
+      "place_name": "The Kaleidoscopizer",
+      "place_editorial_summary": "Explore the prismatic folds of the Kaleidoscopizer! An interactive kaleidoscope with buttons and knobs",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934763"
+    },
+    {
+      "place_id": "pwl_tune_rune_20054",
+      "place_name": "Tune Rune",
+      "place_editorial_summary": "Ancient symbol, modern rhythms. This 7ft LED triskelion pulses and swirls in sync with music.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934768"
+    },
+    {
+      "place_id": "pwl_whimsywondercloud_20699",
+      "place_name": "WhimsyWonderCloud",
+      "place_editorial_summary": "Enjoy discovering all this interactive glowing rainbow cloud has to offer. So much to explore from every angle! So full of surprises!",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934841"
+    },
+    {
+      "place_id": "pwl_portland_adult_soapbox_derby_cars_7292",
+      "place_name": "Portland Adult Soapbox Derby Cars",
+      "place_editorial_summary": "The Portland Adult Soapbox Derby is an annual gathering on Mt. Tabor to race home-made art and science cars.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.934992"
+    },
+    {
+      "place_id": "pwl_join_and_dance_fun_luv8217n_djs_at_silent_disco_at_electric_blocks_7090",
+      "place_name": "Join and Dance: FUN LUV&#8217;N DJs at Silent Disco at Electric Blocks",
+      "place_editorial_summary": "Join FUN LUV&#039;N Silent Disco with amazing music on 3 different DJ audio channels and dance within the art.",
+      "place_address": "236 SE Clay St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "live_participatory_events"
+      ],
+      "place_location": {
+        "latitude": 45.5115397,
+        "longitude": -122.6634692
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935002"
+    },
+    {
+      "place_id": "pwl_glimpse_19973",
+      "place_name": "Glimpse",
+      "place_editorial_summary": "Pacific Northwest inspired moments as viewed through a childs eyes",
+      "place_address": "120 SE Clay St., Ste 102 Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5113823,
+        "longitude": -122.6642071
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935076"
+    },
+    {
+      "place_id": "pwl_invisible_cities_20046",
+      "place_name": "Invisible Cities",
+      "place_editorial_summary": "Look closer, do you know place? How might you?",
+      "place_address": "1515 SE Water Ave Portland Oregon",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.5118778,
+        "longitude": -122.6663613
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935082"
+    },
+    {
+      "place_id": "pwl_that_way_gobo_20139",
+      "place_name": "That Way Gobo",
+      "place_editorial_summary": "I think art is the conduit between living things.",
+      "place_address": "1626 SE Water Avenue Portland Oregon 97212",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5112305,
+        "longitude": -122.6656457
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935087"
+    },
+    {
+      "place_id": "pwl_cosmic_ocean_and_the_light_market_at_bridge_space_pdx_20361",
+      "place_name": "Cosmic Ocean and the Light Market at Bridge Space PDX",
+      "place_editorial_summary": "Featuring the deep sea planetarium, as cosmic creatures swim in starry depths above, vendors, performers, and installations will fill the hall bellow",
+      "place_address": "133 SE Madison St. Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5132048,
+        "longitude": -122.6641579
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935261"
+    },
+    {
+      "place_id": "pwl_wonderlights_22118",
+      "place_name": "WONDERLIGHTS",
+      "place_editorial_summary": "Step into a playground of color and light at WONDERLIGHTS, a 5 day immersive light showcase at Wonderlove featuring live music and art installations.",
+      "place_address": "262 SE Main St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "projection"
+      ],
+      "place_location": {
+        "latitude": 45.5135563,
+        "longitude": -122.6632277
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935367"
+    },
+    {
+      "place_id": "pwl_magic_mirror_22274",
+      "place_name": "Magic Mirror",
+      "place_editorial_summary": "An interactive installation that transforms audience reflection into living digital art.",
+      "place_address": "211 SE Madison St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.513177,
+        "longitude": -122.6635006
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935406"
+    },
+    {
+      "place_id": "pwl_cumulus_animalis_19003",
+      "place_name": "Cumulus Animalis",
+      "place_editorial_summary": "Cumulus Animalis is a cloud of dreams. Hundreds of stuffed animals are suspended and lit from within to capture a universal sense of childlike wonder.",
+      "place_address": "109 SE Salmon St Suite B3 Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5146334,
+        "longitude": -122.6645739
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935440"
+    },
+    {
+      "place_id": "pwl_lamina_infinity_crystals_21159",
+      "place_name": "Lamina + Infinity Crystals",
+      "place_editorial_summary": "A beautiful collection of larger than life glowing leaves hangs above a set of magical Crystals composed of infinite light reflections.",
+      "place_address": "716 SE Grand Ave Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5176558,
+        "longitude": -122.6604908
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935470"
+    },
+    {
+      "place_id": "pwl_illuminated_iridescence_amp_electric_city_20985",
+      "place_name": "Illuminated Iridescence &amp; Electric City",
+      "place_editorial_summary": "Visit the Architectural Heritage Center galleries after hours! Enjoy illuminated stained glass and a new &quot;Electric&quot; Vision for the City exhibit.",
+      "place_address": "701 SE Grand Ave Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5177922,
+        "longitude": -122.6610911
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935570"
+    },
+    {
+      "place_id": "pwl_live_glassblowing_a_gathering_of_artisans_19034",
+      "place_name": "LIVE Glassblowing : A Gathering of Artisans",
+      "place_editorial_summary": "Rachel will be opening her studio to you and showcasing the orange fire light of molten glass. Live glassblowing demos showcasing teamwork!",
+      "place_address": "521 SE Taylor St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "permanent_art"
+      ],
+      "place_location": {
+        "latitude": 45.5152339,
+        "longitude": -122.6601128
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935577"
+    },
+    {
+      "place_id": "pwl_the_jandelier_20991",
+      "place_name": "The Jandelier",
+      "place_editorial_summary": "Spinning, Amazing, whimsical, Mesmerizing and gigantic Chandelier, crafted for local artist for PWLF in 2023, we add parts and pieces every year.",
+      "place_address": "819 SE Taylor St portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5151983,
+        "longitude": -122.6572563
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935631"
+    },
+    {
+      "place_id": "pwl_infinity_crystal_cluster_21156",
+      "place_name": "Infinity Crystal Cluster",
+      "place_editorial_summary": "A larger than life Crystal Cluster, with infinitely repeated light patterns oscillating within!",
+      "place_address": "800 E Burnside Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5226738,
+        "longitude": -122.6572991
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935660"
+    },
+    {
+      "place_id": "pwl_headspace_21740",
+      "place_name": "HEADSPACE",
+      "place_editorial_summary": "This illuminated head produces visualizations of our environment through an immersive LED matrix.",
+      "place_address": "710 SE 6th Avenue Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5177857,
+        "longitude": -122.6594084
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935759"
+    },
+    {
+      "place_id": "pwl_glimmers_in_the_sea_19962",
+      "place_name": "Glimmers in the Sea",
+      "place_editorial_summary": "Glimmers in the Sea is a reflective, textile-based seascape ecosystem created by Reflective Society duo Iris Vondell and Vivien Wise.",
+      "place_address": "SE 10th and Division Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5056031,
+        "longitude": -122.6554041
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935800"
+    },
+    {
+      "place_id": "pwl_house_music_20833",
+      "place_name": "House Music",
+      "place_editorial_summary": "A light refracting quilt of compact discs silhouetting an entire house front , that wavers and reacts to stories whispered through tube telephones.",
+      "place_address": "1313 SE Clinton St Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "interactive_art"
+      ],
+      "place_location": {
+        "latitude": 45.5036352,
+        "longitude": -122.6523542
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935830"
+    },
+    {
+      "place_id": "pwl_lorto_nostrano_presents_carnovskys_atmospheric_no10_21277",
+      "place_name": "l’Orto Nostrano Presents: CARNOVSKY’S ATMOSPHERIC No.10",
+      "place_editorial_summary": "Nostrana lights up l’Orto, its Farm+Garden, with Milan-based duo Carnovsky’s glowing RGB installation, plus an outdoor bar pop-up and surprises.",
+      "place_address": "1301 SE Morrison St Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5175469,
+        "longitude": -122.6527842
+      },
+      "retrieved_at": "2026-02-07T10:53:01.935962"
+    },
+    {
+      "place_id": "pwl_light_blade_20674",
+      "place_name": "Light Blade",
+      "place_editorial_summary": "Light Blade is a vertical light structure powered by LEDs and custom software, iteratively transforming still images into flowing color and motion.",
+      "place_address": "2516 SE Division, St. Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "permanent_art"
+      ],
+      "place_location": {
+        "latitude": 45.5045393,
+        "longitude": -122.640135
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936013"
+    },
+    {
+      "place_id": "pwl_fourth_dimension_ancestors_20936",
+      "place_name": "FOURTH DIMENSION ANCESTORS",
+      "place_editorial_summary": "Reliquary for the recently departed",
+      "place_address": "2475 SE Ladd PORTLAND Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.504954,
+        "longitude": -122.6457123
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936029"
+    },
+    {
+      "place_id": "pwl_summer_nights_20687",
+      "place_name": "Summer Nights",
+      "place_editorial_summary": "An installation and individual artist pieces reflecting wonderful warm summer night memories with fireflies, bugs, nature, glowing windows, candles.",
+      "place_address": "2808 SE 9th Ave Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5026014,
+        "longitude": -122.656659
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936035"
+    },
+    {
+      "place_id": "pwl_dualism_19901",
+      "place_name": "Dualism",
+      "place_editorial_summary": "Exploring the interplay between our metaphysical and physical world, and the ripple effect it has on our environment.",
+      "place_address": "817 SE 34th Ave Portland Oregon 97214",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5169228,
+        "longitude": -122.6297637
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936179"
+    },
+    {
+      "place_id": "pwl_oaks_amusement_park_midway_lights_12362",
+      "place_name": "Oaks Amusement Park Midway Lights",
+      "place_editorial_summary": "For 120 years Portlanders have delighted at the magic of light set against the backdrop of childhood memories at Oaks Amusement Park.",
+      "place_address": "7805 SE Oaks Park Way Portland Oregon 97202",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "architectural_lighting"
+      ],
+      "place_location": {
+        "latitude": 45.4724068,
+        "longitude": -122.6626357
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936185"
+    },
+    {
+      "place_id": "pwl_bike_garden_23086",
+      "place_name": "Bike Garden",
+      "place_editorial_summary": "Brief description: Upcycled bicycle components are transformed into flowers and other curiosities to create an illuminated garden.",
+      "place_address": "5015 SE Lincoln St Portland Oregon 97215",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.5082258,
+        "longitude": -122.610878
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936189"
+    },
+    {
+      "place_id": "pwl_life_on_mars_23249",
+      "place_name": "Life on Mars!",
+      "place_editorial_summary": "The Ida B. Wells High School Makerspace celebrates the 50th anniversary of the first ever mission to Mars &#8211; Viking!",
+      "place_address": "7688 SW Capitol Hwy #37 Portland Oregon 97219",
+      "place_primary_type": "event",
+      "place_types": [
+        "event",
+        "light_display",
+        "art_installation"
+      ],
+      "place_location": {
+        "latitude": 45.468226,
+        "longitude": -122.712478
+      },
+      "retrieved_at": "2026-02-07T10:53:01.936302"
+    }
+  ]
+}

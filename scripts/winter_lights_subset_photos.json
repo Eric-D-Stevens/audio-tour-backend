@@ -1,5 +1,5 @@
 {
-  "processed_at": "2026-02-07T12:04:17.663392",
+  "processed_at": "2026-02-07T17:05:59.706452",
   "total_entries": 5,
   "total_photos": 4,
   "s3_bucket": "tensortours-content-us-west-2",
@@ -59,8 +59,8 @@
         {
           "photo_id": "pwl_glow_with_the_flow_19970_0",
           "place_id": "pwl_glow_with_the_flow_19970",
-          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_glow_with_the_flow_19970/0.jpg",
-          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_glow_with_the_flow_19970/0.jpg",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/winter-lights/photos/pwl_glow_with_the_flow_19970/0.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/winter-lights/photos/pwl_glow_with_the_flow_19970/0.jpg",
           "attribution": {
             "displayName": "Portland Winter Lights Festival"
           },
@@ -139,8 +139,8 @@
         {
           "photo_id": "pwl_spurrkland_20993_0",
           "place_id": "pwl_spurrkland_20993",
-          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/0.jpg",
-          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/0.jpg",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/winter-lights/photos/pwl_spurrkland_20993/0.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/winter-lights/photos/pwl_spurrkland_20993/0.jpg",
           "attribution": {
             "displayName": "Portland Winter Lights Festival"
           },
@@ -151,8 +151,8 @@
         {
           "photo_id": "pwl_spurrkland_20993_1",
           "place_id": "pwl_spurrkland_20993",
-          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/1.jpg",
-          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/1.jpg",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/winter-lights/photos/pwl_spurrkland_20993/1.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/winter-lights/photos/pwl_spurrkland_20993/1.jpg",
           "attribution": {
             "displayName": "Portland Winter Lights Festival"
           },
@@ -163,8 +163,8 @@
         {
           "photo_id": "pwl_spurrkland_20993_2",
           "place_id": "pwl_spurrkland_20993",
-          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/photos/pwl_spurrkland_20993/2.jpg",
-          "s3_url": "s3://tensortours-content-us-west-2/photos/pwl_spurrkland_20993/2.jpg",
+          "cloudfront_url": "https://d2g5o5njd6p5e.cloudfront.net/winter-lights/photos/pwl_spurrkland_20993/2.jpg",
+          "s3_url": "s3://tensortours-content-us-west-2/winter-lights/photos/pwl_spurrkland_20993/2.jpg",
           "attribution": {
             "displayName": "Portland Winter Lights Festival"
           },

@@ -101,6 +101,29 @@ def optimize_for_tts(description: str, place_name: str) -> str:
     return script
 
 
+def upload_script_to_s3(script_text: str, s3_key: str, bucket: str) -> bool:
+    """Upload script text to S3."""
+    if not HAS_BOTO:
+        print("    ⚠️  boto3 not available, skipping S3 upload")
+        return False
+    
+    try:
+        s3_client = boto3.client('s3')
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=s3_key,
+            Body=script_text.encode('utf-8'),
+            ContentType='text/plain'
+        )
+        return True
+    except ClientError as e:
+        print(f"    ❌ S3 script upload failed: {e}")
+        return False
+    except Exception as e:
+        print(f"    ❌ Error uploading script to S3: {e}")
+        return False
+
+
 def generate_audio_for_entry(
     entry: Dict, 
     polly_client: AWSPollyClient,
@@ -126,7 +149,7 @@ def generate_audio_for_entry(
     
     try:
         # Define S3 key for audio
-        audio_key = f"audio/{place_id}_art.mp3"
+        audio_key = f"winter-lights/audio/{place_id}_art.mp3"
         
         # Generate audio using AWS Polly
         print(f"   🎵 Generating audio with Polly...")
@@ -167,10 +190,23 @@ def generate_audio_for_entry(
             "place_id": place_id,
             "place_name": place_name,
             "tour_type": "art",
-            "s3_url": f"s3://{bucket}/scripts/{place_id}_art.txt",
-            "cloudfront_url": f"https://{cloudfront_domain}/scripts/{place_id}_art.txt",
-            "text": script_text
+            "model_info": {
+                "provider": "openai",
+                "model": "gpt-4",
+                "prompt_version": "1.0"
+            },
+            "s3_url": f"s3://{bucket}/winter-lights/scripts/{place_id}_art.txt",
+            "cloudfront_url": f"https://{cloudfront_domain}/winter-lights/scripts/{place_id}_art.txt",
+            "script_text": script_text,
+            "word_count": word_count
         }
+        
+        # Upload script text to S3
+        script_key = f"winter-lights/scripts/{place_id}_art.txt"
+        if upload_script_to_s3(script_text, script_key, bucket):
+            print(f"   ✅ Script uploaded: s3://{bucket}/{script_key}")
+        else:
+            print(f"   ⚠️  Script upload failed")
         
         print(f"   ✅ Audio generated: {cloudfront_url}")
         return entry
