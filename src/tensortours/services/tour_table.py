@@ -1,5 +1,6 @@
 """Tour-related models for TensorTours backend."""
 
+import json
 import os
 from datetime import datetime
 from enum import Enum
@@ -29,16 +30,20 @@ class TourTableItem(BaseModel):
     photos: Optional[List[TTPlacePhotos]]
     script: Optional[TTScript]
     audio: Optional[TTAudio]
+    metadata: Optional[Dict] = None
     created_at: datetime = Field(default_factory=datetime.now)
 
     def dump(self) -> Dict:
-        return {
+        result = {
             "place_id": self.place_id,
             "tour_type": self.tour_type.value,
             "status": self.status.value,
             "created_at": self.created_at.isoformat(),
             "data": self.model_dump_json(),
         }
+        if self.metadata is not None:
+            result["metadata"] = json.dumps(self.metadata)
+        return result
 
     @classmethod
     def load(cls, data: Dict) -> "TourTableItem":
