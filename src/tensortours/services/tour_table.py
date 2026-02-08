@@ -30,7 +30,7 @@ class TourTableItem(BaseModel):
     photos: Optional[List[TTPlacePhotos]]
     script: Optional[TTScript]
     audio: Optional[TTAudio]
-    metadata: Optional[Dict] = None
+    metadata: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.now)
 
     def dump(self) -> Dict:
@@ -42,7 +42,7 @@ class TourTableItem(BaseModel):
             "data": self.model_dump_json(),
         }
         if self.metadata is not None:
-            result["metadata"] = json.dumps(self.metadata)
+            result["metadata"] = self.metadata
         return result
 
     @classmethod
