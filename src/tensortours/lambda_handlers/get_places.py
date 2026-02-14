@@ -98,13 +98,17 @@ def forward_to_generation_queue(place_info: TTPlaceInfo, tour_type: TourType, us
     except ValueError as e:
         # This happens when the environment variable is not set
         logger.warning(f"Skipping generation queue: {str(e)}")
-def _apply_jitter(places: List[TTPlaceInfo], offset_deg: float = 0.00003) -> None:
+def _apply_jitter(places: List[TTPlaceInfo], base_offset_deg: float = 0.00003) -> None:
     """Add small deterministic coordinate jitter only to overlapping markers.
     
     Groups places by their coordinates (rounded to 6 decimal places) and only
-    applies jitter to groups with 2+ places at the same location. Uses a hash
-    of each place_id to produce a consistent offset (~10 ft / ~3 m).
+    applies jitter to groups with 2+ places at the same location. The jitter
+    radius scales with group size: base_offset_deg (~10 ft) for 2 places,
+    growing by sqrt(count / 2) so larger clusters spread proportionally wider.
+    Uses a hash of each place_id to produce a consistent offset.
     """
+    import math
+
     # Group places by rounded coordinates to find overlaps
     coord_groups: Dict[tuple, List[TTPlaceInfo]] = {}
     for place in places:
@@ -118,15 +122,21 @@ def _apply_jitter(places: List[TTPlaceInfo], offset_deg: float = 0.00003) -> Non
     for coord, group in coord_groups.items():
         if len(group) < 2:
             continue
-        logger.info(f"Applying jitter to {len(group)} overlapping places at {coord}")
+        # Linear scale: 1x base (~10 ft) at 2 places, 6x (~60 ft) at 16
+        scale = 1.0 + (len(group) - 2) * (5.0 / 14.0)
+        scaled_offset = base_offset_deg * scale
+        logger.info(
+            f"Applying jitter to {len(group)} overlapping places at {coord} "
+            f"(radius: {scaled_offset:.6f}°)"
+        )
         for place in group:
             h = hashlib.md5(place.place_id.encode()).hexdigest()
             # Use first 8 hex chars for lat offset, next 8 for lng offset
             lat_hash = int(h[:8], 16) / 0xFFFFFFFF  # 0.0 – 1.0
             lng_hash = int(h[8:16], 16) / 0xFFFFFFFF
-            # Map to range [-offset_deg, +offset_deg]
-            lat_offset = (lat_hash * 2 - 1) * offset_deg
-            lng_offset = (lng_hash * 2 - 1) * offset_deg
+            # Map to range [-scaled_offset, +scaled_offset]
+            lat_offset = (lat_hash * 2 - 1) * scaled_offset
+            lng_offset = (lng_hash * 2 - 1) * scaled_offset
             place.place_location = {
                 "latitude": place.place_location["latitude"] + lat_offset,
                 "longitude": place.place_location["longitude"] + lng_offset,
