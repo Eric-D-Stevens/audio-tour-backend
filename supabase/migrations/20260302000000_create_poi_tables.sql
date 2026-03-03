@@ -1,5 +1,4 @@
 -- Extensions
-create extension if not exists pg_uuidv7;   -- time-ordered UUIDs (no B-tree fragmentation)
 create extension if not exists postgis;      -- geography type + GIST spatial indexing
 create extension if not exists vector;       -- pgvector: dedupe_embedding column
 
@@ -10,7 +9,7 @@ create extension if not exists vector;       -- pgvector: dedupe_embedding colum
 create table if not exists poi (
 
     -- Identity & lifecycle
-    id                  uuid          primary key default uuid_generate_v7(),
+    id                  uuid          primary key default gen_random_uuid(),
     status              text          not null
                                       check (status in ('pending', 'processing', 'ready', 'failed')),
     created_at          timestamptz   not null default now(),
