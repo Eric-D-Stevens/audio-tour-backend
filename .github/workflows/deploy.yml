@@ -31,67 +31,35 @@ jobs:
   build-and-deploy:
     needs: migrate
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest build
-    
-    #- name: Run tests
-    #- run: pytest
-    
+
     - name: Generate version string
       id: version
       run: echo "VERSION=$(date +%s)" >> $GITHUB_ENV
-    
-    - name: Package Lambda function
-      run: |
-        mkdir -p dist
-        
-        # Create a single package with both code and dependencies
-        echo "Building consolidated Lambda package..."
-        mkdir -p "build/lambda-package"
-        
-        # Install the package and all dependencies directly to the Lambda package directory
-        pip install . -t "build/lambda-package/"
-        
-        # Ensure proper handling of src-layout Python project
-        if [ -d "src/tensortours" ]; then
-          echo "Project uses src layout, copying files to ensure correct imports..."
-          # This ensures the top-level module exists as Lambda expects
-          cp -r src/tensortours/* build/lambda-package/tensortours/
-        fi
-        
-        # Package everything together
-        cd "build/lambda-package" && zip -r "../../dist/tensortours-${VERSION}.zip" . && cd ../..
-    
+
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
-    
-    - name: Upload Lambda package to S3
+
+    - name: Log in to Amazon ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build and push Docker image
       run: |
-        # Upload versioned package
-        aws s3 cp dist/tensortours-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
-        
-        # Also upload a non-versioned copy for manual deployments
-        aws s3 cp dist/tensortours-${VERSION}.zip s3://${{ secrets.LAMBDA_BUCKET_NAME }}/tensortours.zip
-        
-        # Also upload a version.json file with the current version
-        echo '{"version": "'${VERSION}'"}' > version.json
-        aws s3 cp version.json s3://${{ secrets.LAMBDA_BUCKET_NAME }}/
-    
+        ECR_URI=$(aws ecr describe-repositories \
+          --repository-names tensortours-lambda \
+          --query 'repositories[0].repositoryUri' \
+          --output text)
+        docker build -t "${ECR_URI}:${VERSION}" -t "${ECR_URI}:latest" .
+        docker push "${ECR_URI}:${VERSION}"
+        docker push "${ECR_URI}:latest"
+        echo "ECR_URI=${ECR_URI}" >> $GITHUB_ENV
+
     - name: Trigger Infrastructure Deploy
       uses: peter-evans/repository-dispatch@v3
       with:
@@ -101,16 +69,5 @@ jobs:
         client-payload: |
           {
             "version": "${{ env.VERSION }}",
-            "lambda_package": "tensortours-${{ env.VERSION }}.zip",
-            "handlers": {
-              "geolocation": "tensortours.lambda_handlers.geolocation.handler",
-              "audio_generation": "tensortours.lambda_handlers.audio_generation.handler",
-              "tour_pre_generation": "tensortours.lambda_handlers.tour_pre_generation.handler",
-              "tour_preview": "tensortours.lambda_handlers.tour_preview.handler",
-              "tour_generation": "tensortours.lambda_handlers.tour_generation.handler",
-              "get_places": "tensortours.lambda_handlers.get_places.handler",
-              "photo_retriever": "tensortours.lambda_handlers.tour_generation_pipeline.photo_retriever_handler",
-              "script_generator": "tensortours.lambda_handlers.tour_generation_pipeline.script_generator_handler",
-              "audio_generator": "tensortours.lambda_handlers.tour_generation_pipeline.audio_generator_handler"
-            }
+            "image_tag": "${{ env.VERSION }}"
           }
