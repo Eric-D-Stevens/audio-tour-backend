@@ -35,9 +35,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Generate version string
-      id: version
-      run: echo "VERSION=$(date +%s)" >> $GITHUB_ENV
+    - name: Set image tag from Git SHA
+      run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -49,16 +48,29 @@ jobs:
     - name: Log in to Amazon ECR
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build and push Docker image
+    - name: Check if image already exists in ECR
       run: |
         ECR_URI=$(aws ecr describe-repositories \
           --repository-names tensortours-lambda \
           --query 'repositories[0].repositoryUri' \
           --output text)
-        docker build -t "${ECR_URI}:${VERSION}" -t "${ECR_URI}:latest" .
-        docker push "${ECR_URI}:${VERSION}"
-        docker push "${ECR_URI}:latest"
         echo "ECR_URI=${ECR_URI}" >> $GITHUB_ENV
+        if aws ecr describe-images \
+          --repository-name tensortours-lambda \
+          --image-ids imageTag=${IMAGE_TAG} > /dev/null 2>&1; then
+          echo "IMAGE_EXISTS=true" >> $GITHUB_ENV
+          echo "Image ${IMAGE_TAG} already exists, skipping build."
+        else
+          echo "IMAGE_EXISTS=false" >> $GITHUB_ENV
+          echo "Image ${IMAGE_TAG} not found, will build and push."
+        fi
+
+    - name: Build and push Docker image
+      if: env.IMAGE_EXISTS == 'false'
+      run: |
+        docker build -t "${ECR_URI}:${IMAGE_TAG}" -t "${ECR_URI}:latest" .
+        docker push "${ECR_URI}:${IMAGE_TAG}"
+        docker push "${ECR_URI}:latest"
 
     - name: Trigger Infrastructure Deploy
       uses: peter-evans/repository-dispatch@v3
@@ -68,6 +80,6 @@ jobs:
         event-type: lambda-changed
         client-payload: |
           {
-            "version": "${{ env.VERSION }}",
-            "image_tag": "${{ env.VERSION }}"
+            "version": "${{ env.IMAGE_TAG }}",
+            "image_tag": "${{ env.IMAGE_TAG }}"
           }
